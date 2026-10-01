@@ -599,6 +599,11 @@ function handleUsMarketOverview(data) {
     document.getElementById('tnx-val').className = 'mkt-val neu';
     document.getElementById('tnx-chg').textContent = '10 年期美債殖利率';
   }
+  if (data.tyx && data.tyx.close != null) {
+    document.getElementById('tyx-val').textContent = `${data.tyx.close.toFixed(2)}%`;
+    document.getElementById('tyx-val').className = 'mkt-val neu';
+    document.getElementById('tyx-chg').textContent = '30 年期美債殖利率';
+  }
 }
 
 if (window.US_MARKET_OVERVIEW) {

@@ -175,11 +175,12 @@ def _fetch_us_market_overview() -> dict:
         "dji": {"close": None, "chg_pct": None, "ytd": None},
         "vix": {"close": None, "chg_pct": None},
         "tnx": {"close": None},
+        "tyx": {"close": None},
         "spy_ytd": None,
     }
     sym_key_map = {
         "^SOX": "sox", "^IXIC": "ndx", "^DJI": "dji",
-        "^VIX": "vix", "^TNX": "tnx",
+        "^VIX": "vix", "^TNX": "tnx", "^TYX": "tyx",
     }
     all_syms = list(sym_key_map.keys()) + ["SPY"]
     try:
@@ -192,7 +193,7 @@ def _fetch_us_market_overview() -> dict:
             if len(vals) < 2:
                 continue
             result[key]["close"] = float(vals[-1])
-            if key != "tnx":
+            if key not in ("tnx", "tyx"):
                 result[key]["chg_pct"] = float((vals[-1] - vals[-2]) / vals[-2] * 100)
     except Exception as e:
         print(f"  大盤日線下載失敗：{e}")
@@ -1034,17 +1035,30 @@ def _format_longterm_report_html(
         tnx_block = ('<div class="mkt-item"><div class="mkt-item-label">10Y 殖利率</div>'
                      '<div class="mkt-item-val mkt-neu">—</div></div>')
 
+    tyx_val = mo.get("tyx", {}).get("close")
+    if tyx_val is not None:
+        ycls  = "mkt-dn" if tyx_val > 4.5 else "mkt-neu"
+        ynote = "⚠️ 利率偏高" if tyx_val > 4.5 else "利率溫和"
+        tyx_block = (
+            f'<div class="mkt-item"><div class="mkt-item-label">30Y 美債殖利率</div>'
+            f'<div class="mkt-item-val {ycls}">{tyx_val:.2f}%</div>'
+            f'<div class="mkt-item-sub">{ynote}</div></div>'
+        )
+    else:
+        tyx_block = ('<div class="mkt-item"><div class="mkt-item-label">30Y 殖利率</div>'
+                     '<div class="mkt-item-val mkt-neu">—</div></div>')
+
     market_html = f"""
   <div class="mkt-wrap">
     <div class="mkt-hdr">
       <h2>📊 今日大盤概況</h2>
-      <p>{today}　資料來源：yfinance（^SOX / ^IXIC / ^DJI / ^VIX / ^TNX）</p>
+      <p>{today}　資料來源：yfinance（^SOX / ^IXIC / ^DJI / ^VIX / ^TNX / ^TYX）</p>
     </div>
     <div class="mkt-body">
       {_idx_block("sox","費城半導體 ^SOX")}
       {_idx_block("ndx","納斯達克 ^IXIC")}
       {_idx_block("dji","道瓊工業 ^DJI")}
-      {vix_block}{tnx_block}
+      {vix_block}{tnx_block}{tyx_block}
     </div>
   </div>"""
 
