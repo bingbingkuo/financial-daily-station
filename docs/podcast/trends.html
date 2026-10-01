@@ -1,0 +1,1616 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Podcast 摘要 · 2026-09-28 · 財經日報站</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --dr-bg:#0d1117; --dr-surface:#161b22; --dr-surface2:#21262d; --dr-border:#30363d;
+  --dr-text:#e6edf3; --dr-muted:#7d8590; --dr-tw:#ef4444; --dr-us:#22c55e; --dr-pod:#a78bfa;
+  --dr-twma:#2dd4bf; --dr-all:#f59e0b; --dr-radius:8px;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --dr-bg:#f6f8fa; --dr-surface:#ffffff; --dr-surface2:#f0f2f5;
+    --dr-border:#d0d7de; --dr-text:#1f2328; --dr-muted:#656d76;
+  }
+}
+:root[data-theme="dark"]  { --dr-bg:#0d1117;--dr-surface:#161b22;--dr-surface2:#21262d;--dr-border:#30363d;--dr-text:#e6edf3;--dr-muted:#7d8590; }
+:root[data-theme="light"] { --dr-bg:#f6f8fa;--dr-surface:#ffffff;--dr-surface2:#f0f2f5;--dr-border:#d0d7de;--dr-text:#1f2328;--dr-muted:#656d76; }
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+[hidden] { display:none !important; }
+/* 注意：下面的殼層樣式全部用 .dr- 前綴 class 跟 --dr- 前綴變數，
+   跟被包進來的報告自己的 CSS（.nav/.header/--bg 這類常見命名、
+   甚至 body{} 全站選取器）完全不共用命名，兩邊不會互相覆蓋。
+   側欄／頂部列因此不管包哪份報告，字體、字級、顏色都固定一致。 */
+.dr-layout {
+  display:flex; min-height:100vh;
+  font-family:'IBM Plex Sans',sans-serif;
+}
+.dr-sidebar {
+  width:220px; flex-shrink:0; background:var(--dr-surface); border-right:1px solid var(--dr-border);
+  display:flex; flex-direction:column; position:fixed; top:0; left:0; bottom:0; z-index:50; overflow-y:auto;
+}
+.dr-brand { padding:20px 18px 16px; border-bottom:1px solid var(--dr-border); text-decoration:none; display:block; }
+.dr-brand-name { font-size:14px; font-weight:700; letter-spacing:.5px; color:var(--dr-text); }
+.dr-brand-sub  { font-size:11px; color:var(--dr-muted); margin-top:2px; }
+.dr-nav { padding:12px 8px; flex:1; }
+.dr-nav-item {
+  display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:6px;
+  font-size:13.5px; font-weight:500; color:var(--dr-muted); text-decoration:none; margin-bottom:2px;
+}
+.dr-nav-item:hover { background:var(--dr-surface2); color:var(--dr-text); }
+.dr-nav-item.active { color:var(--dr-text); background:var(--dr-surface2); }
+.dr-nav-item.soon { opacity:.5; pointer-events:none; }
+.dr-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; background:var(--dr-border); }
+.dr-dot-tw  { background:var(--dr-tw); }
+.dr-dot-us  { background:var(--dr-us); }
+.dr-dot-pod { background:var(--dr-pod); }
+.dr-dot-twma { background:var(--dr-twma); }
+.dr-nav-subitems { margin:0 0 4px 10px; padding-left:10px; border-left:1px solid var(--dr-border); }
+.dr-nav-subitem {
+  display:flex; align-items:center; gap:6px; padding:5px 8px; border-radius:5px;
+  font-size:12px; color:var(--dr-muted); text-decoration:none; font-family:'IBM Plex Mono',monospace;
+}
+.dr-nav-subitem:hover { background:var(--dr-surface2); color:var(--dr-text); }
+.dr-nav-subitem.active { color:var(--dr-text); font-weight:600; }
+.dr-main { margin-left:220px; flex:1; display:flex; flex-direction:column; min-width:0; }
+.dr-topbar {
+  background:var(--dr-surface); border-bottom:1px solid var(--dr-border); padding:12px 24px;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  position:sticky; top:0; z-index:40;
+}
+.dr-topbar-left { display:flex; align-items:center; gap:12px; }
+.dr-page-title { font-size:15px; font-weight:600; color:var(--dr-text); }
+.dr-date-badge {
+  font-size:12px; font-family:'IBM Plex Mono',monospace; background:var(--dr-surface2); color:var(--dr-muted);
+  padding:3px 10px; border-radius:20px; border:1px solid var(--dr-border);
+}
+.dr-theme-btn {
+  background:var(--dr-surface2); border:1px solid var(--dr-border); border-radius:6px;
+  padding:5px 10px; color:var(--dr-muted); font-size:12px; cursor:pointer; font-family:inherit;
+}
+.dr-theme-btn:hover { color:var(--dr-text); }
+.dr-content { padding:24px; flex:1; background:var(--dr-bg); color:var(--dr-text); }
+@media (max-width:767px) {
+  .dr-sidebar { position:static; width:100%; height:auto; border-right:none; border-bottom:1px solid var(--dr-border); }
+  .dr-main { margin-left:0; }
+  .dr-content { padding:16px; }
+}
+</style>
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #080808; --surface: #111111; --surface2: #1c1c1c;
+      --border: #2e2e2e; --text: #f0f0f0; --muted: #666666;
+      --accent: #d4d4d4; --bull: #22c55e; --bear: #ef4444; --neutral: #666666;
+    }
+    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang TC', sans-serif; min-height: 100vh; }
+
+    /* ── Header ── */
+    .header {
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 0 24px; height: 60px; display: flex; align-items: center; gap: 20px;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .logo { font-size: 18px; font-weight: 700; color: var(--text); text-decoration: none; }
+    .logo span { color: var(--accent); }
+    .nav a {
+      font-size: 14px; color: var(--muted); text-decoration: none;
+      padding: 6px 12px; border-radius: 6px; transition: background 0.15s;
+    }
+    .nav a:hover { background: var(--surface2); color: var(--text); }
+    .nav a.active { color: var(--text); background: var(--surface2); border: 1px solid var(--border); }
+
+    /* ── Layout ── */
+    .page { max-width: 1200px; margin: 0 auto; padding: 28px 16px; }
+    .page-header { margin-bottom: 28px; }
+    .page-title { font-size: 22px; font-weight: 700; }
+    .page-sub { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+    /* ── Filter bar ── */
+    .filter-bar { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+    .filter-btn {
+      background: var(--surface); border: 1px solid var(--border); color: var(--muted);
+      padding: 6px 16px; border-radius: 20px; font-size: 13px; cursor: pointer; transition: all 0.15s;
+    }
+    .filter-btn.active, .filter-btn:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    /* ── Industry grid ── */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+
+    .ind-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; overflow: hidden; cursor: pointer;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .ind-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .ind-card.bullish, .ind-card.strong_bullish { border-top: 3px solid var(--bull); }
+    .ind-card.bearish, .ind-card.strong_bearish { border-top: 3px solid var(--bear); }
+    .ind-card.neutral  { border-top: 3px solid #475569; }
+
+    .card-body { padding: 18px 20px; }
+    .ind-name { font-size: 18px; font-weight: 700; }
+    .outlook-chip {
+      font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px;
+    }
+    .outlook-chip.bullish, .outlook-chip.strong_bullish { background: rgba(34,197,94,0.12); color: #4ade80; }
+    .outlook-chip.bearish, .outlook-chip.strong_bearish { background: rgba(239,68,68,0.12); color: #f87171; }
+    .outlook-chip.neutral { background: rgba(255,255,255,0.05); color: #777777; border: 1px solid #333; }
+
+    .latest-view {
+      font-size: 13px; color: #999999; line-height: 1.7;
+      display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .card-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .mention-count-tag {
+      font-size: 11px; background: var(--surface2); border-radius: 10px;
+      padding: 2px 8px; color: var(--muted);
+    }
+    .stock-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+    .stock-tag {
+      font-size: 11px; font-family: monospace; background: var(--surface2);
+      border: 1px solid var(--border); color: #cccccc; border-radius: 5px; padding: 1px 6px;
+      cursor: pointer; transition: border-color 0.15s, color 0.15s;
+    }
+    .stock-tag:hover { border-color: #666; color: #fff; }
+    .latest-date { margin-left: auto; font-size: 12px; color: var(--muted); }
+
+    /* ── Drag & Drop ── */
+    .ind-card[draggable="true"] { cursor: grab; }
+    .ind-card[draggable="true"]:active { cursor: grabbing; }
+    .ind-card.dragging { opacity: 0.4; transform: scale(0.97); }
+    .ind-card.drop-target {
+      border-color: #6366f1 !important;
+      background: rgba(99,102,241,0.08);
+      box-shadow: 0 0 0 2px rgba(99,102,241,0.4);
+    }
+
+    /* merge confirm dialog */
+    .merge-dialog-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.7); z-index: 500;
+      align-items: center; justify-content: center;
+    }
+    .merge-dialog-overlay.open { display: flex; }
+    .merge-dialog {
+      background: #111; border: 1px solid #333; border-radius: 14px;
+      padding: 28px; width: min(460px, 92vw);
+    }
+    .merge-dialog h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+    .merge-dialog p  { font-size: 13px; color: #888; line-height: 1.7; margin-bottom: 20px; }
+    .merge-names {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;
+    }
+    .merge-name {
+      background: #1c1c1c; border: 1px solid #333; border-radius: 8px;
+      padding: 6px 14px; font-size: 14px; font-weight: 600;
+    }
+    .merge-arrow { color: #6366f1; font-size: 18px; }
+    .merge-btns { display: flex; gap: 10px; justify-content: flex-end; }
+    .merge-cancel {
+      background: none; border: 1px solid #333; color: #888;
+      border-radius: 8px; padding: 7px 18px; font-size: 13px; cursor: pointer;
+    }
+    .merge-cancel:hover { border-color: #555; color: #ccc; }
+    .merge-confirm {
+      background: #6366f1; border: none; color: #fff;
+      border-radius: 8px; padding: 7px 18px; font-size: 13px;
+      font-weight: 600; cursor: pointer; transition: background 0.15s;
+    }
+    .merge-confirm:hover { background: #4f46e5; }
+
+    /* ── Card top row ── */
+    .card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 10px; }
+    .card-top-right { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
+
+    /* ── Remove / Merge buttons ── */
+    .ind-remove-btn, .ind-merge-btn {
+      background: none; border: 1px solid #2e2e2e; color: #444;
+      border-radius: 6px; padding: 3px 8px; font-size: 11px;
+      cursor: pointer; transition: all 0.15s;
+    }
+    .ind-remove-btn:hover { background: rgba(239,68,68,0.12); border-color: #7f1d1d; color: #f87171; }
+    .ind-merge-btn:hover  { background: rgba(99,102,241,0.12); border-color: #6366f1;  color: #a5b4fc; }
+    .ind-merge-btn.selecting { background: rgba(99,102,241,0.25); border-color: #6366f1; color: #a5b4fc; }
+
+    /* merge-select mode: all other cards highlighted as targets */
+    .merge-select-mode .ind-card:not(.merge-source) {
+      border-color: #6366f1 !important;
+      box-shadow: 0 0 0 1px rgba(99,102,241,0.35);
+      cursor: crosshair !important;
+    }
+    .ind-card.merge-source { opacity: 0.5; cursor: default !important; }
+    .merge-select-hint {
+      display: none; position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      background: #6366f1; color: #fff; font-size: 13px; font-weight: 600;
+      padding: 10px 22px; border-radius: 30px; z-index: 600;
+      box-shadow: 0 4px 20px rgba(99,102,241,0.5);
+    }
+    .merge-select-hint.open { display: block; }
+
+    /* ── Modal ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.75); z-index: 200;
+      align-items: flex-start; justify-content: center; padding: 40px 16px; overflow-y: auto;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px; width: min(720px, 100%);
+      margin: auto;
+    }
+    .modal-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .modal-title { font-size: 26px; font-weight: 700; }
+    .modal-close {
+      margin-left: auto; background: none; border: none; color: var(--muted);
+      font-size: 22px; cursor: pointer; padding: 4px 8px; border-radius: 6px;
+    }
+    .modal-close:hover { background: var(--surface2); color: var(--text); }
+
+    /* mention timeline */
+    .timeline { position: relative; padding-left: 20px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 6px; top: 8px; bottom: 8px;
+      width: 2px; background: var(--border);
+    }
+    .tl-item { position: relative; margin-bottom: 24px; }
+    .tl-dot {
+      position: absolute; left: -17px; top: 5px;
+      width: 10px; height: 10px; border-radius: 50%;
+      border: 2px solid var(--surface); background: var(--accent);
+    }
+    .tl-dot.bullish, .tl-dot.strong_bullish { background: var(--bull); }
+    .tl-dot.bearish, .tl-dot.strong_bearish { background: var(--bear); }
+    .tl-dot.neutral  { background: var(--muted); }
+
+    .tl-date { font-size: 12px; color: #aaaaaa; font-weight: 600; margin-bottom: 4px; }
+    .tl-episode { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+    .tl-outlook {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      padding: 2px 8px; border-radius: 10px; margin-bottom: 8px;
+    }
+    .tl-view { font-size: 14px; color: #999999; line-height: 1.75; margin-bottom: 10px; }
+
+    .factor-row { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 8px; }
+    .factor-group { flex: 1; min-width: 140px; }
+    .factor-label { font-size: 11px; color: var(--muted); font-weight: 600; letter-spacing: 0.05em; margin-bottom: 4px; }
+    .factor-list { list-style: none; }
+    .factor-list li { font-size: 12px; color: #94a3b8; padding: 2px 0 2px 12px; position: relative; }
+    .factor-list li::before { content: '▸'; position: absolute; left: 0; }
+    .factor-list.catalysts li::before { color: var(--bull); }
+    .factor-list.risks li::before { color: var(--bear); }
+
+    .related-stocks-row { margin-top: 8px; display: flex; gap: 4px; flex-wrap: wrap; }
+    .rel-stock {
+      font-size: 12px; font-family: monospace; background: var(--surface2);
+      border: 1px solid var(--border); color: #cccccc; border-radius: 5px; padding: 2px 7px;
+      cursor: pointer; transition: border-color 0.15s, color 0.15s;
+    }
+    .rel-stock:hover { border-color: #666; color: #fff; }
+
+    /* empty */
+    .empty { text-align: center; padding: 80px 20px; color: var(--muted); }
+    .empty .icon { font-size: 52px; margin-bottom: 16px; }
+    .empty h3 { font-size: 18px; color: var(--text); margin-bottom: 6px; }
+
+    /* ── Stock Popup ── */
+    .stock-popup-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6); z-index: 400;
+      align-items: center; justify-content: center;
+    }
+    .stock-popup-overlay.open { display: flex; }
+    .stock-popup {
+      background: #111; border: 1px solid #333;
+      border-radius: 14px; padding: 22px 24px;
+      width: min(500px, 94vw); max-height: 88vh; overflow-y: auto;
+    }
+    .sp-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .sp-symbol { font-size: 22px; font-weight: 700; font-family: monospace; }
+    .sp-name   { font-size: 13px; color: #888; margin-top: 2px; }
+    .sp-close  { margin-left: auto; background: none; border: none; color: #555; font-size: 20px; cursor: pointer; }
+    .sp-close:hover { color: #ccc; }
+    .sp-stats  { display: flex; gap: 20px; margin-bottom: 14px; }
+    .sp-stat .lbl { font-size: 11px; color: #555; }
+    .sp-stat .val { font-size: 18px; font-weight: 700; }
+    .sp-chart  { height: 140px; margin-bottom: 16px; }
+    .sp-mentions-title { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: #444; text-transform: uppercase; margin-bottom: 10px; }
+    .sp-mention { padding: 8px 0; border-bottom: 1px solid #1e1e1e; font-size: 12px; }
+    .sp-mention:last-child { border-bottom: none; }
+    .sp-mention .date { color: #888; font-weight: 600; margin-bottom: 3px; }
+    .sp-mention .view { color: #666; line-height: 1.6; }
+    .sp-not-tracked { text-align: center; padding: 24px; color: #444; font-size: 13px; }
+    .sp-watchlist-link { display: block; text-align: center; margin-top: 12px; font-size: 12px; color: #555; text-decoration: none; }
+    .sp-watchlist-link:hover { color: #aaa; }
+  </style>
+</head>
+<body>
+<div class="dr-layout">
+  <aside class="dr-sidebar">
+    <a class="dr-brand" href="../index.html">
+      <div class="dr-brand-name">📡 財經日報站</div>
+      <div class="dr-brand-sub">Stock · Market · Podcast</div>
+    </a>
+    <nav class="dr-nav">
+      <a class="dr-nav-item" href="../index.html">
+        <span class="dr-dot" style="background:var(--dr-all)"></span> 總覽
+      </a>
+      <a class="dr-nav-item active" href="../podcast/latest.html">
+        <span class="dr-dot dr-dot-pod"></span> Podcast 摘要
+      </a>
+      <a class="dr-nav-item" href="../tw_scout/latest.html">
+        <span class="dr-dot dr-dot-tw"></span> 台股選股雷達
+      </a>
+      <div class="dr-nav-subitems"><a class="dr-nav-subitem" href="../tw_scout/2026-10-01.html">2026-10-01</a><a class="dr-nav-subitem" href="../tw_scout/2026-09-30.html">2026-09-30</a><a class="dr-nav-subitem" href="../tw_scout/2026-09-29.html">2026-09-29</a><a class="dr-nav-subitem" href="../tw_scout/2026-09-28.html">2026-09-28</a><a class="dr-nav-subitem" href="../tw_scout/2026-09-25.html">2026-09-25</a></div>
+      <a class="dr-nav-item" href="../us_scout/latest.html">
+        <span class="dr-dot dr-dot-us"></span> 美股選股雷達
+      </a>
+      <div class="dr-nav-subitems"><a class="dr-nav-subitem" href="../us_scout/2026-09-30.html">2026-09-30</a><a class="dr-nav-subitem" href="../us_scout/2026-09-29.html">2026-09-29</a><a class="dr-nav-subitem" href="../us_scout/2026-09-28.html">2026-09-28</a><a class="dr-nav-subitem" href="../us_scout/2026-09-25.html">2026-09-25</a><a class="dr-nav-subitem" href="../us_scout/2026-09-24.html">2026-09-24</a></div>
+      <a class="dr-nav-item" href="../tw_ma/latest.html">
+        <span class="dr-dot dr-dot-twma"></span> 台股族群強弱
+      </a>
+      <div class="dr-nav-subitems"><a class="dr-nav-subitem" href="../tw_ma/2026-10-01.html">2026-10-01</a><a class="dr-nav-subitem" href="../tw_ma/2026-09-30.html">2026-09-30</a><a class="dr-nav-subitem" href="../tw_ma/2026-09-29.html">2026-09-29</a><a class="dr-nav-subitem" href="../tw_ma/2026-09-28.html">2026-09-28</a></div>
+    </nav>
+  </aside>
+
+  <div class="dr-main">
+    <header class="dr-topbar">
+      <div class="dr-topbar-left">
+        <span class="dr-page-title">Podcast 摘要</span>
+        <span class="dr-date-badge">2026-09-28</span>
+      </div>
+      <button class="dr-theme-btn" onclick="drToggleTheme()" id="dr-theme-btn">🌙</button>
+    </header>
+    <main class="dr-content">
+      
+
+
+<header class="header" style="position:static">
+  <nav class="nav">
+    <a href="latest.html">每日摘要</a>
+    <a href="watchlist.html">股票追蹤</a>
+    <a href="trends.html" class="active">產業趨勢</a>
+  </nav>
+</header>
+
+
+<div class="page">
+  <div class="page-header">
+    <div class="page-title">🔭 未來產業趨勢</div>
+    <div class="page-sub">彙整 Podcast 節目對各產業的看法與預測，持續追蹤觀點演變</div>
+  </div>
+
+  
+  
+
+  <!-- Filter -->
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterOutlook('ALL', this)">全部 (24)</button>
+    <button class="filter-btn" onclick="filterOutlook('bullish', this)">📈 看漲</button>
+    <button class="filter-btn" onclick="filterOutlook('neutral', this)">📊 中性</button>
+    <button class="filter-btn" onclick="filterOutlook('bearish', this)">📉 看跌</button>
+  </div>
+
+  <div class="grid" id="grid">
+    
+    
+    
+    <div class="ind-card bullish" data-outlook="bullish" data-name="半導體"
+         draggable="false"
+         onclick="cardClick(event, '半導體')"
+         ondragstart="onDragStart(event, '半導體')"
+         ondragover="onDragOver(event)"
+         ondragleave="onDragLeave(event)"
+         ondrop="onDrop(event, '半導體')"
+         ondragend="onDragEnd(event)">
+      <div class="card-body">
+        <div class="card-top">
+          <div class="ind-name">半導體</div>
+          <div class="card-top-right">
+            <span class="outlook-chip bullish">
+              📈 看漲
+            </span>
+            
+          </div>
+        </div>
+        <div class="latest-view">半導體產業依然是全球科技發展的核心，雖然面臨景氣循環，但長期需求依然強勁。</div>
+        <div class="card-meta">
+          <span class="mention-count-tag">提及 16 次</span>
+          
+          <span class="latest-date">2026-09-30</span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    <div class="ind-card bullish" data-outlook="bullish" data-name="光通訊"
+         draggable="false"
+         onclick="cardClick(event, '光通訊')"
+         ondragstart="onDragStart(event, '光通訊')"
+         ondragover="onDragOver(event)"
+         ondragleave="onDragLeave(event)"
+         ondrop="onDrop(event, '光通訊')"
+         ondragend="onDragEnd(event)">
+      <div class="card-body">
+        <div class="card-top">
+          <div class="ind-name">光通訊</div>
+          <div class="card-top-right">
+            <span class="outlook-chip bullish">
+              📈 看漲
+            </span>
+            
+          </div>
+        </div>
+        <div class="latest-view">光通訊產業受惠於AI與資料中心的高速傳輸需求，今年表現亮眼，未來成長空間廣闊。</div>
+        <div class="card-meta">
+          <span class="mention-count-tag">提及 1 次</span>
+          
+          <span class="latest-date">2026-09-30</span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    <div class="ind-card bullish" data-outlook="bullish" data-name="Optical Communication"
+         draggable="false"
+         onclick="cardClick(event, 'Optical Communication')"
+         ondragstart="onDragStart(event, 'Optical Communication')"
+         ondragover="onDragOver(event)"
+         ondragleave="onDragLeave(event)"
+         ondrop="onDrop(event, 'Optical Communication')"
+         ondragend="onDragEnd(event)">
+      <div class="card-body">
+        <div class="card-top">
+          <div class="ind-name">Optical Communication</div>
+          <div class="card-top-right">
+            <span class="outlook-chip bullish">
+              📈 看漲
+            </span>
+            
+          </div>
+        </div>
+        <div class="latest-view">光通訊產業在 AI 和數據中心時代扮演關鍵角色，其技術發展和產品應用將受益於 AI 裝置對高速資料傳輸的需求。</div>
+        <div class="card-meta">
+          <span class="mention-count-tag">提及 8 次</span>
+          
+          <div class="stock-tags">
+            
+            <span class="stock-tag" onclick="goToStock('LITE', event)">LITE</span>
+            
+            <span class="stock-tag" onclick="goToStock('COHR', event)">COHR</span>
+            
+            <span class="stock-tag" onclick="goToStock('GLW', event)">GLW</span>
+            
+          </div>
+          
+          <span class="latest-date">2026-09-26</span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    <div class="ind-card neutral" data-outlook="neutral" data-name="AI穿戴裝置"
+         draggable="false"
+         onclick="cardClick(event, 'AI穿戴裝置')"
+         ondragstart="onDragStart(event, 'AI穿戴裝置')"
+         ondragover="onDragOver(event)"
+         ondragleave="onDragLeave(event)"
+         ondrop="onDrop(event, 'AI穿戴裝置')"
+         ondragend="onDragEnd(event)">
+      <div class="card-body">
+        <div class="card-top">
+          <div class="ind-name">AI穿戴裝置</div>
+          <div class="card-top-right">
+            <span class="outlook-chip neutral">
+              📊 中性
+            </span>
+            
+          </div>
+        </div>
+        <div class="latest-view">AI 穿戴裝置市場充滿潛力，但面臨兩大挑戰：一是取代智慧型手機的困難度高，二是建立用戶信任是關鍵。初期產品可能表現不佳，但長期仍有疊代和突破的機會。Meta 的巨大生態系是其競爭優勢。</div>
+        <div class="card-meta">
+          <span class="mention-count-tag">提及 1 次</span>
+          
+          <div class="stock-tags">
+            
+            <span class="stock-tag" onclick="goToStock('META', event)">META</span>
+            
+            <span class="stock-tag" onclick="goToStock('AAPL', event)">AAPL</span>
+            
+          </div>
+          
+          <span class="latest-date">2026-09-26</span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    <div class="ind-card bullish" data-outlook="bullish" data-name="CPU"
+         draggable="false"
+         onclick="cardClick(event, 'CPU')"
+         ondragstart="onDragStart(event, 'CPU')"
+         ondragover="onDragOver(event)"
+         ondragleave="onDragLeave(event)"
+         ondrop="onDrop(event, 'CPU')"
+         ondragend="onDragEnd(event)">
+      <div class="card-body">
+        <div class="card-top">
+          <div class="ind-name">CPU</div>
+          <div class="card-top-right">
+            <span class="outlook-chip bullish">
+              📈 看漲
+            </span>
+            
+          </div>
+        </div>
+        <div class="latest-view">AI時代，CPU在AI工作負載中的重要性被重新評估，其與GPU的配比正朝1:1發展，帶動CPU需求顯著增長，預期相關股票有上漲潛力。</div>
+        <div class="card-meta">
+          <span class="mention-count-tag">提及 3 次</span>
+          
+          <span class="latest-date">2026-09-23</span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    <div class="ind-card bullish" data-outlook="bullish" data-name="AI"
+         draggable="false"
+         onclick="cardClick(event, 'AI')"
+         ondragstart="onDragStart(event, 'AI')"
+         ondragover="onDragOver(event)"
+         ondragleave="onDragLeave(event)"
+         ondrop="onDrop(event, 'AI')"
+         ondragend="onDragEnd(event)">
+      <div class="card-body">
+        <div class="card-top">
+          <div class="ind-name">AI</div>
+          <div class="card-top-right">
+            <span class="outlook-chip bullish">
+              📈 看漲
+            </span>
+            
+          </div>
+        </div>
+        <div class="latest-view">AI技術對CPU和DSP等硬體元件的需求是真實且持續增長的，但市場上許多AI應用可能只是短期FOMO現象，投資者應理性看待，並留意潛在泡沫化風險。</div>
+        <div class="card-meta">
+          <span class="mention-count-tag">提及 13 次</span>
+          
+          <span class="latest-date">2026-09-23</span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    <div class="ind-card bullish" data-outlook="bullish" data-name="DSP"
+         draggable="false"
+         onclick="cardClick(event, 'DSP')"
+         ondragstart="onDragStart(event, 'DSP')"
+         ondragover="onDragOver(event)"
+         ondragleave="onDragLeave(event)"
+         ondrop="onDrop(event, 'DSP')"
+         ondragend="onDragEnd(event)">
+      <div class="card-body">
+        <div class="card-top">
+          <div class="ind-name">DSP</div>
+          <div class="card-top-right">
+            <span class="outlook-chip bullish">
+              📈 看漲
+            </span>
+            
+          </div>
+        </div>
+        <div class="latest-view">DSP在高速光通訊（400G/800G/1.6T）的應用中需求強勁，其價格上漲合理。DSP在數據中心、AI基礎設施的傳輸效率上扮演關鍵角色，未來趨勢看好。</div>
+        <div class="card-meta">
+          <span class="mention-count-tag">提及 1 次</span>
+          
+          <span class="latest-date">2026-09-23</span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    <div class="ind-card bullish" data-outlook="bullish" data-name="記憶體"
+         draggable="false"
+         onclick="cardClick(event, '記憶體')"
+         ondragstart="onDragStart(event, '記憶體')"
+         ondragover="onDragOver(event)"
+         ondragleave="onDragLeave(event)"
+         ondrop="onDrop(event, '記憶體')"
+         ondragend="onDragEnd(event)">
+      <div class="card-body">
+        <div class="card-top">
+          <div class="ind-name">記憶體</div>
+          <div class="card-top-right">
+            <span class="outlook-chip bullish">
+              📈 看漲
+            </span>
+            
+          </div>
+        </div>
+        <div class="latest-view">記憶體（特別是HBM）價格上漲是半導體供應鏈中的一個主要痛點，廠商為此開始討論是否要降低HBM層數或尋找替代方案。然而，這僅是應對短期缺貨和成本壓力的策略，長期對更高性能記憶體的需求不變。</div>
+        <div class="card-meta">
+          <span class="mention-count-tag">提及 8 次</span>
+          
+          <span class="latest-date">2026-09-19</span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    <div class="ind-card bullish" data-outlook="bullish" data-name="板材"
+         draggable="false"
+         onclick="cardClick(event, '板材')"
+         ondragstart="onDragStart(event, '板材')"
+         ondragover="onDragOver(event)"
+         ondragleave="onDragLeave(event)"
+         ondrop="onDrop(event, '板材')"
+         ondragend="onDragEnd(event)">
+      <div class="card-body">
+        <div class="card-top">
+          <div class="ind-name">板材</div>
+          <div class="card-top-right">
+            <span class="outlook-chip bullish">
+              📈 看漲
+            </span>
+            
+          </div>
+        </div>
+        <div class="latest-view">板材（CCL）產業同樣面臨價格上漲與技術升級的壓力。高頻高速傳輸需求推動材料持續升級，但若導入新技術（如PCIe Gen6）將需要更昂貴的材料。短期內市場可能因成本或技術瓶頸而出現降規的討論，但長期升級趨勢不變。</div>
+        <div class="card-meta">
+          <span class="mention-count-tag">提及 2 次</span>
+          
+          <span class="latest-date">2026-09-19</span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    <div class="ind-card bearish" data-outlook="bearish" data-name="軟體"
+         draggable="false"
+         onclick="cardClick(event, '軟體')"
+         ondragstart="onDragStart(event, '軟體')"
+         ondragover="onDragOver(event)"
+         ondragleave="onDragLeave(event)"
+         ondrop="onDrop(event, '軟體')"
+         ondragend="onDragEnd(event)">
+      <div class="card-body">
+        <div class="card-top">
+          <div class="ind-name">軟體</div>
+          <div class="card-top-right">
+            <span class="outlook-chip bearish">
+              📉 看跌
+            </span>
+            
+          </div>
+        </div>
+        <div class="latest-view">甲骨文（Oracle）近期財報表現受到其激進財務工程（如預付費、自帶硬體服務及供應商融資）的提振，主持人對此持懷疑態度，認為其成長存在「虛胖」風險。這種策略引發對需求可持續性和真實有機成長的擔憂。</div>
+        <div class="card-meta">
+          <span class="mention-count-tag">提及 5 次</span>
+          
+          <span class="latest-date">2026-09-12</span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    <div class="ind-card bullish" data-outlook="bullish" data-name="雲端運算"
+         draggable="false"
+         onclick="cardClick(event, '雲端運算')"
+         ondragstart="onDragStart(event, '雲端運算')"
+         ondragover="onDragOver(event)"
+         ondragleave="onDragLeave(event)"
+         ondrop="onDrop(event, '雲端運算')"
+         ondragend="onDragEnd(event)">
+      <div class="card-body">
+        <div class="card-top">
+          <div class="ind-name">雲端運算</div>
+          <div class="card-top-right">
+            <span class="outlook-chip bullish">
+              📈 看漲
+            </span>
+            
+          </div>
+        </div>
+        <div class="latest-view">雲端巨頭積極投資AI基礎設施，轉型為高回報的供應商。客戶超額消費和新客獲取速度顯示強勁增長。儘管前期資本支出大，但長期合約模式確保穩定回收。</div>
+        <div class="card-meta">
+          <span class="mention-count-tag">提及 4 次</span>
+          
+          <div class="stock-tags">
+            
+            <span class="stock-tag" onclick="goToStock('GOOGL', event)">GOOGL</span>
+            
+            <span class="stock-tag" onclick="goToStock('MSFT', event)">MSFT</span>
+            
+            <span class="stock-tag" onclick="goToStock('ORCL', event)">ORCL</span>
+            
+            <span class="stock-tag" onclick="goToStock('AMZN', event)">AMZN</span>
+            
+          </div>
+          
+          <span class="latest-date">2026-09-09</span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    <div class="ind-card bullish" data-outlook="bullish" data-name="資料中心"
+         draggable="false"
+         onclick="cardClick(event, '資料中心')"
+         ondragstart="onDragStart(event, '資料中心')"
+         ondragover="onDragOver(event)"
+         ondragleave="onDragLeave(event)"
+         ondrop="onDrop(event, '資料中心')"
+         ondragend="onDragEnd(event)">
+      <div class="card-body">
+        <div class="card-top">
+          <div class="ind-name">資料中心</div>
+          <div class="card-top-right">
+            <span class="outlook-chip bullish">
+              📈 看漲
+            </span>
+            
+          </div>
+        </div>
+        <div class="latest-view">AI基礎設施是目前回報率最高的投資之一，特別是自研晶片及伺服器。大型科技公司正積極擴大部署，顯示產業前景廣闊。</div>
+        <div class="card-meta">
+          <span class="mention-count-tag">提及 2 次</span>
+          
+          <div class="stock-tags">
+            
+            <span class="stock-tag" onclick="goToStock('GOOGL', event)">GOOGL</span>
+            
+            <span class="stock-tag" onclick="goToStock('MSFT', event)">MSFT</span>
+            
+            <span class="stock-tag" onclick="goToStock('NVDA', event)">NVDA</span>
+            
+          </div>
+          
+          <span class="latest-date">2026-09-09</span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    <div class="ind-card bullish" data-outlook="bullish" data-name="功率半導體"
+         draggable="false"
+         onclick="cardClick(event, '功率半導體')"
+         ondragstart="onDragStart(event, '功率半導體')"
+         ondragover="onDragOver(event)"
+         ondragleave="onDragLeave(event)"
+         ondrop="onDrop(event, '功率半導體')"
+         ondragend="onDragEnd(event)">
+      <div class="card-body">
+        <div class="card-top">
+          <div class="ind-name">功率半導體</div>
+          <div class="card-top-right">
+            <span class="outlook-chip bullish">
+              📈 看漲
+            </span>
+            
+          </div>
+        </div>
+        <div class="latest-view">資料中心電力架構的演進，特別是 PowerCenter 階段對 SiC 和 GaN 等新一代功率半導體的需求將大幅增加，這些材料在高效能電源轉換方面具有顯著優勢，將成為關鍵受惠者。</div>
+        <div class="card-meta">
+          <span class="mention-count-tag">提及 12 次</span>
+          
+          <span class="latest-date">2026-08-15</span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    <div class="ind-card bullish" data-outlook="bullish" data-name="散熱"
+         draggable="false"
+         onclick="cardClick(event, '散熱')"
+         ondragstart="onDragStart(event, '散熱')"
+         ondragover="onDragOver(event)"
+         ondragleave="onDragLeave(event)"
+         ondrop="onDrop(event, '散熱')"
+         ondragend="onDragEnd(event)">
+      <div class="card-body">
+        <div class="card-top">
+          <div class="ind-name">散熱</div>
+          <div class="card-top-right">
+            <span class="outlook-chip bullish">
+              📈 看漲
+            </span>
+            
+          </div>
+        </div>
+        <div class="latest-view">AI時代，高效能計算對散熱技術的需求劇增，使其成為重要的投資主題。主持人將其列為個人佈局的重點。</div>
+        <div class="card-meta">
+          <span class="mention-count-tag">提及 3 次</span>
+          
+          <span class="latest-date">2026-08-12</span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    <div class="ind-card bullish" data-outlook="bullish" data-name="雲端服務"
+         draggable="false"
+         onclick="cardClick(event, '雲端服務')"
+         ondragstart="onDragStart(event, '雲端服務')"
+         ondragover="onDragOver(event)"
+         ondragleave="onDragLeave(event)"
+         ondrop="onDrop(event, '雲端服務')"
+         ondragend="onDragEnd(event)">
+      <div class="card-body">
+        <div class="card-top">
+          <div class="ind-name">雲端服務</div>
+          <div class="card-top-right">
+            <span class="outlook-chip bullish">
+              📈 看漲
+            </span>
+            
+          </div>
+        </div>
+        <div class="latest-view">雲端服務在AI時代將成為核心基礎設施，類似於「數位時代的鐵路與電網」。提供算力與平台將是重要的商業模式，吸引像巴菲特這樣的大型投資者。</div>
+        <div class="card-meta">
+          <span class="mention-count-tag">提及 1 次</span>
+          
+          <div class="stock-tags">
+            
+            <span class="stock-tag" onclick="goToStock('GOOGL', event)">GOOGL</span>
+            
+            <span class="stock-tag" onclick="goToStock('AMD', event)">AMD</span>
+            
+          </div>
+          
+          <span class="latest-date">2026-08-12</span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    <div class="ind-card neutral" data-outlook="neutral" data-name="被動元件"
+         draggable="false"
+         onclick="cardClick(event, '被動元件')"
+         ondragstart="onDragStart(event, '被動元件')"
+         ondragover="onDragOver(event)"
+         ondragleave="onDragLeave(event)"
+         ondrop="onDrop(event, '被動元件')"
+         ondragend="onDragEnd(event)">
+      <div class="card-body">
+        <div class="card-top">
+          <div class="ind-name">被動元件</div>
+          <div class="card-top-right">
+            <span class="outlook-chip neutral">
+              📊 中性
+            </span>
+            
+          </div>
+        </div>
+        <div class="latest-view">在節目中簡短提及，未給出明確看法。</div>
+        <div class="card-meta">
+          <span class="mention-count-tag">提及 13 次</span>
+          
+          <div class="stock-tags">
+            
+            <span class="stock-tag" onclick="goToStock('6462', event)">6462</span>
+            
+          </div>
+          
+          <span class="latest-date">2026-07-18</span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    <div class="ind-card bullish" data-outlook="bullish" data-name="後端封裝"
+         draggable="false"
+         onclick="cardClick(event, '後端封裝')"
+         ondragstart="onDragStart(event, '後端封裝')"
+         ondragover="onDragOver(event)"
+         ondragleave="onDragLeave(event)"
+         ondrop="onDrop(event, '後端封裝')"
+         ondragend="onDragEnd(event)">
+      <div class="card-body">
+        <div class="card-top">
+          <div class="ind-name">後端封裝</div>
+          <div class="card-top-right">
+            <span class="outlook-chip bullish">
+              📈 看漲
+            </span>
+            
+          </div>
+        </div>
+        <div class="latest-view">先進封裝（如Intel的IMT）是半導體產業的關鍵環節，目前產能供給非常緊俏。若競爭對手能在後端封裝取得突破，對台積電的前端晶圓代工是利好，因為可以擴大前端產出。</div>
+        <div class="card-meta">
+          <span class="mention-count-tag">提及 3 次</span>
+          
+          <span class="latest-date">2026-07-18</span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    <div class="ind-card strong_bullish" data-outlook="strong_bullish" data-name="封裝測試"
+         draggable="false"
+         onclick="cardClick(event, '封裝測試')"
+         ondragstart="onDragStart(event, '封裝測試')"
+         ondragover="onDragOver(event)"
+         ondragleave="onDragLeave(event)"
+         ondrop="onDrop(event, '封裝測試')"
+         ondragend="onDragEnd(event)">
+      <div class="card-body">
+        <div class="card-top">
+          <div class="ind-name">封裝測試</div>
+          <div class="card-top-right">
+            <span class="outlook-chip strong_bullish">
+              📈 看漲
+            </span>
+            
+          </div>
+        </div>
+        <div class="latest-view">封裝測試產業表現「特別強勢」，因AI需求而面臨產能吃緊和漲價。IC設計公司被漲價30-50%。有自己的封測廠（IDM）或能掌握外部產能者具優勢。預計將成為市場新的追逐題材。</div>
+        <div class="card-meta">
+          <span class="mention-count-tag">提及 1 次</span>
+          
+          <div class="stock-tags">
+            
+            <span class="stock-tag" onclick="goToStock('3711', event)">3711</span>
+            
+            <span class="stock-tag" onclick="goToStock('2444', event)">2444</span>
+            
+          </div>
+          
+          <span class="latest-date">2026-07-04</span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    <div class="ind-card bullish" data-outlook="bullish" data-name="IC設計"
+         draggable="false"
+         onclick="cardClick(event, 'IC設計')"
+         ondragstart="onDragStart(event, 'IC設計')"
+         ondragover="onDragOver(event)"
+         ondragleave="onDragLeave(event)"
+         ondrop="onDrop(event, 'IC設計')"
+         ondragend="onDragEnd(event)">
+      <div class="card-body">
+        <div class="card-top">
+          <div class="ind-name">IC設計</div>
+          <div class="card-top-right">
+            <span class="outlook-chip bullish">
+              📈 看漲
+            </span>
+            
+          </div>
+        </div>
+        <div class="latest-view">整體IC設計族群已全面轉強，許多個股走出新多頭或站上關鍵均線。但需要辨別哪些是需求導向的實質成長，哪些是短期成本轉嫁的反應，這將是後續選股的關鍵。</div>
+        <div class="card-meta">
+          <span class="mention-count-tag">提及 1 次</span>
+          
+          <div class="stock-tags">
+            
+            <span class="stock-tag" onclick="goToStock('2454', event)">2454</span>
+            
+            <span class="stock-tag" onclick="goToStock('3443', event)">3443</span>
+            
+            <span class="stock-tag" onclick="goToStock('3661', event)">3661</span>
+            
+            <span class="stock-tag" onclick="goToStock('2379', event)">2379</span>
+            
+          </div>
+          
+          <span class="latest-date">2026-07-01</span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    <div class="ind-card bullish" data-outlook="bullish" data-name="ABF載板"
+         draggable="false"
+         onclick="cardClick(event, 'ABF載板')"
+         ondragstart="onDragStart(event, 'ABF載板')"
+         ondragover="onDragOver(event)"
+         ondragleave="onDragLeave(event)"
+         ondrop="onDrop(event, 'ABF載板')"
+         ondragend="onDragEnd(event)">
+      <div class="card-body">
+        <div class="card-top">
+          <div class="ind-name">ABF載板</div>
+          <div class="card-top-right">
+            <span class="outlook-chip bullish">
+              📈 看漲
+            </span>
+            
+          </div>
+        </div>
+        <div class="latest-view">雖然曾被市場淡化，但近期因南電等公司的上修展望而再次轉強，顯示其在AI等新興應用中仍有強勁需求，且表現具備強勢。</div>
+        <div class="card-meta">
+          <span class="mention-count-tag">提及 1 次</span>
+          
+          <div class="stock-tags">
+            
+            <span class="stock-tag" onclick="goToStock('8046', event)">8046</span>
+            
+          </div>
+          
+          <span class="latest-date">2026-07-01</span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    <div class="ind-card bullish" data-outlook="bullish" data-name="矽晶圓"
+         draggable="false"
+         onclick="cardClick(event, '矽晶圓')"
+         ondragstart="onDragStart(event, '矽晶圓')"
+         ondragover="onDragOver(event)"
+         ondragleave="onDragLeave(event)"
+         ondrop="onDrop(event, '矽晶圓')"
+         ondragend="onDragEnd(event)">
+      <div class="card-body">
+        <div class="card-top">
+          <div class="ind-name">矽晶圓</div>
+          <div class="card-top-right">
+            <span class="outlook-chip bullish">
+              📈 看漲
+            </span>
+            
+          </div>
+        </div>
+        <div class="latest-view">矽晶圓市場原預期下半年才有機會，但已提早反應，顯示市場資金對其後市看法樂觀，提早進場佈局。</div>
+        <div class="card-meta">
+          <span class="mention-count-tag">提及 1 次</span>
+          
+          <span class="latest-date">2026-07-01</span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    <div class="ind-card bullish" data-outlook="bullish" data-name="AI伺服器"
+         draggable="false"
+         onclick="cardClick(event, 'AI伺服器')"
+         ondragstart="onDragStart(event, 'AI伺服器')"
+         ondragover="onDragOver(event)"
+         ondragleave="onDragLeave(event)"
+         ondrop="onDrop(event, 'AI伺服器')"
+         ondragend="onDragEnd(event)">
+      <div class="card-body">
+        <div class="card-top">
+          <div class="ind-name">AI伺服器</div>
+          <div class="card-top-right">
+            <span class="outlook-chip bullish">
+              📈 看漲
+            </span>
+            
+          </div>
+        </div>
+        <div class="latest-view">AI伺服器相關的高壓/高功率元件是最缺貨的產品之一，驅動主動元件的漲價趨勢。台灣供應鏈有機會承接海外大廠的訂單轉移。</div>
+        <div class="card-meta">
+          <span class="mention-count-tag">提及 1 次</span>
+          
+          <div class="stock-tags">
+            
+            <span class="stock-tag" onclick="goToStock('NVDA', event)">NVDA</span>
+            
+            <span class="stock-tag" onclick="goToStock('2382', event)">2382</span>
+            
+            <span class="stock-tag" onclick="goToStock('2376', event)">2376</span>
+            
+          </div>
+          
+          <span class="latest-date">2026-07-01</span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    <div class="ind-card bullish" data-outlook="bullish" data-name="機器人"
+         draggable="false"
+         onclick="cardClick(event, '機器人')"
+         ondragstart="onDragStart(event, '機器人')"
+         ondragover="onDragOver(event)"
+         ondragleave="onDragLeave(event)"
+         ondrop="onDrop(event, '機器人')"
+         ondragend="onDragEnd(event)">
+      <div class="card-body">
+        <div class="card-top">
+          <div class="ind-name">機器人</div>
+          <div class="card-top-right">
+            <span class="outlook-chip bullish">
+              📈 看漲
+            </span>
+            
+          </div>
+        </div>
+        <div class="latest-view">車用電子與機器人領域正受到主要零組件供應商（如德州儀器）的積極加單，顯示這兩個產業的用量在未來將顯著提升。主持人認為這是新興的成長題材，值得長期關注。</div>
+        <div class="card-meta">
+          <span class="mention-count-tag">提及 3 次</span>
+          
+          <div class="stock-tags">
+            
+            <span class="stock-tag" onclick="goToStock('TXN', event)">TXN</span>
+            
+          </div>
+          
+          <span class="latest-date">2026-06-17</span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    <div class="ind-card bullish" data-outlook="bullish" data-name="AI硬體"
+         draggable="false"
+         onclick="cardClick(event, 'AI硬體')"
+         ondragstart="onDragStart(event, 'AI硬體')"
+         ondragover="onDragOver(event)"
+         ondragleave="onDragLeave(event)"
+         ondrop="onDrop(event, 'AI硬體')"
+         ondragend="onDragEnd(event)">
+      <div class="card-body">
+        <div class="card-top">
+          <div class="ind-name">AI硬體</div>
+          <div class="card-top-right">
+            <span class="outlook-chip bullish">
+              📈 看漲
+            </span>
+            
+          </div>
+        </div>
+        <div class="latest-view">本輪市場熱點，ODM/OEM廠商交出優異成績單，美國相關企業發起新一波建構，台灣硬體廠也跟上，顯示健康成長趨勢。但需注意擴廠時機點及所擴產產品的市場獨特性。</div>
+        <div class="card-meta">
+          <span class="mention-count-tag">提及 1 次</span>
+          
+          <div class="stock-tags">
+            
+            <span class="stock-tag" onclick="goToStock('2317', event)">2317</span>
+            
+            <span class="stock-tag" onclick="goToStock('3231', event)">3231</span>
+            
+            <span class="stock-tag" onclick="goToStock('2382', event)">2382</span>
+            
+            <span class="stock-tag" onclick="goToStock('2330', event)">2330</span>
+            
+          </div>
+          
+          <span class="latest-date">2026-05-30</span>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+  
+</div>
+
+<!-- Merge select hint -->
+<div class="merge-select-hint" id="mergeHint">
+  點選要合併到的目標產業，或按 Esc 取消
+</div>
+
+<!-- Merge Dialog -->
+<div class="merge-dialog-overlay" id="mergeOverlay">
+  <div class="merge-dialog">
+    <h3>🔀 合併產業</h3>
+    <p>將以下兩個產業合併為一個，所有提及紀錄會整合到目標產業中，來源產業將被刪除。</p>
+    <div class="merge-names">
+      <span class="merge-name" id="merge-source-name"></span>
+      <span class="merge-arrow">→</span>
+      <span class="merge-name" id="merge-target-name"></span>
+    </div>
+    <div class="merge-btns">
+      <button class="merge-cancel" onclick="closeMergeDialog()">取消</button>
+      <button class="merge-confirm" onclick="confirmMerge()">確認合併</button>
+    </div>
+  </div>
+</div>
+
+<!-- Stock Popup -->
+<div class="stock-popup-overlay" id="stockPopupOverlay" onclick="closeStockPopup(event)">
+  <div class="stock-popup">
+    <div class="sp-header">
+      <div>
+        <div class="sp-symbol" id="sp-symbol"></div>
+        <div class="sp-name" id="sp-name"></div>
+      </div>
+      <button class="sp-close" onclick="closeStockPopupBtn()">✕</button>
+    </div>
+    <div class="sp-stats">
+      <div class="sp-stat"><div class="lbl">追蹤起始價</div><div class="val" id="sp-base">—</div></div>
+      <div class="sp-stat"><div class="lbl">目前價格</div><div class="val" id="sp-cur">—</div></div>
+      <div class="sp-stat"><div class="lbl">追蹤報酬</div><div class="val" id="sp-pct">—</div></div>
+    </div>
+    <div class="sp-chart"><canvas id="sp-chart-canvas"></canvas></div>
+    <div class="sp-mentions-title">提及紀錄</div>
+    <div id="sp-mentions"></div>
+    <a class="sp-watchlist-link" id="sp-wl-link" href="#">在追蹤清單查看完整資訊 →</a>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="overlay" onclick="closeOnOverlay(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="modal-title">—</div>
+        <div id="modal-sub" style="font-size:13px;color:var(--muted);margin-top:2px"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="timeline" id="modal-timeline"></div>
+  </div>
+</div>
+
+<script>
+const STATIC_EXPORT = true;
+const industriesData = {"ABF\u8f09\u677f": {"first_date": "2026-07-01", "mentions": [{"catalysts": ["AI\u61c9\u7528\u9700\u6c42", "\u9f8d\u982d\u5ee0\u5546\u4e0a\u4fee\u5c55\u671b"], "date": "2026-07-01", "episode": "EP675 | \ud83c\udfa2", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["8046"], "risks": [], "view": "\u96d6\u7136\u66fe\u88ab\u5e02\u5834\u6de1\u5316\uff0c\u4f46\u8fd1\u671f\u56e0\u5357\u96fb\u7b49\u516c\u53f8\u7684\u4e0a\u4fee\u5c55\u671b\u800c\u518d\u6b21\u8f49\u5f37\uff0c\u986f\u793a\u5176\u5728AI\u7b49\u65b0\u8208\u61c9\u7528\u4e2d\u4ecd\u6709\u5f37\u52c1\u9700\u6c42\uff0c\u4e14\u8868\u73fe\u5177\u5099\u5f37\u52e2\u3002"}], "name": "ABF\u8f09\u677f"}, "AI": {"first_date": "2026-08-01", "mentions": [{"catalysts": ["\u6a21\u578b\u516c\u53f8\u76c8\u5229\u80fd\u529b\u63d0\u5347", "\u96f2\u670d\u52d9\u63d0\u4f9b\u5546\u5de8\u984d\u6295\u8cc7", "Google TPU\u64f4\u5927\u5916\u92b7", "AI\u63d0\u5347\u751f\u7522\u529b"], "date": "2026-05-23", "episode": "EP664 | \ud83d\udc1f", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["NVDA", "AMD", "INTC"], "risks": ["\u6676\u5713\u4ee3\u5de5\u7522\u80fd\u74f6\u9838", "\u5e02\u5834\u7af6\u722d\u52a0\u5287", "\u539f\u6750\u6599\u50f9\u683c\u4e0a\u6f32", "\u77ed\u671f\u6295\u6a5f\u6027\u6ce1\u6cab"], "view": "AI\u7522\u696d\u6b63\u7d93\u6b77\u5feb\u901f\u6210\u9577\uff0c\u6a21\u578b\u516c\u53f8\u5df2\u80fd\u7372\u5229\uff0c\u786c\u9ad4\u6295\u8cc7\u5c07\u6703\u6301\u7e8c\u64f4\u5927\u3002\u5118\u7ba1\u6709\u6ce1\u6cab\u5316\u7684\u64d4\u6182\uff0c\u4f46\u6676\u5713\u5ee0\u7684\u7522\u80fd\u9650\u5236\u53cd\u800c\u53ef\u80fd\u5ef6\u7de9\u6ce1\u6cab\u7834\u88c2\u7684\u901f\u5ea6\uff0c\u4e26\u5e36\u4f86\u9577\u671f\u9700\u6c42\u3002"}, {"catalysts": ["\u6280\u8853\u5275\u65b0", "\u5e02\u5834\u8ffd\u6367"], "date": "2026-08-01", "episode": "EP684 | \ud83d\udd26", "outlook": "neutral", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["NVDA", "IREN", "BE"], "risks": ["\u4f30\u503c\u904e\u9ad8", "\u5747\u503c\u56de\u6b78", "\u69d3\u687f\u98a8\u96aa"], "view": "AI \u7522\u696d\u662f\u7576\u524d\u5e02\u5834\u7684\u71b1\u9ede\uff0c\u7522\u751f\u4e86\u8a31\u591a\u5feb\u901f\u4e0a\u6f32\u7684\u80a1\u7968\u3002\u7136\u800c\uff0c\u4e3b\u6301\u4eba\u9810\u671f AI \u7d42\u5c07\u9762\u81e8\u4e00\u6b21\u300c\u771f\u6b63\u7684\u5927 correction\u300d\uff08\u5927\u4fee\u6b63\uff09\uff0c\u56e0\u70ba\u6b77\u53f2\u986f\u793a\u6240\u6709\u71b1\u9580\u7522\u696d\u90fd\u6703\u56de\u6b78\u5747\u503c\u3002"}, {"catalysts": ["AI\u904b\u7b97\u9700\u6c42\u6301\u7e8c\u589e\u9577", "AI\u6df1\u5ea6\u6574\u5408\u81f3\u8907\u96dc\u8edf\u9ad4\u89e3\u6c7a\u65b9\u6848"], "date": "2026-08-05", "episode": "EP685 | \ud83e\udd13", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["PLTR", "NVDA", "GOOGL", "AMD"], "risks": ["\u7c21\u6613\u8edf\u9ad4\u7684\u5229\u6f64\u7a7a\u9593\u53d7\u64e0\u58d3", "\u904e\u5ea6\u4f9d\u8cf4\u904e\u65bc\u6a02\u89c0\u7684\u9810\u6e2c", "\u76e3\u7ba1\u5be9\u67e5\u98a8\u96aa"], "view": "AI\u57fa\u790e\u8a2d\u65bd\u53ca\u76f8\u95dc\u8edf\u9ad4\u6b63\u7d93\u6b77\u986f\u8457\u8b8a\u9769\u3002\u7c21\u55ae\u529f\u80fd\u7684\u8edf\u9ad4\u53ef\u80fd\u9762\u81e8\u5229\u6f64\u64e0\u58d3\u6216\u6dd8\u6c70\uff0c\u4f46\u5c08\u696d\u8edf\u9ad4\uff08\u5982\u8cc7\u5b89\uff09\u5c07\u6301\u7e8c\u767c\u5c55\u3002AI\u662f\u5de5\u5177\uff0c\u975e\u4eba\u985e\u5275\u9020\u529b\u7684\u66ff\u4ee3\u54c1\uff0c\u5176\u6700\u7d42\u5f71\u97ff\u4ecd\u9700\u8003\u91cf\u5be6\u969b\u6574\u5408\u6311\u6230\u3002"}, {"catalysts": ["AI\u57fa\u790e\u8a2d\u65bd\u9700\u6c42\u589e\u9577", "\u96f2\u7aef\u670d\u52d9\u63d0\u4f9b\u5546\u8f49\u578b", "\u5927\u578b\u8cc7\u672c\u6295\u5165"], "date": "2026-08-12", "episode": "EP687 | \ud83d\udc27", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["GOOGL", "AAPL", "AMD", "2308"], "risks": ["\u524d\u7aef\u6a21\u578b\u7af6\u722d\u6fc0\u70c8", "\u4e2d\u570b\u5e02\u5834\u7684\u6a21\u4eff\u8207\u88dc\u8cbc\u58d3\u529b", "\u50f9\u503c\u93c8\u5206\u914d\u4e0d\u78ba\u5b9a\u6027"], "view": "AI\u7522\u696d\u7af6\u722d\u6fc0\u70c8\uff0c\u7279\u5225\u662f\u524d\u7aef\u6a21\u578b\u9818\u57df\u3002\u4f46\u4e3b\u6301\u4eba\u8a8d\u70baAI\u7684\u50f9\u503c\u93c8\u53ef\u80fd\u66f4\u504f\u5411\u57fa\u790e\u8a2d\u65bd\uff08\u7b97\u529b\u3001\u96f2\u7aef\uff09\uff0c\u800c\u975e\u50c5\u50c5\u662f\u6a21\u578b\u6216\u8edf\u9ad4\u3002\u4e2d\u570b\u7684\u8ffd\u8d95\u8005\u53ef\u80fd\u6539\u8b8a\u5168\u7403AI\u7af6\u722d\u683c\u5c40\u3002"}, {"catalysts": ["\u6a21\u578b\u8907\u96dc\u5ea6\u63d0\u5347\u8207\u63a8\u8ad6\u9700\u6c42\u589e\u52a0", "\u9ad8\u983b\u5bec\u8a18\u61b6\u9ad4\u8207\u4f4e\u5ef6\u9072\u8655\u7406\u6280\u8853\u7a81\u7834"], "date": "2026-08-15", "episode": "EP688 | \ud83e\udd7d", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["NVDA", "AMD"], "risks": ["\u6280\u8853\u904e\u5ea6\u7092\u4f5c\u5c0e\u81f4\u7684\u77ed\u671f\u4f30\u503c\u6ce1\u6cab", "\u5e02\u5834\u7af6\u722d\u52a0\u5287"], "view": "AI \u9818\u57df\u7684\u767c\u5c55\u63a8\u52d5\u4e86\u8cc7\u6599\u4e2d\u5fc3\u529f\u8017\u548c\u6548\u80fd\u9700\u6c42\u7684\u6025\u5287\u589e\u9577\uff0c\u5c24\u5176\u662f\u5728 Prefill \u548c Decode \u7b49\u63a8\u8ad6\u74b0\u7bc0\u3002\u9019\u4e0d\u50c5\u523a\u6fc0\u4e86\u6676\u7247\u6280\u8853\u7684\u5275\u65b0\uff0c\u4e5f\u9a45\u52d5\u4e86\u6574\u500b\u96fb\u6e90\u4f9b\u61c9\u93c8\u7684\u9769\u65b0\u3002"}, {"catalysts": ["\u6280\u8853\u5275\u65b0\u5e36\u4f86\u7684\u8b8a\u73fe\u80fd\u529b", "\u6301\u7e8c\u7684\u5e02\u5834\u9700\u6c42"], "date": "2026-08-19", "episode": "EP689 | \ud83c\udfd0", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["NVDA"], "risks": ["\u8868\u5916\u69d3\u687f\u8207\u96b1\u6027\u50b5\u52d9", "\u4f9b\u61c9\u93c8\u74f6\u9838\u672a\u89e3\u5c0e\u81f4\u7684\u6210\u672c\u58d3\u529b"], "view": "AI\u9818\u57df\u5b58\u5728\u5927\u91cf\u300c\u8868\u5916\u300d\u7684\u96b1\u6027\u69d3\u687f\u8207\u6295\u8cc7\uff0c\u53ef\u80fd\u5e36\u4f86\u672a\u4f86\u5e02\u5834\u9707\u76ea\u7684\u98a8\u96aa\u3002\u7136\u800c\uff0cAI\u7684\u8b8a\u73fe\u80fd\u529b\u5df2\u7d93\u88ab\u8b49\u660e\uff0c\u76ee\u524d\u5e02\u5834\u66f4\u591a\u662f\u8655\u65bc\u5c0d\u77ed\u671f\u56de\u6a94\u7684\u64d4\u6182\u800c\u975e\u6ce1\u6cab\u7834\u88c2\u3002\u5982\u679c\u6700\u6838\u5fc3\u7684AI\u5143\u4ef6\u672a\u80fd\u4e0a\u6f32\uff0c\u5c07\u5f71\u97ff\u6574\u9ad4\u5e02\u5834\u8868\u73fe\u3002"}, {"catalysts": ["\u63d0\u5347\u8cc7\u6599\u8655\u7406\u6548\u7387", "\u52a0\u901f\u7814\u7a76\u5206\u6790", "\u81ea\u52d5\u5316\u5e38\u898f\u4efb\u52d9"], "date": "2026-08-26", "episode": "EP691 | \ud83c\udf82", "outlook": "neutral", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["NVDA", "AAPL"], "risks": ["\u7af6\u722d\u52a0\u5287\u5c0e\u81f4\u5de5\u4f5c\u91cf\u589e\u52a0", "\u5e02\u5834\u52d5\u614b\u6027\u9ad8\uff0cAI \u96e3\u4ee5\u5b8c\u5168\u638c\u63e1", "\u8cc7\u8a0a\u904e\u8f09", "\u53ef\u80fd\u7522\u751f\u5fc3\u7406\u4e0a\u7684\u300c\u5b89\u6170\u5291\u6548\u61c9\u300d"], "view": "AI \u6975\u5927\u5730\u63d0\u5347\u4e86\u5f8c\u7aef\u7814\u7a76\u548c\u8cc7\u6599\u8655\u7406\u6548\u7387\uff0c\u5c24\u5176\u5728\u8ca1\u5831\u5206\u6790\u65b9\u9762\u8868\u73fe\u5353\u8d8a\u3002\u7136\u800c\uff0c\u9019\u4e5f\u5c0e\u81f4\u7af6\u722d\u52a0\u5287\uff0c\u5de5\u4f5c\u6642\u9593\u53ef\u80fd\u589e\u52a0\u3002\u96d6\u7136 AI \u6709\u52a9\u65bc\u5206\u6790\uff0c\u4f46\u5e02\u5834\u7684\u52d5\u614b\u6027\u3001\u975e\u91cf\u5316\u56e0\u7d20\u53ca\u4eba\u6027\u5224\u65b7\u7684\u4e0d\u53ef\u6216\u7f3a\u6027\uff0c\u4f7f\u5176\u96e3\u4ee5\u7368\u81ea\u5e36\u4f86\u7a69\u5b9a\u7684\u8d85\u984d\u5831\u916c\u3002\u4e3b\u6301\u4eba\u50be\u5411\u65bc\u4eba\u6a5f\u5354\u4f5c\u7684\u6df7\u5408\u6a21\u5f0f\uff0c\u4ee5\u7d50\u5408\u4eba\u985e\u76f4\u89ba\u8207 AI \u7684\u5f37\u5927\u5206\u6790\u80fd\u529b\u3002"}, {"catalysts": ["\u5de8\u982d\u5408\u4f5c\u6a21\u5f0f\u7684\u63a8\u52d5", "AI\u6a21\u578b\u6548\u80fd\u6301\u7e8c\u63d0\u5347", "\u4f01\u696d\u5c0dAI\u61c9\u7528\u7684\u9700\u6c42\u589e\u9577"], "date": "2026-08-29", "episode": "EP692 | \ud83c\udf7a", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["NVDA", "CRM"], "risks": ["\u4f9b\u61c9\u93c8\u74f6\u9838\u5c0e\u81f4\u7522\u54c1\u5ef6\u9072", "\u65b0\u8208AI\u516c\u53f8\u5e02\u5834\u7b56\u7565\u4e0d\u78ba\u5b9a\u6027", "\u6578\u64da\u96b1\u79c1\u8207\u6cbb\u7406\u554f\u984c"], "view": "AI\u5e02\u5834\u7684\u767c\u5c55\u6a21\u5f0f\u662f\u5408\u4f5c\u8207\u7af6\u5408\u4e26\u5b58\uff0c\u800c\u975e\u7c21\u55ae\u7684\u66ff\u4ee3\u6216\u6dd8\u6c70\u3002\u4ecb\u9762\u5c64\u548c\u6a21\u578b\u5c64\u5c07\u7531\u65b0\u7684AI\u516c\u53f8\u4e3b\u5c0e\uff0c\u800c\u884c\u52d5\u5c64\uff08\u5982\u4f01\u696d\u61c9\u7528\uff09\u4ecd\u6703\u7531\u638c\u63e1\u5927\u91cf\u6578\u64da\u548cknow-how\u7684\u50b3\u7d71\u5de8\u982d\u4f54\u512a\u52e2\u3002\u9810\u671fAI\u5c07\u5e36\u4f86\u5de8\u5927\u7684\u7522\u696d\u6d17\u724c\u548c\u50f9\u503c\u91cd\u5206\u914d\u3002"}, {"catalysts": ["\u65b0\u6280\u8853\u8207\u7522\u54c1\u4e0d\u65b7\u63a8\u51fa", "\u7522\u696d\u61c9\u7528\u5834\u666f\u64f4\u5927", "\u5927\u5ee0\u6230\u7565\u6027\u6295\u8cc7\u8207\u5408\u4f5c"], "date": "2026-09-02", "episode": "EP693 | \ud83c\udf56", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["NVDA", "GOOGL", "AVGO", "2330", "2454"], "risks": ["\u5e02\u5834\u904e\u5ea6\u504f\u57f7\u5c0e\u81f4\u77ed\u671f\u6ce2\u52d5", "\u7af6\u722d\u6fc0\u70c8", "\u6280\u8853\u767c\u5c55\u7684\u4e0d\u78ba\u5b9a\u6027"], "view": "AI\u7522\u696d\u76ee\u524d\u4ecd\u8655\u65bc\u65e9\u671f\u968e\u6bb5\uff0c\u5e02\u5834\u6f5b\u529b\u5de8\u5927\u3002\u96d6\u7136\u6703\u7d93\u6b77\u5287\u70c8\u6ce2\u52d5\uff0c\u4f46\u6574\u9ad4\u8da8\u52e2\u5411\u4e0a\uff0c\u8a31\u591a\u516c\u53f8\u6700\u7d42\u5c07\u5f9e\u4e2d\u7372\u76ca\u3002\u6295\u8cc7\u8005\u61c9\u5177\u5099\u9577\u671f\u8996\u89d2\uff0c\u95dc\u6ce8\u5168\u5957\u89e3\u6c7a\u65b9\u6848\u7684\u63d0\u4f9b\u8005\u3002"}, {"catalysts": ["\u5927\u8a9e\u8a00\u6a21\u578b\u8fed\u4ee3\u52a0\u901f", "\u4f01\u696d\u7aef\u8cc7\u672c\u652f\u51fa\u6301\u7e8c\u589e\u52a0", "\u786c\u9ad4\u7b97\u529b\u9700\u6c42\u5f37\u52c1"], "date": "2026-09-05", "episode": "EP694 | \ud83e\udd56", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["AVGO", "NVDA", "2330", "AMD"], "risks": ["\u5167\u5bb9\u901a\u81a8\u8207\u540c\u8cea\u5316\u7af6\u722d", "\u77ed\u7dda\u4f30\u503c\u904e\u9ad8\u56de\u6a94\u98a8\u96aa"], "view": "AI \u6280\u8853\u6b63\u5f9e\u65e9\u671f\u7684\u984c\u6750\u7092\u4f5c\u904e\u6e21\u5230\u5be6\u8cea\u5546\u696d\u5316\u843d\u5730\u968e\u6bb5\uff0c\u96d6\u7136\u5e02\u5834\u53ef\u80fd\u51fa\u73fe\u968e\u6bb5\u6027\u8a55\u50f9\u904e\u9ad8\uff0c\u4f46\u9577\u7dda\u4f86\u770b\u5c0d\u5404\u884c\u5404\u696d\u7684\u751f\u7522\u529b\u63d0\u5347\u8207\u7d50\u69cb\u6027\u6539\u8b8a\u662f\u7121\u5eb8\u7f6e\u7591\u7684\u3002"}, {"catalysts": ["\u9ad8\u6548\u80fdAI\u6676\u7247\u8207\u4f3a\u670d\u5668\u9700\u6c42", "\u6a21\u578b\u958b\u767c\u8207\u61c9\u7528\u7206\u70b8", "\u96f2\u7aef\u670d\u52d9\u64f4\u5f35"], "date": "2026-09-09", "episode": "EP695 | \ud83c\udf4a", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["GOOGL", "NVDA", "MSFT", "ORCL"], "risks": ["\u5e02\u5834\u904e\u71b1\u3001\u6f5b\u5728\u6ce1\u6cab", "\u6a21\u578b\u670d\u52d9\u5546\u54c1\u5316\u5c0e\u81f4\u5229\u6f64\u7387\u58d3\u7e2e"], "view": "AI\u7522\u696d\u6b63\u7d93\u6b77\u7206\u767c\u5f0f\u589e\u9577\uff0c\u7279\u5225\u662f\u57fa\u790e\u8a2d\u65bd\u5c64\u9762\uff0c\u56de\u6536\u671f\u6975\u77ed\uff0c\u986f\u793a\u51fa\u5de8\u5927\u7684\u8cfa\u9322\u6f5b\u529b\u3002\u6a21\u578b\u670d\u52d9\u8da8\u5411\u5546\u54c1\u5316\uff0c\u6210\u672c\u512a\u52e2\u5c07\u662f\u95dc\u9375\u3002\u5e02\u5834\u6a5f\u6703\u4ecd\u5728\u5feb\u901f\u64f4\u5927\uff0c\u975e\u96f6\u548c\u904a\u6232\u3002"}, {"catalysts": ["\u6301\u7e8c\u5275\u65b0", "\u61c9\u7528\u64f4\u5c55", "\u5c08\u696d\u5316\u6a21\u578b\u9700\u6c42\u589e\u9577"], "date": "2026-09-12", "episode": "EP696 | \ud83c\udf96\ufe0f", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["NVDA", "GOOG"], "risks": ["\u653f\u6cbb\u5e72\u9810", "\u57fa\u790e\u8a2d\u65bd\u74f6\u9838", "\u5546\u54c1\u5316\u4fb5\u8755\u5229\u6f64", "\u5e02\u5834\u904e\u5ea6\u71b1\u60c5"], "view": "AI\u5e02\u5834\u5169\u6975\u5206\u5316\uff1a\u9ad8\u50f9\u503c\u3001\u5c16\u7aef\u7684AI\u61c9\u7528\uff08\u5982\u86cb\u767d\u8cea\u647a\u758a\uff09\u5c07\u7dad\u6301\u5c08\u6709\uff0c\u5438\u5f15\u5de8\u984d\u6295\u8cc7\uff1b\u800c\u65e5\u5e38\u3001\u666e\u904d\u7684AI\u61c9\u7528\u5c07\u8d70\u5411\u5546\u54c1\u5316\u3002\u9577\u9060\u4f86\u770b\uff0c\u50f9\u503c\u5c07\u8f49\u5411\u57fa\u790e\u8a2d\u65bd\u3001\u5206\u92b7\u548c\u5c08\u696d\u5316\u6a21\u578b\u3002\u9700\u7559\u610f\u96fb\u529b\u3001\u5be9\u6279\u7b49\u653f\u6cbb\u74f6\u9838\u5c0d\u8cc7\u6599\u4e2d\u5fc3\u7684\u5f71\u97ff\u3002"}, {"catalysts": ["AI\u4ee3\u7406\u7522\u54c1\uff08\u5982Meta Muse\uff09\u7684\u63a8\u51fa", "AI\u5de5\u4f5c\u8ca0\u8f09\u5c0d\u904b\u7b97\u80fd\u529b\u7684\u9700\u6c42", "CPU\u8207GPU\u914d\u6bd4\u8f49\u8b8a"], "date": "2026-09-23", "episode": "EP699 | \ud83e\udebb", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u8a31\u591aAI\u61c9\u7528\u53ef\u80fd\u53ea\u662f\u77ed\u671f\u71b1\u6f6e\uff0c\u7f3a\u4e4f\u9577\u671f\u50f9\u503c", "\u5e02\u5834\u904e\u5ea6\u9810\u671f\u53ca\u7092\u4f5c\u5c0e\u81f4\u4f30\u503c\u904e\u9ad8", "\u5143\u4ef6\u4f9b\u61c9\u934a\u8b8a\u5316\u5feb\u901f\uff0c\u9810\u6e2c\u56f0\u96e3"], "view": "AI\u6280\u8853\u5c0dCPU\u548cDSP\u7b49\u786c\u9ad4\u5143\u4ef6\u7684\u9700\u6c42\u662f\u771f\u5be6\u4e14\u6301\u7e8c\u589e\u9577\u7684\uff0c\u4f46\u5e02\u5834\u4e0a\u8a31\u591aAI\u61c9\u7528\u53ef\u80fd\u53ea\u662f\u77ed\u671fFOMO\u73fe\u8c61\uff0c\u6295\u8cc7\u8005\u61c9\u7406\u6027\u770b\u5f85\uff0c\u4e26\u7559\u610f\u6f5b\u5728\u6ce1\u6cab\u5316\u98a8\u96aa\u3002"}], "name": "AI"}, "AI\u4f3a\u670d\u5668": {"first_date": "2026-07-01", "mentions": [{"catalysts": ["AI\u9700\u6c42\u5f37\u52c1", "\u5927\u5ee0\u8a02\u55ae\u8f49\u79fb"], "date": "2026-07-01", "episode": "EP675 | \ud83c\udfa2", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["NVDA", "2382", "2376"], "risks": ["\u4f9b\u61c9\u93c8\u5403\u7dca"], "view": "AI\u4f3a\u670d\u5668\u76f8\u95dc\u7684\u9ad8\u58d3/\u9ad8\u529f\u7387\u5143\u4ef6\u662f\u6700\u7f3a\u8ca8\u7684\u7522\u54c1\u4e4b\u4e00\uff0c\u9a45\u52d5\u4e3b\u52d5\u5143\u4ef6\u7684\u6f32\u50f9\u8da8\u52e2\u3002\u53f0\u7063\u4f9b\u61c9\u93c8\u6709\u6a5f\u6703\u627f\u63a5\u6d77\u5916\u5927\u5ee0\u7684\u8a02\u55ae\u8f49\u79fb\u3002"}], "name": "AI\u4f3a\u670d\u5668"}, "AI\u786c\u9ad4": {"first_date": "2026-05-30", "mentions": [{"catalysts": ["AI\u9700\u6c42\u7206\u767c", "\u8a02\u55ae\u5f37\u52c1", "\u6280\u8853\u7a81\u7834"], "date": "2026-05-30", "episode": "EP666 | \ud83c\udf50", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["2317", "3231", "2382", "2330"], "risks": ["\u5e02\u5834\u904e\u5ea6\u8ffd\u9010\u5c0e\u81f4\u7684\u6ce1\u6cab", "\u76f2\u76ee\u64f4\u7522\u5c0e\u81f4\u4f9b\u904e\u65bc\u6c42"], "view": "\u672c\u8f2a\u5e02\u5834\u71b1\u9ede\uff0cODM/OEM\u5ee0\u5546\u4ea4\u51fa\u512a\u7570\u6210\u7e3e\u55ae\uff0c\u7f8e\u570b\u76f8\u95dc\u4f01\u696d\u767c\u8d77\u65b0\u4e00\u6ce2\u5efa\u69cb\uff0c\u53f0\u7063\u786c\u9ad4\u5ee0\u4e5f\u8ddf\u4e0a\uff0c\u986f\u793a\u5065\u5eb7\u6210\u9577\u8da8\u52e2\u3002\u4f46\u9700\u6ce8\u610f\u64f4\u5ee0\u6642\u6a5f\u9ede\u53ca\u6240\u64f4\u7522\u7522\u54c1\u7684\u5e02\u5834\u7368\u7279\u6027\u3002"}], "name": "AI\u786c\u9ad4"}, "AI\u7a7f\u6234\u88dd\u7f6e": {"first_date": "2026-09-26", "mentions": [{"catalysts": ["\u5275\u65b0\u7522\u54c1\u8a2d\u8a08\u548c\u529f\u80fd", "\u5de8\u982d\u516c\u53f8\uff08\u5982 Meta\uff09\u7684\u8cc7\u6e90\u6295\u5165\u548c\u751f\u614b\u7cfb\u6574\u5408", "\u514b\u670d\u96b1\u79c1\u548c\u4fe1\u4efb\u554f\u984c"], "date": "2026-09-26", "episode": "EP700 | \ud83e\udead", "outlook": "neutral", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["META", "AAPL"], "risks": ["\u667a\u6167\u578b\u624b\u6a5f\u7684\u5f37\u5927\u7af6\u722d\u548c\u7528\u6236\u9ecf\u8457\u5ea6", "\u5e02\u5834\u5c0d\u65b0\u7522\u54c1\u7684\u63a5\u53d7\u5ea6", "\u7528\u6236\u5c0d\u8cc7\u6599\u96b1\u79c1\u548c\u5b89\u5168\u7684\u7591\u616e"], "view": "AI \u7a7f\u6234\u88dd\u7f6e\u5e02\u5834\u5145\u6eff\u6f5b\u529b\uff0c\u4f46\u9762\u81e8\u5169\u5927\u6311\u6230\uff1a\u4e00\u662f\u53d6\u4ee3\u667a\u6167\u578b\u624b\u6a5f\u7684\u56f0\u96e3\u5ea6\u9ad8\uff0c\u4e8c\u662f\u5efa\u7acb\u7528\u6236\u4fe1\u4efb\u662f\u95dc\u9375\u3002\u521d\u671f\u7522\u54c1\u53ef\u80fd\u8868\u73fe\u4e0d\u4f73\uff0c\u4f46\u9577\u671f\u4ecd\u6709\u758a\u4ee3\u548c\u7a81\u7834\u7684\u6a5f\u6703\u3002Meta \u7684\u5de8\u5927\u751f\u614b\u7cfb\u662f\u5176\u7af6\u722d\u512a\u52e2\u3002"}], "name": "AI\u7a7f\u6234\u88dd\u7f6e"}, "CPU": {"first_date": "2026-07-22", "mentions": [{"catalysts": ["AMD\u65b0CPU\u7522\u54c1\u4e0a\u5e02", "AI\u61c9\u7528\u5c0dCPU\u9700\u6c42\u6025\u589e", "CPU Socket\u56e0\u91dd\u8173\u589e\u52a0\u800c\u63d0\u5347ASP"], "date": "2026-07-22", "episode": "EP681 | \ud83e\udd89", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["AMD", "GOOG", "NVDA"], "risks": ["\u6676\u5713\u4ee3\u5de5\u7522\u80fd\u7dca\u7f3a", "\u8a18\u61b6\u9ad4\u4f9b\u61c9\u4e0d\u8db3", "\u7d44\u88dd\u96e3\u5ea6\u9ad8"], "view": "CPU\u5e02\u5834\u7af6\u722d\u6fc0\u70c8\uff0cAMD\u900f\u904e\u65b0\u7522\u54c1\uff08\u5982Venice CPU\uff09\u548c\u8207\u5927\u5ba2\u6236\u7684\u5408\u4f5c\uff0c\u5e02\u4f54\u7387\u6301\u7e8c\u63d0\u5347\u3002Intel\u4e5f\u6709\u65b0\u4e00\u4ee3\u7522\u54c1\u63a8\u51fa\u3002AI\u61c9\u7528\u5c0dCPU\u9700\u6c42\u5de8\u5927\uff0c\u5f9e\u904e\u53bb1:8\u751a\u81f31:2\u7684GPU/CPU\u6bd4\u4f8b\uff0c\u53ef\u80fd\u767c\u5c55\u52301:1\uff0c\u4f7fCPU\u6210\u70ba\u7522\u696d\u74f6\u9838\u4e14\u50f9\u503c\u63d0\u5347\u3002"}, {"catalysts": ["AI\u61c9\u7528\u5c0d\u901a\u7528\u578bCPU\u7684\u5354\u540c\u8655\u7406\u9700\u6c42\u589e\u52a0", "AI\u5de5\u4f5c\u8ca0\u8f09\u5206\u64d4"], "date": "2026-07-29", "episode": "EP683 | \ud83d\ude91", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["GPU\u4ecd\u662fAI\u6838\u5fc3\uff0c\u82e5CPU\u5354\u540c\u6548\u7387\u4e0d\u5982\u9810\u671f\u5247\u50f9\u503c\u6709\u9650"], "view": "\u5118\u7ba1GPU\u5728AI\u9818\u57df\u5099\u53d7\u95dc\u6ce8\uff0c\u4f46\u4e3b\u6301\u4eba\u8a8d\u70ba\u901a\u7528\u578bCPU\u5728AI\u61c9\u7528\u4e2d\u7684\u91cd\u8981\u6027\u88ab\u4f4e\u4f30\u3002\u4ed6\u9810\u671f\u96a8\u8457AI\u5de5\u4f5c\u8ca0\u8f09\u7684\u5206\u64d4\uff0cCPU\u5728AI\u4f3a\u670d\u5668\u4e2d\u7684\u7528\u91cf\u548c\u8da8\u52e2\u5c07\u986f\u8457\u589e\u9577\uff0c\u6709\u671b\u8fce\u4f86\u50f9\u503c\u91cd\u4f30\u3002"}, {"catalysts": ["Agentic AI\u5de5\u4f5c\u6d41\u5c0dCPU\u7b97\u529b\u7684\u4f9d\u8cf4", "Meta Muse\u7b49AI\u7522\u54c1\u9a45\u52d5CPU\u9700\u6c42", "CPU\u5728AI\u904b\u7b97\u4e2d\u7684\u89d2\u8272\u65e5\u76ca\u95dc\u9375"], "date": "2026-09-23", "episode": "EP699 | \ud83e\udebb", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": [], "view": "AI\u6642\u4ee3\uff0cCPU\u5728AI\u5de5\u4f5c\u8ca0\u8f09\u4e2d\u7684\u91cd\u8981\u6027\u88ab\u91cd\u65b0\u8a55\u4f30\uff0c\u5176\u8207GPU\u7684\u914d\u6bd4\u6b63\u671d1:1\u767c\u5c55\uff0c\u5e36\u52d5CPU\u9700\u6c42\u986f\u8457\u589e\u9577\uff0c\u9810\u671f\u76f8\u95dc\u80a1\u7968\u6709\u4e0a\u6f32\u6f5b\u529b\u3002"}], "name": "CPU"}, "DSP": {"first_date": "2026-09-23", "mentions": [{"catalysts": ["\u9ad8\u901f\u6578\u64da\u4e2d\u5fc3\u548c\u7db2\u7d61\u9700\u6c42\u589e\u9577", "AI\u6578\u64da\u50b3\u8f38\u91cf\u5927\u589e", "DSP\u5728\u9ad8\u901f\u5149\u901a\u8a0a\u6a21\u7d44\u4e2d\u7684\u4e0d\u53ef\u6216\u7f3a\u6027"], "date": "2026-09-23", "episode": "EP699 | \ud83e\udebb", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u672a\u4f86LPO\u6216CPO\u7b49\u65b0\u6280\u8853\u53ef\u80fd\u5c0dDSP\u7522\u751f\u53d6\u4ee3\u6548\u61c9\uff08\u4f46\u8a8d\u70ba\u9019\u662f\u66f4\u9060\u671f\u7684\u8da8\u52e2\uff09"], "view": "DSP\u5728\u9ad8\u901f\u5149\u901a\u8a0a\uff08400G/800G/1.6T\uff09\u7684\u61c9\u7528\u4e2d\u9700\u6c42\u5f37\u52c1\uff0c\u5176\u50f9\u683c\u4e0a\u6f32\u5408\u7406\u3002DSP\u5728\u6578\u64da\u4e2d\u5fc3\u3001AI\u57fa\u790e\u8a2d\u65bd\u7684\u50b3\u8f38\u6548\u7387\u4e0a\u626e\u6f14\u95dc\u9375\u89d2\u8272\uff0c\u672a\u4f86\u8da8\u52e2\u770b\u597d\u3002"}], "name": "DSP"}, "IC\u8a2d\u8a08": {"first_date": "2026-07-01", "mentions": [{"catalysts": ["\u9700\u6c42\u5c0e\u5411\u7684\u6f32\u50f9", "AI\u4f3a\u670d\u5668\u76f8\u95dc\u9700\u6c42", "\u7522\u696d\u56de\u6eab"], "date": "2026-07-01", "episode": "EP675 | \ud83c\udfa2", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["2454", "3443", "3661", "2379", "3034"], "risks": ["\u77ed\u671f\u6210\u672c\u5c0e\u5411\u6f32\u50f9\u53ef\u80fd\u7121\u6cd5\u6301\u7e8c", "\u5e02\u5834\u904e\u71b1\u5f8c\u4fee\u6b63"], "view": "\u6574\u9ad4IC\u8a2d\u8a08\u65cf\u7fa4\u5df2\u5168\u9762\u8f49\u5f37\uff0c\u8a31\u591a\u500b\u80a1\u8d70\u51fa\u65b0\u591a\u982d\u6216\u7ad9\u4e0a\u95dc\u9375\u5747\u7dda\u3002\u4f46\u9700\u8981\u8fa8\u5225\u54ea\u4e9b\u662f\u9700\u6c42\u5c0e\u5411\u7684\u5be6\u8cea\u6210\u9577\uff0c\u54ea\u4e9b\u662f\u77ed\u671f\u6210\u672c\u8f49\u5ac1\u7684\u53cd\u61c9\uff0c\u9019\u5c07\u662f\u5f8c\u7e8c\u9078\u80a1\u7684\u95dc\u9375\u3002"}], "name": "IC\u8a2d\u8a08"}, "Optical Communication": {"first_date": "2026-06-03", "mentions": [{"catalysts": ["AI\u6578\u64da\u4e2d\u5fc3\u5efa\u8a2d\u9700\u6c42", "NVIDIA\u63a8\u52d5\u6280\u8853\u6a19\u6e96"], "date": "2026-06-03", "episode": "EP667 | \ud83c\udf0d", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u6280\u8853\u8f49\u63db\u6210\u672c\u9ad8", "\u6a19\u6e96\u7d71\u4e00\u7684\u6311\u6230"], "view": "\u5728\u8cc7\u6599\u4e2d\u5fc3\u548cAI\u57fa\u790e\u8a2d\u65bd\u4e2d\uff0c\u5149\u901a\u8a0a\uff08\u5c24\u5176\u662fCPO\u6280\u8853\uff09\u88ab\u8996\u70ba\u672a\u4f86\u8da8\u52e2\uff0c\u5176\u6210\u9577\u901f\u5ea6\u548c\u6f5b\u529b\u8d85\u8d8a\u50b3\u7d71\u9285\u7dda\u9023\u63a5\u3002NVIDIA\u6b63\u7a4d\u6975\u63a8\u52d5\u6b64\u4e00\u767c\u5c55\uff0c\u9810\u8a08\u5c07\u6709\u66f4\u591a\u8cc7\u91d1\u6d41\u5411\u5149\u901a\u8a0a\u76f8\u95dc\u9818\u57df\u3002"}, {"catalysts": [], "date": "2026-06-10", "episode": "EP669 | \ud83c\udf88", "outlook": "bearish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u7522\u696d\u8f49\u5f31\u8da8\u52e2"], "view": "\u8fd1\u671f\u5448\u73fe\u8f49\u5f31\u8da8\u52e2\uff0c\u4e3b\u6301\u4eba\u89c0\u5bdf\u5230\u6b64\u65cf\u7fa4\u666e\u904d\u8d70\u5f31\u3002"}, {"catalysts": ["\u65b0\u7684\u6280\u8853\u8def\u7dda\u767c\u5c55", "ETF\u7b49\u8cc7\u91d1\u884c\u60c5\u5e36\u52d5"], "date": "2026-07-11", "episode": "EP678 | \ud83c\udfae", "outlook": "neutral", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u6280\u8853\u8def\u7dda\u8f49\u63db\u7684\u9663\u75db", "\u5e02\u5834\u8cc7\u91d1\u7684\u975e\u7406\u6027\u8ffd\u9010"], "view": "\u5149\u901a\u8a0a\u7522\u696d\u5167\u90e8\u5b58\u5728\u300c\u5149\u9032\u9285\u9000\u300d\u7684\u8f2a\u52d5\u73fe\u8c61\u3002\u96d6\u7136\u50b3\u7d71\u7684SiPh\u548c\u78f7\u5316\u92a6\u96f7\u5c04\u7b49\u300c\u7a84\u800c\u5feb\u300d\u6280\u8853\u8868\u73fe\u75b2\u8edf\uff0c\u4f46\u65b0\u7684\u300c\u5bec\u800c\u6162\u300d\uff08\u5982VCSEL\u3001MicroLED\uff09\u6280\u8853\u96d6\u662f\u9060\u671f\u6545\u4e8b\uff0c\u537b\u53d7\u5230\u5e02\u5834\u8ffd\u6367\uff0c\u5448\u73fe\u5167\u90e8\u8cc7\u91d1\u6d41\u52d5\u7684\u8f49\u8b8a\u3002"}, {"catalysts": ["5G/6G\u7db2\u8def\u5efa\u8a2d", "AI\u6578\u64da\u4e2d\u5fc3\u50b3\u8f38\u9700\u6c42", "\u5149\u7e96\u5230\u6236\u666e\u53ca"], "date": "2026-07-18", "episode": "EP680 | \ud83d\udc94", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["4966", "4919"], "risks": ["\u8cc7\u91d1\u8f2a\u52d5\u7de9\u6162", "\u6280\u8853\u6f14\u9032\u5feb\u901f", "\u7af6\u722d\u6fc0\u70c8"], "view": "\u5149\u901a\u8a0a\u7522\u696d\u88ab\u8a8d\u70ba\u662f\u672a\u4f86\u8da8\u52e2\uff0c\u4f46\u76ee\u524d\u8cc7\u91d1\u6d41\u5411\u5c1a\u672a\u660e\u986f\u9032\u5165\u3002\u4e3b\u6301\u4eba\u8a8d\u70ba\u9577\u671f\u770b\u597d\uff0c\u4f46\u6295\u8cc7\u8005\u9700\u6709\u8010\u5fc3\uff0c\u4e26\u907f\u514d\u76f2\u76ee\u91cd\u5009\u3002\u82e5\u80fd\u63d0\u524d\u4f48\u5c40\uff0c\u53ef\u80fd\u5728\u672a\u4f86\u8cc7\u91d1\u8f2a\u52d5\u6642\u7372\u5f97\u56de\u5831\u3002"}, {"catalysts": ["AI\u6578\u64da\u50b3\u8f38\u7684\u9ad8\u9700\u6c42", "\u6301\u7e8c\u7684\u57fa\u790e\u8a2d\u65bd\u5347\u7d1a"], "date": "2026-08-05", "episode": "EP685 | \ud83e\udd13", "outlook": "neutral", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u8cbf\u6613\u6230\u5347\u7d1a", "\u6f5b\u5728\u7684\u539f\u7269\u6599\u5831\u5fa9\u6027\u7981\u4ee4", "\u4f9b\u61c9\u93c8\u4e2d\u65b7"], "view": "\u5149\u901a\u8a0a\u884c\u696d\u9762\u81e8\u6f5b\u5728\u7684\u8cbf\u6613\u6469\u64e6\uff08\u5982\u4e2d\u570b\u5143\u4ef6\u7981\u4ee4\uff09\uff0c\u4f46\u4e3b\u8981\u5ee0\u5546\u92b7\u5f80\u7f8e\u570b\u7684\u7522\u54c1\u591a\u5728\u6d77\u5916\u751f\u7522\uff0c\u76f4\u63a5\u885d\u64ca\u6709\u9650\u3002\u4e2d\u570b\u5c0d\u95dc\u9375\u539f\u7269\u6599\uff08\u5982\u78f7\u9178\u92a6\u57fa\u677f\uff09\u7684\u638c\u63a7\u69cb\u6210\u6f5b\u5728\u5831\u5fa9\u98a8\u96aa\uff0c\u4f46\u5168\u7403\u5c0d\u9ad8\u901f\u5143\u4ef6\u7684\u9700\u6c42\u5c07\u78ba\u4fdd\u4efb\u4f55\u4e2d\u65b7\u90fd\u80fd\u8fc5\u901f\u89e3\u6c7a\u3002"}, {"catalysts": ["\u8cc7\u91d1\u8f2a\u52d5", "AI\u61c9\u7528\u9700\u6c42", "\u7522\u696d\u666f\u6c23\u5fa9\u7526"], "date": "2026-08-08", "episode": "EP686 | \ud83d\udd78\ufe0f", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["2301"], "risks": ["\u4e0a\u6e38\u6750\u6599\u4f9b\u61c9\u53ef\u80fd\u5403\u7dca"], "view": "\u7f8e\u80a1\u548c\u53f0\u80a1\u7684\u5149\u901a\u8a0a\u65cf\u7fa4\u5747\u898b\u5f37\u52e2\u53cd\u5f48\uff0c\u662f\u672c\u6ce2\u5e02\u5834\u4e2d\u7387\u5148\u5f9e\u5e95\u90e8\u56de\u5347\u7684\u65cf\u7fa4\u3002\u9019\u9810\u793a\u8457\u8cc7\u91d1\u8f2a\u52d5\u81f3\u6b64\uff0c\u6709\u6a5f\u6703\u6210\u70ba\u65b0\u4e00\u6ce2\u4e3b\u6d41\u3002"}, {"catalysts": ["AI\u8cc7\u6599\u4e2d\u5fc3\u9ad8\u983b\u5bec\u9700\u6c42", "\u5149\u4e92\u9023\u6280\u8853\u7684\u767c\u5c55\u8207\u666e\u53ca"], "date": "2026-08-29", "episode": "EP692 | \ud83c\udf7a", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["MRVL"], "risks": ["\u5143\u4ef6\u4f9b\u61c9\u80fd\u529b\u7121\u6cd5\u8ddf\u4e0a\u9700\u6c42", "\u6280\u8853\u8fed\u4ee3\u901f\u5ea6\u5feb\uff0c\u7af6\u722d\u6fc0\u70c8"], "view": "\u5149\u901a\u8a0a\u7522\u696d\u662fAI\u8cc7\u6599\u4e2d\u5fc3\u64f4\u5f35\u7684\u95dc\u9375\u652f\u6490\uff0c\u5c0d\u9ad8\u901f\u4e92\u9023\u7684\u9700\u6c42\u63a8\u52d5\u4e86\u76f8\u95dc\u5143\u4ef6\u7684\u6210\u9577\u3002Marvell\u8ca1\u6e2c\u4e0a\u4fee\u4e5f\u5370\u8b49\u4e86\u5149\u901a\u8a0a\u5728AI\u80cc\u666f\u4e0b\u7684\u5f37\u52c1\u8868\u73fe\uff0c\u672a\u4f86\u4ecd\u662f\u5e02\u5834\u95dc\u6ce8\u7684\u4e3b\u8ef8\u3002"}, {"catalysts": ["AI \u88dd\u7f6e\u6578\u64da\u50b3\u8f38\u9700\u6c42", "\u6578\u64da\u4e2d\u5fc3\u57fa\u790e\u8a2d\u65bd\u5347\u7d1a"], "date": "2026-09-26", "episode": "EP700 | \ud83e\udead", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["LITE", "COHR", "GLW"], "risks": ["\u6280\u8853\u7af6\u722d", "\u4f9b\u61c9\u93c8\u4e0d\u78ba\u5b9a\u6027"], "view": "\u5149\u901a\u8a0a\u7522\u696d\u5728 AI \u548c\u6578\u64da\u4e2d\u5fc3\u6642\u4ee3\u626e\u6f14\u95dc\u9375\u89d2\u8272\uff0c\u5176\u6280\u8853\u767c\u5c55\u548c\u7522\u54c1\u61c9\u7528\u5c07\u53d7\u76ca\u65bc AI \u88dd\u7f6e\u5c0d\u9ad8\u901f\u8cc7\u6599\u50b3\u8f38\u7684\u9700\u6c42\u3002"}], "name": "Optical Communication"}, "\u5149\u901a\u8a0a": {"first_date": "2026-09-30", "mentions": [{"catalysts": ["AI\u57fa\u790e\u5efa\u8a2d\u9700\u6c42", "\u8cc7\u6599\u4e2d\u5fc3\u5347\u7d1a\u63db\u4ee3"], "date": "2026-09-30", "episode": "EP701 | \ud83d\udc21", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u77ed\u671f\u80a1\u50f9\u6ce2\u52d5\u904e\u5287", "\u4f9b\u61c9\u93c8\u4ea4\u671f\u4e0d\u78ba\u5b9a\u6027"], "view": "\u5149\u901a\u8a0a\u7522\u696d\u53d7\u60e0\u65bcAI\u8207\u8cc7\u6599\u4e2d\u5fc3\u7684\u9ad8\u901f\u50b3\u8f38\u9700\u6c42\uff0c\u4eca\u5e74\u8868\u73fe\u4eae\u773c\uff0c\u672a\u4f86\u6210\u9577\u7a7a\u9593\u5ee3\u95ca\u3002"}], "name": "\u5149\u901a\u8a0a"}, "\u529f\u7387\u534a\u5c0e\u9ad4": {"first_date": "2026-06-03", "mentions": [{"catalysts": ["AI\u8a2d\u5099\u80fd\u6548\u9700\u6c42\u63d0\u5347", "\u96fb\u52d5\u8eca\u53ca\u518d\u751f\u80fd\u6e90\u61c9\u7528\u64f4\u5927"], "date": "2026-06-03", "episode": "EP667 | \ud83c\udf0d", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["ON", "ADI"], "risks": ["\u5e02\u5834\u898f\u6a21\u76f8\u5c0d\u8f03\u5c0f", "\u6280\u8853\u9580\u6abb\u8f03\u9ad8"], "view": "\u529f\u7387\u534a\u5c0e\u9ad4\u662fAI\u76f8\u95dc\u61c9\u7528\u4e2d\u4e0d\u53ef\u6216\u7f3a\u7684\u4e00\u74b0\uff0c\u5305\u62ecON Semiconductor\u7b49\u516c\u53f8\u57fa\u672c\u9762\u6709\u986f\u8457\u6539\u5584\u3002\u9019\u985e\u80a1\u7968\u5728\u4e0b\u4e00\u6ce2\u5e02\u5834\u984c\u6750\u4e2d\u53ef\u80fd\u6210\u70ba\u532f\u805a\u9ede\uff0c\u4f46\u7531\u65bc\u5176\u5e02\u5834\u95dc\u6ce8\u5ea6\u4e0d\u5982CPU/GPU\u7b49\u6838\u5fc3\u5143\u4ef6\uff0c\u9700\u8981\u89c0\u5bdf\u80fd\u5426\u7372\u5f97\u5168\u9762\u6027\u7684\u8cc7\u91d1\u9752\u775e\u548c\u6f32\u50f9\u6a5f\u6703\u3002"}, {"catalysts": ["\u5730\u7de3\u653f\u6cbb\u5236\u88c1\u5c0e\u81f4\u4f9b\u61c9\u93c8\u91cd\u7d44", "\u9ad8\u968e\u9700\u6c42\u6392\u64e0\u6548\u61c9", "800V VDC \u7b49\u65b0\u6280\u8853\u61c9\u7528", "DRMOS \u7b49\u9ad8\u6bdb\u5229\u7522\u54c1\u63a8\u5ee3"], "date": "2026-06-17", "episode": "EP671 | \ud83c\udf3c", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["ON", "IFNNY", "MPWR", "ROHMY", "TXN"], "risks": ["\u5e02\u5834\u521d\u671f\u6ef2\u900f\u7387\u6162\u65bc\u9810\u671f", "\u7522\u696d\u7af6\u722d"], "view": "\u529f\u7387\u534a\u5c0e\u9ad4\u7522\u696d\u56e0\u5730\u7de3\u653f\u6cbb\u5236\u88c1\uff08\u5982\u6b50\u76df\u5c0d\u4e2d\u570b\u7684\u5236\u88c1\uff09\u548c\u9ad8\u968e\u9700\u6c42\u589e\u9577\u5e36\u4f86\u7684\u6392\u64e0\u6548\u61c9\uff0c\u70ba\u53f0\u5ee0\u5e36\u4f86\u65b0\u7684\u5546\u6a5f\u3002\u7279\u5225\u662fDriver MOSFET\uff08DRMOS\uff09\u7b49\u9ad8\u6bdb\u5229\u7522\u54c1\uff0c\u5118\u7ba1\u76ee\u524d\u5e02\u5834\u9810\u671f\u6ef2\u900f\u7387\u4e0d\u9ad8\uff0c\u4f46\u9577\u671f\u589e\u9577\u6f5b\u529b\u5de8\u5927\u3002"}, {"catalysts": ["AI\u9700\u6c42\u7206\u767c", "\u6b50\u7f8e\u5927\u5ee0\u4ea4\u671f\u62c9\u9577", "IDM\u5ee0\u5546\u7522\u80fd\u63a7\u5236\u53ca\u5b9a\u50f9\u6b0a"], "date": "2026-06-20", "episode": "EP672 | \ud83d\udc23", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["STM", "ON", "TSM"], "risks": ["\u5168\u7403\u7d93\u6fdf\u4e0d\u78ba\u5b9a\u6027", "\u6d88\u8cbb\u6027\u53ca\u8eca\u7528\u9700\u6c42\u75b2\u8edf\u53ef\u80fd\u62d6\u7d2f\u6574\u9ad4\u5e02\u5834"], "view": "\u529f\u7387\u534a\u5c0e\u9ad4\u662f\u7576\u524d\u5e02\u5834\u7126\u9ede\uff0c\u53d7\u60e0\u65bcAI\u9700\u6c42\u7206\u767c\u3002\u6b50\u7f8e\u5927\u5ee0\u4ea4\u671f\u904e\u9577\uff0c\u8a02\u55ae\u8f49\u79fb\u81f3\u4e9e\u6d32\u5ee0\u5546\u3002IDM\u5ee0\u5546\u56e0\u5782\u76f4\u6574\u5408\u5177\u8b70\u50f9\u512a\u52e2\uff0c\u7522\u80fd\u662f\u95dc\u9375\u74f6\u9838\u3002\u9810\u8a08\u8a72\u7522\u696d\u5c07\u7dad\u6301\u5f37\u52c1\u589e\u9577\u3002"}, {"catalysts": ["\u5e02\u5834\u9700\u6c42\u9ad8\u6f32"], "date": "2026-06-24", "episode": "EP673 | \ud83e\udd6c", "outlook": "neutral", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["8\u540b\u6676\u5713\u7522\u80fd\u4e0d\u8db3", "\u88fd\u9020\u6280\u8853\u96e3\u5ea6", "\u5f8c\u6bb5\u5c01\u6e2c\u6311\u6230"], "view": "\u529f\u7387\u5143\u4ef6\u7522\u696d\u76ee\u524d\u9762\u81e88\u540b\u6676\u5713\u7522\u80fd\u9650\u5236\u7684\u554f\u984c\uff0c\u82e5\u7121\u6cd5\u6709\u6548\u89e3\u6c7a\uff0c\u53ef\u80fd\u5f71\u97ff\u5176\u71df\u6536\u548c\u7372\u5229\u589e\u9577\u3002\u5118\u7ba1\u9700\u6c42\u65fa\u76db\uff0c\u4f46\u4f9b\u61c9\u7aef\u7684\u74f6\u9838\u662f\u4e3b\u8981\u6311\u6230\u3002"}, {"catalysts": ["\u7f3a\u8ca8\u73fe\u8c61\u51fa\u73fe", "\u50f9\u683c\u4e0a\u6f32", "\u4ea4\u671f\u62c9\u9577", "AI\u4f3a\u670d\u5668\u9ad8\u529f\u7387\u9700\u6c42"], "date": "2026-07-01", "episode": "EP675 | \ud83c\udfa2", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u8cc7\u8a0a\u4e0d\u660e\u78ba", "\u5e02\u5834\u8ffd\u9ad8\u98a8\u96aa"], "view": "\u985e\u4f3c\u88ab\u52d5\u5143\u4ef6\uff0c\u529f\u7387\u5143\u4ef6\u4e5f\u5df2\u958b\u59cb\u51fa\u73fe\u7f3a\u8ca8\u548c\u6f32\u50f9\u8da8\u52e2\uff0c\u4ea4\u671f\u62c9\u9577\u3002\u76ee\u524d\u5e02\u5834\u624d\u525b\u53cd\u61c9\uff0c\u5f8c\u7e8c\u9700\u8981\u66f4\u660e\u78ba\u7684\u6578\u64da\u4f86\u5224\u65b7\u5177\u9ad4\u7f3a\u53e3\uff0c\u4f46\u9810\u671f\u5c07\u6703\u50cf\u88ab\u52d5\u5143\u4ef6\u4e00\u6a23\uff0c\u50f9\u683c\u548c\u4ea4\u671f\u540c\u6b65\u4e0a\u6f32\u3002"}, {"catalysts": ["AI\u9700\u6c42\u5f37\u52c1", "\u56b4\u91cd\u7f3a\u6599\u5c0e\u81f4\u6f32\u50f9", "IDM\u6a21\u5f0f\u6709\u5229\u638c\u63a7\u7522\u80fd"], "date": "2026-07-04", "episode": "EP676 | \ud83d\udc2c", "outlook": "strong_bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u5e02\u5834\u6f32\u5e45\u53ef\u80fd\u4e0d\u5982\u88ab\u52d5\u5143\u4ef6", "\u80a1\u50f9\u6f32\u5e45\u53ef\u80fd\u8d85\u524d\u7522\u696d\u57fa\u672c\u9762"], "view": "\u529f\u7387\u5143\u4ef6\u76ee\u524d\u9762\u81e8\u56b4\u91cd\u7684\u7f3a\u6599\uff0c\u5c24\u5176\u662fMOSFET\uff0c\u5c0e\u81f4\u4ea4\u671f\u62c9\u9577\u4e14\u50f9\u683c\u5927\u6f32\u3002\u8a31\u591a\u516c\u53f8\u662fIDM\uff0c\u53ef\u638c\u63a7\u7522\u80fd\u3002\u9810\u8a08\u5176\u6bdb\u5229\u7387\u5c07\u63d0\u5347\uff0c\u6709\u671b\u6210\u70ba\u4e0b\u4e00\u6ce2\u5e02\u5834\u7126\u9ede\u3002"}, {"catalysts": ["\u5168\u9762\u6f32\u50f9", "\u7f3a\u8ca8\u64f4\u5f35", "\u7a3c\u52d5\u7387\u6eff\u8f09"], "date": "2026-07-11", "episode": "EP678 | \ud83c\udfae", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u7f8e\u570b\u6a19\u7684\u672a\u540c\u6b65\u4e0a\u6f32"], "view": "\u529f\u7387\u5143\u4ef6\u7522\u696d\u666e\u904d\u6f32\u50f9\uff0c\u4e26\u51fa\u73fe\u5927\u898f\u6a21\u7f3a\u8ca8\u64f4\u5f35\u3002\u96d6\u7136\u7f8e\u570b\u76f8\u95dc\u6a19\u7684\u672a\u7e8c\u6f32\uff0c\u4f46\u53f0\u7063\u7684\u529f\u7387\u5143\u4ef6\uff08\u5982MOSFETs\u53ca\u5f8c\u7aef\u5c01\u88dd\uff09\u8868\u73fe\u4eae\u773c\uff0c\u71df\u6536\u7a69\u5b9a\u589e\u9577\u4f46\u7372\u5229\u5927\u5e45\u8df3\u5347\uff0c\u986f\u793a\u7a3c\u52d5\u7387\u6eff\u8f09\u3002"}, {"catalysts": ["800V\u96fb\u6e90\u67b6\u69cb\u666e\u53ca", "AI\u4f3a\u670d\u5668\u9700\u6c42", "\u96fb\u52d5\u8eca\u5e02\u5834\u589e\u9577"], "date": "2026-07-22", "episode": "EP681 | \ud83e\udd89", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["NAVI", "WOLF", "STM"], "risks": ["\u6280\u8853\u9032\u6b65", "\u5e02\u5834\u7af6\u722d"], "view": "\u529f\u7387\u5143\u4ef6\uff08\u5982GaN\u3001SiC\u76f8\u95dc\uff09\u5e02\u5834\u770b\u597d\uff0c\u7279\u5225\u662f\u53d7\u60e0\u65bcAI\u4f3a\u670d\u5668\u5c0e\u5165\u7684800V\u67b6\u69cb\u4ee5\u53ca\u96fb\u52d5\u8eca\u9700\u6c42\uff0c\u76f8\u95dc\u4f9b\u61c9\u5546\u5c07\u6709\u597d\u7684\u8868\u73fe\u3002\u6b64\u9818\u57df\u516c\u53f8\u88ab\u8a8d\u70ba\u5176\u71df\u6536\u7372\u5229\u5c07\u6301\u7e8c\u589e\u9577\u3002"}, {"catalysts": ["\u5e02\u5834\u5f37\u52e2\u8da8\u52e2", "\u8cc7\u91d1\u8ffd\u9010"], "date": "2026-07-08", "episode": "EP677 | \ud83d\udc0e", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u5e02\u503c\u5c0f\uff0c\u7121\u6cd5\u627f\u63a5\u5927\u91cf\u8cc7\u91d1"], "view": "\u5c6c\u65bc\u5e02\u5834\u76f8\u5c0d\u5f37\u52e2\u7684\u65cf\u7fa4\uff0c\u4f46\u5176\u5e02\u503c\u8f03\u5c0f\uff0c\u5927\u578b\u6cd5\u4eba\u96e3\u4ee5\u5927\u91cf\u8cc7\u91d1\u9032\u99d0\u3002"}, {"catalysts": ["\u96fb\u52d5\u8eca", "\u80fd\u6e90\u6548\u7387\u63d0\u5347"], "date": "2026-07-15", "episode": "EP679 | \ud83e\uddcc", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["6770"], "risks": ["\u4f9b\u61c9\u93c8\u4e2d\u65b7"], "view": "\u529f\u7387\u5143\u4ef6\u7522\u696d\u72c0\u6cc1\u826f\u597d\uff0c\u8a31\u591a\u74b0\u7bc0\u4ecd\u4f9b\u4e0d\u61c9\u6c42\uff0c\u5c24\u5176\u50cf\u7acb\u7a4d\u96fb\uff086770\uff09\u7684\u529f\u7387\u5c01\u88dd\u90e8\u9580\uff0c\u8a02\u55ae\u6eff\u8f09\u4e14\u5ba2\u6236\u6301\u7e8c\u8ffd\u55ae\u3002"}, {"catalysts": ["AI\u8cc7\u6599\u4e2d\u5fc3\u529f\u8017\u589e\u9577", "\u96fb\u6e90\u7ba1\u7406\u9700\u6c42\u63d0\u5347", "\u65b0\u80fd\u6e90\u61c9\u7528\u64f4\u5f35"], "date": "2026-05-23", "episode": "EP664 | \ud83d\udc1f", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u4f9b\u61c9\u93c8\u7522\u80fd\u9650\u5236"], "view": "\u529f\u7387\u534a\u5c0e\u9ad4\u56e0\u61c9AI\u8cc7\u6599\u4e2d\u5fc3\u9ad8\u529f\u8017\u9700\u6c42\uff0c\u5176\u6027\u80fd\u8868\u73fe\u548c\u7528\u91cf\u90fd\u5728\u63d0\u5347\uff0c\u5e02\u5834\u5c55\u671b\u6a02\u89c0\u3002"}, {"catalysts": ["800V DC \u67b6\u69cb\u4e0b\u5c0d\u9ad8\u6548\u7387\u96fb\u6e90\u8f49\u63db\u7684\u9700\u6c42", "SiC \u548c GaN \u6280\u8853\u5728\u529f\u7387\u5143\u4ef6\u4e2d\u7684\u6ef2\u900f\u7387\u63d0\u5347"], "date": "2026-08-15", "episode": "EP688 | \ud83e\udd7d", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u6280\u8853\u6210\u719f\u5ea6\u8207\u91cf\u7522\u6311\u6230", "\u4f9b\u61c9\u93c8\u74f6\u9838\u8207\u50f9\u683c\u7af6\u722d"], "view": "\u8cc7\u6599\u4e2d\u5fc3\u96fb\u529b\u67b6\u69cb\u7684\u6f14\u9032\uff0c\u7279\u5225\u662f PowerCenter \u968e\u6bb5\u5c0d SiC \u548c GaN \u7b49\u65b0\u4e00\u4ee3\u529f\u7387\u534a\u5c0e\u9ad4\u7684\u9700\u6c42\u5c07\u5927\u5e45\u589e\u52a0\uff0c\u9019\u4e9b\u6750\u6599\u5728\u9ad8\u6548\u80fd\u96fb\u6e90\u8f49\u63db\u65b9\u9762\u5177\u6709\u986f\u8457\u512a\u52e2\uff0c\u5c07\u6210\u70ba\u95dc\u9375\u53d7\u60e0\u8005\u3002"}], "name": "\u529f\u7387\u534a\u5c0e\u9ad4"}, "\u534a\u5c0e\u9ad4": {"first_date": "2026-08-01", "mentions": [{"catalysts": ["AI\u7b97\u529b\u9700\u6c42\u6301\u7e8c\u589e\u9577", "\u65b0\u8208AI\u61c9\u7528\u5e36\u52d5", "\u6676\u7247\u5ee0\u5546\u64f4\u5927\u6295\u8cc7"], "date": "2026-05-23", "episode": "EP664 | \ud83d\udc1f", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["NVDA", "AMD", "INTC"], "risks": ["\u6676\u5713\u4ee3\u5de5\u7522\u80fd\u53d7\u9650", "\u5730\u7de3\u653f\u6cbb\u98a8\u96aa", "\u4e0a\u6e38\u4f9b\u61c9\u93c8\u5403\u7dca"], "view": "\u534a\u5c0e\u9ad4\u7522\u696d\u7279\u5225\u662fAI\u76f8\u95dc\u6676\u7247\u9700\u6c42\u5f37\u52c1\u3002\u6676\u5713\u4ee3\u5de5\u5ee0\uff08\u5982\u53f0\u7a4d\u96fb\uff09\u7684\u7522\u80fd\u6210\u70ba\u95dc\u9375\u74f6\u9838\uff0c\u672a\u4f86\u6436\u596a\u7522\u80fd\u7684\u7af6\u722d\u5c07\u975e\u5e38\u6fc0\u70c8\uff0c\u4e0a\u6e38\u6750\u6599\u8207\u8a2d\u5099\u7684\u9700\u6c42\u4e5f\u5c07\u96a8\u4e4b\u9ad8\u6f32\u3002"}, {"catalysts": ["AI\u767c\u5c55\u5e36\u52d5\u9700\u6c42"], "date": "2026-08-01", "episode": "EP684 | \ud83d\udd26", "outlook": "neutral", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["SKH", "MU"], "risks": ["\u5e02\u5834\u6ce2\u52d5", "\u69d3\u687f\u5f71\u97ff"], "view": "\u534a\u5c0e\u9ad4\u7522\u696d\u4e2d\u7684\u4e00\u4e9b\u516c\u53f8\uff08\u5982 SK Hynix, Micron\uff09\u662f Situational Awareness \u57fa\u91d1\u7684\u91cd\u5009\u80a1\uff0c\u8aaa\u660e\u8a72\u7522\u696d\u5728\u5e02\u5834\u4e0a\u6f32\u6642\u8868\u73fe\u5f37\u52c1\uff0c\u4f46\u5728\u53bb\u69d3\u687f\u5316\u904e\u7a0b\u4e2d\u4e5f\u9996\u7576\u5176\u885d\u53d7\u5230\u885d\u64ca\u3002"}, {"catalysts": ["AI\u9700\u6c42\u63a8\u52d5\u5143\u4ef6\u5347\u7d1a", "\u5e02\u5834\u5f9e\u524d\u671f\u6d41\u52d5\u6027\u5371\u6a5f\u4e2d\u5fa9\u7526"], "date": "2026-08-05", "episode": "EP685 | \ud83e\udd13", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["NVDA", "AMD"], "risks": ["\u4f9b\u61c9\u93c8\u74f6\u9838", "\u6210\u672c\u58d3\u529b", "\u6f5b\u5728\u7684\u8cbf\u6613\u5236\u88c1"], "view": "\u534a\u5c0e\u9ad4\u7522\u696d\u5df2\u5f37\u52c1\u53cd\u5f48\uff0c\u4f46\u6b64\u524d\u53d7\u91cd\u5275\u80a1\u7968\u7684\u4f30\u503c\u4fee\u5fa9\u4ecd\u9700\u6642\u9593\u3002HBM\u964d\u898f\u7b49\u554f\u984c\u662f\u56e0\u61c9\u4f9b\u61c9\u8207\u6210\u672c\u7684\u77ed\u671f\u8abf\u6574\uff0c\u800c\u975e\u9577\u671f\u7d50\u69cb\u6027\u554f\u984c\u3002\u6574\u9ad4\u800c\u8a00\uff0c\u534a\u5c0e\u9ad4\u7522\u696d\u56e0AI\u9700\u6c42\u53ca\u5e02\u5834\u5fa9\u7526\u800c\u524d\u666f\u770b\u597d\u3002"}, {"catalysts": ["AI\u76f8\u95dc\u61c9\u7528\u9577\u671f\u9700\u6c42"], "date": "2026-08-08", "episode": "EP686 | \ud83d\udd78\ufe0f", "outlook": "neutral", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["MTK"], "risks": ["\u5e02\u5834\u60c5\u7dd2\u5c0e\u81f4\u7684\u975e\u7406\u6027\u4fee\u6b63", "\u8a18\u61b6\u9ad4\u5831\u50f9\u77ed\u671f\u8da8\u7de9"], "view": "\u6574\u9ad4\u534a\u5c0e\u9ad4\u7522\u696d\u57fa\u672c\u9762\u672a\u898b\u660e\u986f\u8f49\u5f31\u8de1\u8c61\uff0c\u50f9\u683c\u58d3\u529b\u4e3b\u8981\u4f86\u81ea\u5e02\u5834\u60c5\u7dd2\u8207\u904e\u5ea6\u69d3\u687f\uff0c\u9577\u671f\u9700\u6c42\u4ecd\u53d7AI\u8da8\u52e2\u652f\u6490\u3002"}, {"catalysts": ["AI\u6676\u7247\u9700\u6c42", "HBM\u6280\u8853\u9032\u6b65", "\u9ad8\u6027\u80fd\u904b\u7b97\u9700\u6c42"], "date": "2026-08-12", "episode": "EP687 | \ud83d\udc27", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["AMD"], "risks": ["\u6280\u8853\u7814\u767c\u6210\u672c", "\u5e02\u5834\u7af6\u722d", "\u9031\u671f\u6027\u6ce2\u52d5"], "view": "HBM\u7b49\u5148\u9032\u534a\u5c0e\u9ad4\u6280\u8853\u662fAI\u767c\u5c55\u7684\u95dc\u9375\u3002\u5118\u7ba1\u66fe\u662f\u51b7\u9580\u6280\u8853\uff0c\u4f46\u56e0AI\u7206\u767c\u800c\u53d7\u5230\u524d\u6240\u672a\u6709\u7684\u95dc\u6ce8\uff0c\u986f\u793a\u6280\u8853\u5275\u65b0\u5728\u7279\u5b9a\u6642\u6a5f\u9ede\u7684\u5de8\u5927\u6f5b\u529b\u3002"}, {"catalysts": ["\u900f\u904e\u6295\u8cc7\u8a2d\u5099\u3001\u7b56\u7565\u6027\u4e0b\u55ae\u89e3\u6c7a\u4f9b\u61c9\u93c8\u74f6\u9838", "\u6280\u8853\u5275\u65b0\u5e36\u4f86\u65b0\u7684\u7522\u54c1\u758a\u4ee3\u548c\u61c9\u7528"], "date": "2026-08-19", "episode": "EP689 | \ud83c\udfd0", "outlook": "neutral", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u7522\u80fd\u904e\u5269\u7684\u58d3\u529b", "\u5e02\u5834\u5c0d\u7279\u5b9a\u7522\u54c1\u7684\u9700\u6c42\u4e0d\u5982\u9810\u671f"], "view": "\u534a\u5c0e\u9ad4\u7522\u696d\u7684\u4f9b\u9700\u95dc\u4fc2\u57282022\u5e74\u7d93\u6b77\u4e86\u5eab\u5b58\u8abf\u6574\uff0c\u76ee\u524d\u96d6\u7136\u4ecd\u666e\u904d\u9762\u81e8\u7f3a\u6599\u554f\u984c\uff0c\u4f46\u91cd\u9ede\u5728\u65bc\u5982\u4f55\u89e3\u6c7a\u4f9b\u61c9\u93c8\u74f6\u9838\uff0c\u800c\u975e\u55ae\u7d14\u7684\u7f3a\u8ca8\u3002\u7522\u696d\u6b63\u5f9e\u55ae\u7d14\u7684\u300c\u7f3a\u6599\u6f32\u50f9\u300d\u968e\u6bb5\uff0c\u9010\u6b65\u8f49\u5411\u300c\u50f9\u503c\u5275\u9020\u300d\u7684\u7af6\u722d\u3002"}, {"catalysts": ["AI\u63a8\u52d5\u5ba2\u88fd\u5316\u6676\u7247\u9700\u6c42", "\u96f2\u7aef\u904b\u7b97\u548c\u8cc7\u6599\u4e2d\u5fc3\u64f4\u5f35"], "date": "2026-08-22", "episode": "EP690 | \u26f3", "outlook": "neutral", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["GOOG", "BRCM", "MTK", "MRVL", "AMD", "MU"], "risks": ["\u6676\u7247\u8a2d\u8a08\u670d\u52d9\u5546\u6bdb\u5229\u53d7\u58d3", "\u5e02\u5834\u7af6\u722d\u52a0\u5287", "TSMC\u6676\u5713\u7522\u80fd\u53d6\u5f97\u56f0\u96e3"], "view": "\u534a\u5c0e\u9ad4\u7522\u696d\u6b63\u5f9e\u50b3\u7d71\u4e00\u7ad9\u5f0f\u89e3\u6c7a\u65b9\u6848\u8f49\u5411\u5ba2\u6236\u81ea\u7814\u6676\u7247\uff08COT\uff09\u7b56\u7565\uff0c\u9019\u5c0d\u5927\u578b\u79d1\u6280\u516c\u53f8\uff08\u5982Google\uff09\u662f\u5229\u597d\uff0c\u53ef\u964d\u4f4e\u6210\u672c\u4e26\u63d0\u5347\u81ea\u4e3b\u6027\u3002\u7136\u800c\uff0c\u5c0d\u65bc\u4f9d\u8cf4\u4e00\u7ad9\u5f0f\u89e3\u6c7a\u65b9\u6848\u7684\u6676\u7247\u8a2d\u8a08\u516c\u53f8\uff08\u5982Broadcom\uff09\u5c07\u9762\u81e8\u6311\u6230\uff0c\u800c\u5c0d\u65bc\u63d0\u4f9b\u7279\u5b9aIP\u548c\u8a2d\u8a08\u670d\u52d9\u7684\u5c08\u696d\u8a2d\u8a08\u516c\u53f8\uff08\u5982Marvell\u3001MediaTek\u3001AMD\uff09\u5247\u5e36\u4f86\u65b0\u7684\u5408\u4f5c\u6a5f\u6703\u3002"}, {"catalysts": ["\u8a18\u61b6\u9ad4\u6280\u8853\u5347\u7d1a\uff08\u5982 HBM\uff09"], "date": "2026-08-26", "episode": "EP691 | \ud83c\udf82", "outlook": "neutral", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u6280\u8853\u5feb\u901f\u8fed\u4ee3", "\u7522\u696d\u9031\u671f\u6027"], "view": "\u4e3b\u6301\u4eba\u7c21\u77ed\u63d0\u53ca\u8a18\u61b6\u9ad4\u6280\u8853\uff08\u5982\u5f9e 12-hi \u5230 8-hi/4-hi\uff09\u7684\u8b8a\u5316\u53ef\u80fd\u5f71\u97ff\u5e02\u5834\uff0c\u986f\u793a\u5c0d\u534a\u5c0e\u9ad4\u7522\u696d\u6280\u8853\u8da8\u52e2\u7684\u95dc\u6ce8\uff0c\u4f46\u672a\u6df1\u5165\u5206\u6790\u3002"}, {"catalysts": ["AI\u6676\u7247\u9700\u6c42\u7206\u767c\u6027\u589e\u9577", "\u65b0\u578b\u6676\u7247\u67b6\u69cb\u8fed\u4ee3\u52a0\u901f"], "date": "2026-08-29", "episode": "EP692 | \ud83c\udf7a", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["NVDA", "MRVL"], "risks": ["\u4f9b\u61c9\u93c8\u74f6\u9838\u5c0e\u81f4\u4ea4\u671f\u5ef6\u9072", "\u8a18\u61b6\u9ad4\u548c\u8f09\u677f\u7b49\u95dc\u9375\u5143\u4ef6\u77ed\u7f3a", "\u5730\u7de3\u653f\u6cbb\u98a8\u96aa\u5c0d\u4f9b\u61c9\u93c8\u7684\u5f71\u97ff"], "view": "\u534a\u5c0e\u9ad4\u7522\u696d\u5728AI\u6d6a\u6f6e\u4e0b\u5448\u73fe\u9ad8\u901f\u6210\u9577\uff0c\u7279\u5225\u662fNvidia\u7b49GPU\u4f9b\u61c9\u5546\u7684\u9700\u6c42\u5f37\u52c1\uff0c\u4e5f\u5e36\u52d5\u4e86\u5149\u901a\u8a0a\u3001\u8f09\u677f\u7b49\u76f8\u95dc\u5143\u4ef6\u7684\u9700\u6c42\u3002\u7136\u800c\uff0c\u4e3b\u6301\u4eba\u6307\u51fa\u4f9b\u61c9\u93c8\u4e2d\u5b58\u5728\u986f\u8457\u7684\u7f3a\u53e3\uff0c\u5c24\u5176\u662f\u8f09\u677f\u548c\u9ad8\u968e\u8a18\u61b6\u9ad4\uff0c\u9019\u53ef\u80fd\u5c0e\u81f4\u672a\u4f86\u7522\u54c1\u51fa\u8ca8\u5ef6\u9072\uff0c\u6210\u70ba\u6574\u500b\u7522\u696d\u7684\u6f5b\u5728\u98a8\u96aa\u3002"}, {"catalysts": ["AI\u6676\u7247\u9700\u6c42\u589e\u9577", "\u5148\u9032\u88fd\u7a0b\u6280\u8853\u7a81\u7834", "\u7570\u8cea\u6574\u5408\u8207\u5c01\u88dd\u6280\u8853\u767c\u5c55"], "date": "2026-09-02", "episode": "EP693 | \ud83c\udf56", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["2330", "2454", "NVDA"], "risks": ["\u5730\u7de3\u653f\u6cbb\u98a8\u96aa", "\u4f9b\u61c9\u93c8\u4e0d\u7a69\u5b9a\u6027", "\u5e02\u5834\u7af6\u722d\u52a0\u5287"], "view": "\u534a\u5c0e\u9ad4\u7522\u696d\u662fAI\u767c\u5c55\u7684\u6838\u5fc3\uff0cNvidia\u7684\u7b56\u7565\u6027\u6295\u8cc7\u548c\u65b0\u6280\u8853\uff08\u5982NVHBM\uff09\u4e0d\u65b7\u63a8\u9032\uff0c\u986f\u793a\u7522\u696d\u6301\u7e8c\u5275\u65b0\u3002\u53f0\u7a4d\u96fb\u7b49\u4ee3\u5de5\u5ee0\u5c07\u6301\u7e8c\u53d7\u76ca\u65bc\u6280\u8853\u9818\u5148\u5730\u4f4d\u3002"}, {"catalysts": ["AI \u4f3a\u670d\u5668\u9700\u6c42\u7206\u767c", "\u5148\u9032\u5c01\u88dd\u6280\u8853\u7a81\u7834"], "date": "2026-09-05", "episode": "EP694 | \ud83e\udd56", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["2330", "AVGO"], "risks": ["\u7e3d\u9ad4\u7d93\u6fdf\u6ce2\u52d5", "\u5730\u7de3\u653f\u6cbb\u98a8\u96aa"], "view": "\u534a\u5c0e\u9ad4\u7522\u696d\u53d7\u60e0\u65bc AI\u3001\u9ad8\u6548\u80fd\u904b\u7b97\uff08HPC\uff09\u53ca\u8eca\u7528\u96fb\u5b50\u9700\u6c42\u5e36\u52d5\uff0c\u6b63\u8fce\u4f86\u65b0\u4e00\u6ce2\u7684\u6210\u9577\u9031\u671f\uff0c\u5148\u9032\u88fd\u7a0b\u8207\u5c01\u88dd\u6280\u8853\uff08\u5982 CoWoS\uff09\u662f\u5175\u5bb6\u5fc5\u722d\u4e4b\u5730\u3002"}, {"catalysts": ["AI\u6676\u7247\u9700\u6c42", "\u9ad8\u6548\u80fd\u904b\u7b97", "\u5ba2\u88fd\u5316\u6676\u7247\u767c\u5c55"], "date": "2026-09-09", "episode": "EP695 | \ud83c\udf4a", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["NVDA", "INTC"], "risks": ["\u7522\u80fd\u74f6\u9838", "\u5730\u7de3\u653f\u6cbb", "\u6280\u8853\u8fed\u4ee3\u901f\u5ea6\u5feb"], "view": "\u53d7\u76ca\u65bcAI\u57fa\u790e\u8a2d\u65bd\u7684\u5f37\u52c1\u9700\u6c42\uff0c\u7279\u5225\u662f\u5ba2\u88fd\u5316AI\u6676\u7247\uff08ASIC\uff09\u7684\u56de\u5831\u7387\u6975\u9ad8\u3002\u4f9b\u61c9\u93c8\u9762\u81e8\u5de8\u5927\u9700\u6c42\u58d3\u529b\uff0c\u5b58\u5728\u4f9b\u4e0d\u61c9\u6c42\u60c5\u6cc1\u3002"}, {"catalysts": ["\u65b0\u7522\u54c1\u9031\u671f\uff08\u5982\u647a\u758a\u624b\u6a5f\uff09", "AI\u57fa\u790e\u8a2d\u65bd\u5efa\u8a2d"], "date": "2026-09-12", "episode": "EP696 | \ud83c\udf96\ufe0f", "outlook": "neutral", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["NVDA", "TSM", "3376"], "risks": ["\u4f9b\u61c9\u93c8\u58d3\u529b", "\u5927\u5ba2\u6236\u58d3\u4f4e\u5229\u6f64", "\u5730\u7de3\u653f\u6cbb\u56e0\u7d20"], "view": "\u95dc\u9375\u96f6\u7d44\u4ef6\u4f9b\u61c9\u5546\uff08\u5982\u9278\u93c8\u88fd\u9020\u5546\uff09\u5c07\u53d7\u60e0\u65bc\u65b0\u7522\u54c1\u767c\u4f48\u3002NVIDIA\u5728AI\u786c\u9ad4\u9818\u57df\u4f54\u64da\u4e3b\u5c0e\u5730\u4f4d\u3002\u7136\u800c\uff0c\u860b\u679c\u5c0d\u4f9b\u61c9\u5546\u7684\u5229\u6f64\u63a7\u5236\u56b4\u683c\u3002\u8a72\u7522\u696d\u9762\u81e8\u6fc0\u70c8\u7684\u7af6\u722d\u548c\u6301\u7e8c\u7684\u5275\u65b0\u58d3\u529b\u3002"}, {"catalysts": ["AI\u9700\u6c42\u65fa\u76db", "\u9577\u671f\u6280\u8853\u6f14\u9032", "\u65b0\u8208\u5e02\u5834\u9700\u6c42"], "date": "2026-09-19", "episode": "EP698 | \ud83c\udfae", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["2330", "AMD", "NVDA"], "risks": ["\u4f9b\u61c9\u93c8\u7f3a\u8ca8\u554f\u984c", "\u901a\u81a8\u58d3\u529b", "\u5730\u7de3\u653f\u6cbb\u98a8\u96aa"], "view": "\u534a\u5c0e\u9ad4\u7522\u696d\u93c8\u7684\u6210\u672c\u4e0d\u65b7\u4e0a\u6f32\uff0c\u5305\u62ec\u6676\u5713\u4ee3\u5de5\u3001\u8a18\u61b6\u9ad4\u3001\u677f\u6750\u7b49\u3002\u5118\u7ba1\u77ed\u671f\u53ef\u80fd\u51fa\u73fe\u7f3a\u8ca8\u3001\u964d\u898f\u7b49\u60c5\u6cc1\uff0c\u4f46\u9577\u671f\u6280\u8853\u9032\u6b65\u548c\u9700\u6c42\u589e\u9577\u662f\u4e0d\u53ef\u9006\u7684\u8da8\u52e2\u3002\u4f9b\u61c9\u93c8\u6703\u4e0d\u65b7\u5c0b\u627e\u66ff\u4ee3\u65b9\u6848\uff0c\u4f46\u6574\u9ad4\u6210\u672c\u4ecd\u5c07\u8d70\u9ad8\u3002"}, {"catalysts": ["AI \u88dd\u7f6e\u548c\u6578\u64da\u4e2d\u5fc3\u9700\u6c42\u589e\u9577", "\u5148\u9032\u88fd\u7a0b\u6280\u8853\u7684\u6301\u7e8c\u6f14\u9032"], "date": "2026-09-26", "episode": "EP700 | \ud83e\udead", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["2330", "TER", "AMD"], "risks": ["\u5168\u7403\u7d93\u6fdf\u666f\u6c23\u6ce2\u52d5", "\u5e02\u5834\u4f9b\u9700\u8b8a\u5316", "\u5730\u7de3\u653f\u6cbb\u98a8\u96aa"], "view": "\u534a\u5c0e\u9ad4\u7522\u696d\u4f5c\u70ba AI \u786c\u9ad4\u4f9b\u61c9\u93c8\u7684\u57fa\u77f3\uff0c\u5176\u7522\u80fd\u548c\u6e2c\u8a66\u6280\u8853\u5c07\u652f\u6490 AI \u88dd\u7f6e\u7684\u767c\u5c55\u3002\u5118\u7ba1\u5e02\u5834\u6ce2\u52d5\uff0c\u4f46\u9577\u671f\u8da8\u52e2\u4f9d\u7136\u5411\u4e0a\uff0c\u70ba\u76f8\u95dc\u516c\u53f8\u5e36\u4f86\u6210\u9577\u6a5f\u6703\u3002"}, {"catalysts": ["\u5148\u9032\u88fd\u7a0b\u9700\u6c42", "\u8eca\u7528\u8207\u9ad8\u6548\u80fd\u904b\u7b97"], "date": "2026-09-30", "episode": "EP701 | \ud83d\udc21", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u5730\u7de3\u653f\u6cbb\u98a8\u96aa", "\u5eab\u5b58\u8abf\u6574\u9031\u671f"], "view": "\u534a\u5c0e\u9ad4\u7522\u696d\u4f9d\u7136\u662f\u5168\u7403\u79d1\u6280\u767c\u5c55\u7684\u6838\u5fc3\uff0c\u96d6\u7136\u9762\u81e8\u666f\u6c23\u5faa\u74b0\uff0c\u4f46\u9577\u671f\u9700\u6c42\u4f9d\u7136\u5f37\u52c1\u3002"}], "name": "\u534a\u5c0e\u9ad4"}, "\u5c01\u88dd\u6e2c\u8a66": {"first_date": "2026-07-04", "mentions": [{"catalysts": ["AI\u9700\u6c42\u9a45\u52d5", "\u6392\u64e0\u6548\u61c9\u5c0e\u81f4\u8b70\u50f9\u80fd\u529b\u63d0\u5347", "IDM\u6a21\u5f0f\u7684\u512a\u52e2"], "date": "2026-07-04", "episode": "EP676 | \ud83d\udc2c", "outlook": "strong_bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["3711", "2444"], "risks": ["\u6f32\u5e45\u53ef\u80fd\u8d85\u524d\u57fa\u672c\u9762", "\u8ffd\u9ad8\u98a8\u96aa"], "view": "\u5c01\u88dd\u6e2c\u8a66\u7522\u696d\u8868\u73fe\u300c\u7279\u5225\u5f37\u52e2\u300d\uff0c\u56e0AI\u9700\u6c42\u800c\u9762\u81e8\u7522\u80fd\u5403\u7dca\u548c\u6f32\u50f9\u3002IC\u8a2d\u8a08\u516c\u53f8\u88ab\u6f32\u50f930-50%\u3002\u6709\u81ea\u5df1\u7684\u5c01\u6e2c\u5ee0\uff08IDM\uff09\u6216\u80fd\u638c\u63e1\u5916\u90e8\u7522\u80fd\u8005\u5177\u512a\u52e2\u3002\u9810\u8a08\u5c07\u6210\u70ba\u5e02\u5834\u65b0\u7684\u8ffd\u9010\u984c\u6750\u3002"}], "name": "\u5c01\u88dd\u6e2c\u8a66"}, "\u5f8c\u7aef\u5c01\u88dd": {"first_date": "2026-07-11", "mentions": [{"catalysts": ["\u7372\u5229\u986f\u8457\u589e\u9577", "\u7a3c\u52d5\u7387\u63d0\u9ad8"], "date": "2026-07-11", "episode": "EP678 | \ud83c\udfae", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": [], "view": "\u5f8c\u7aef\u5c01\u88dd\u5ee0\u7684\u81ea\u7d50\u6578\u5b57\u986f\u793a\u71df\u6536\u5e74\u589e\u7387\u7dad\u6301\u7a69\u5b9a\uff0c\u4f46\u7372\u5229\u6578\u5b57\u5927\u5e45\u6210\u9577\u3002\u9019\u8868\u660e\u7522\u696d\u6b63\u8655\u65bc\u6f32\u50f9\u5faa\u74b0\uff0c\u4e14\u7a3c\u52d5\u7387\u62c9\u6eff\uff0c\u5229\u6f64\u7a7a\u9593\u64f4\u5927\u3002"}, {"catalysts": ["\u5148\u9032\u88fd\u7a0b\u9700\u6c42\u63a8\u52d5", "\u7570\u8cea\u6574\u5408\u6280\u8853\u767c\u5c55"], "date": "2026-07-18", "episode": "EP680 | \ud83d\udc94", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u7af6\u722d\u52a0\u5287", "\u6280\u8853\u74f6\u9838", "\u7522\u80fd\u64f4\u5f35\u6311\u6230"], "view": "\u5148\u9032\u5c01\u88dd\uff08\u5982Intel\u7684IMT\uff09\u662f\u534a\u5c0e\u9ad4\u7522\u696d\u7684\u95dc\u9375\u74b0\u7bc0\uff0c\u76ee\u524d\u7522\u80fd\u4f9b\u7d66\u975e\u5e38\u7dca\u4fcf\u3002\u82e5\u7af6\u722d\u5c0d\u624b\u80fd\u5728\u5f8c\u7aef\u5c01\u88dd\u53d6\u5f97\u7a81\u7834\uff0c\u5c0d\u53f0\u7a4d\u96fb\u7684\u524d\u7aef\u6676\u5713\u4ee3\u5de5\u662f\u5229\u597d\uff0c\u56e0\u70ba\u53ef\u4ee5\u64f4\u5927\u524d\u7aef\u7522\u51fa\u3002"}, {"catalysts": ["AI\u6676\u7247", "\u5148\u9032\u88fd\u7a0b"], "date": "2026-07-15", "episode": "EP679 | \ud83e\uddcc", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["2377"], "risks": ["\u6280\u8853\u8907\u96dc\u6027", "\u8a2d\u5099\u8cc7\u672c\u652f\u51fa"], "view": "\u5c01\u6e2c\uff08IC testing and packaging\uff09\u7522\u696d\u8868\u73fe\u5f37\u52e2\uff0c\u7279\u5225\u662f\u5f8c\u6bb5\u5c01\u88dd\uff0c\u5305\u62ec\u50cf\u53f0\u7a4d\u96fbOSAT\u5916\u5305\u5546\uff0c\u90fd\u8655\u65bc\u4f9b\u4e0d\u61c9\u6c42\u7684\u72c0\u6cc1\uff0c\u9810\u8a08\u8868\u73fe\u6703\u6301\u7e8c\u826f\u597d\u3002"}], "name": "\u5f8c\u7aef\u5c01\u88dd"}, "\u6563\u71b1": {"first_date": "2026-05-27", "mentions": [{"catalysts": ["AI\u4f3a\u670d\u5668\u9700\u6c42\u5927\u589e", "\u885b\u661f\u4f3a\u670d\u5668\u7684\u7279\u6b8a\u6563\u71b1\u8981\u6c42", "\u7522\u54c1\u5347\u7d1a\u8207\u5927\u578b\u8a02\u55ae"], "date": "2026-05-27", "episode": "EP665 | \ud83c\udf38", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u9a57\u8b49\u9031\u671f\u9577", "\u9ad8\u6280\u8853\u9580\u6abb", "\u5e02\u5834\u7af6\u722d"], "view": "\u6563\u71b1\u6280\u8853\u5728AI\u548c\u592a\u7a7a\u61c9\u7528\u4e2d\u626e\u6f14\u95dc\u9375\u89d2\u8272\u3002\u5118\u7ba1\u8fd1\u671f\u5728\u53f0\u80a1\u8868\u73fe\u4e0d\u4f73\uff0c\u4f46\u80fd\u901a\u904e\u56b4\u683c\u9a57\u8b49\u7684\u6563\u71b1\u516c\u53f8\u5c07\u5728\u672a\u4f86\u885b\u661f\u4f3a\u670d\u5668\u7b49\u5927\u578b\u9805\u76ee\u4e2d\u7372\u5f97\u5de8\u5927\u8a02\u55ae\uff0c\u56e0\u5176\u7522\u54c1\u5c3a\u5bf8\u5c07\u9060\u8d85\u73fe\u6709\u898f\u683c\u3002"}, {"catalysts": ["AI\u4f3a\u670d\u5668\u9700\u6c42", "\u9ad8\u529f\u8017\u6676\u7247\u6563\u71b1\u58d3\u529b"], "date": "2026-08-12", "episode": "EP687 | \ud83d\udc27", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u6280\u8853\u7af6\u722d", "\u6210\u672c\u63a7\u5236"], "view": "AI\u6642\u4ee3\uff0c\u9ad8\u6548\u80fd\u8a08\u7b97\u5c0d\u6563\u71b1\u6280\u8853\u7684\u9700\u6c42\u5287\u589e\uff0c\u4f7f\u5176\u6210\u70ba\u91cd\u8981\u7684\u6295\u8cc7\u4e3b\u984c\u3002\u4e3b\u6301\u4eba\u5c07\u5176\u5217\u70ba\u500b\u4eba\u4f48\u5c40\u7684\u91cd\u9ede\u3002"}, {"catalysts": ["AI\u4f3a\u670d\u5668\u9700\u6c42"], "date": "2026-08-08", "episode": "EP686 | \ud83d\udd78\ufe0f", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["3653"], "risks": [], "view": "\u6563\u71b1\u662f\u524d\u4e00\u6ce2AI\u4f9b\u61c9\u93c8\u4e2d\u7387\u5148\u4e0b\u8dcc\uff0c\u800c\u5f8c\u4e5f\u7387\u5148\u53cd\u5f48\u7684\u65cf\u7fa4\uff0c\u6697\u793a\u8cc7\u91d1\u8f2a\u52d5\u53ef\u80fd\u518d\u6b21\u56de\u5230\u6b64\u985e\u5177\u5099\u660e\u78baAI\u61c9\u7528\u9700\u6c42\u7684\u7522\u696d\u3002"}], "name": "\u6563\u71b1"}, "\u677f\u6750": {"first_date": "2026-09-19", "mentions": [{"catalysts": ["5G", "AI\u4f3a\u670d\u5668", "\u9ad8\u6548\u80fd\u904b\u7b97"], "date": "2026-07-15", "episode": "EP679 | \ud83e\uddcc", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u6210\u672c\u4e0a\u6f32", "\u9700\u6c42\u6ce2\u52d5"], "view": "CCL\uff08\u9285\u7b94\u57fa\u677f\uff09\u662f\u5e02\u5834\u4e0a\u6975\u5ea6\u77ed\u7f3a\u7684\u7522\u54c1\uff0c\u6301\u7e8c\u8655\u65bc\u6f32\u50f9\u8da8\u52e2\u4e2d\uff0c\u4f46\u56e0\u70ba\u5df2\u7d93\u662f\u5e02\u5834\u5171\u8b58\u4e14\u50f9\u683c\u5df2\u9ad8\uff0c\u4e3b\u6301\u4eba\u4e0d\u6703\u523b\u610f\u53bb\u8ffd\u9010\u3002"}, {"catalysts": ["\u9ad8\u901f\u50b3\u8f38\u6a19\u6e96\u5347\u7d1a\uff08PCIe Gen6\uff09", "AI\u4f3a\u670d\u5668\u5c0d\u9ad8\u6027\u80fd\u677f\u6750\u9700\u6c42", "\u65b0\u6750\u6599\u6280\u8853\u7a81\u7834"], "date": "2026-09-19", "episode": "EP698 | \ud83c\udfae", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u6210\u672c\u58d3\u529b\u5927", "\u6280\u8853\u958b\u767c\u96e3\u5ea6\u9ad8", "\u4f9b\u61c9\u93c8\u4e0d\u7a69\u5b9a"], "view": "\u677f\u6750\uff08CCL\uff09\u7522\u696d\u540c\u6a23\u9762\u81e8\u50f9\u683c\u4e0a\u6f32\u8207\u6280\u8853\u5347\u7d1a\u7684\u58d3\u529b\u3002\u9ad8\u983b\u9ad8\u901f\u50b3\u8f38\u9700\u6c42\u63a8\u52d5\u6750\u6599\u6301\u7e8c\u5347\u7d1a\uff0c\u4f46\u82e5\u5c0e\u5165\u65b0\u6280\u8853\uff08\u5982PCIe Gen6\uff09\u5c07\u9700\u8981\u66f4\u6602\u8cb4\u7684\u6750\u6599\u3002\u77ed\u671f\u5167\u5e02\u5834\u53ef\u80fd\u56e0\u6210\u672c\u6216\u6280\u8853\u74f6\u9838\u800c\u51fa\u73fe\u964d\u898f\u7684\u8a0e\u8ad6\uff0c\u4f46\u9577\u671f\u5347\u7d1a\u8da8\u52e2\u4e0d\u8b8a\u3002"}], "name": "\u677f\u6750"}, "\u6a5f\u5668\u4eba": {"first_date": "2026-05-27", "mentions": [{"catalysts": ["\u81ea\u52d5\u5316\u9700\u6c42\u589e\u52a0", "\u9ad8\u6210\u9577\u6f5b\u529b", "\u653f\u7b56\u63a8\u52d5"], "date": "2026-05-27", "episode": "EP665 | \ud83c\udf38", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u77ed\u671f\u71df\u6536\u8ca2\u737b\u4f4e", "\u6280\u8853\u767c\u5c55\u8207\u5e02\u5834\u63a5\u53d7\u5ea6"], "view": "\u6a5f\u5668\u4eba\u7522\u696d\u96d6\u7136\u76ee\u524d\u71df\u6536\u4f54\u6bd4\u4e0d\u9ad8\uff0c\u4f46\u88ab\u8996\u70ba\u5177\u6709\u5de8\u5927\u6210\u9577\u6f5b\u529b\u7684\u65b0\u8208\u984c\u6750\u3002\u4e3b\u6301\u4eba\u5c0d\u5176\u672a\u4f86\u6210\u9577\u6027\u62b1\u6301\u6a02\u89c0\u614b\u5ea6\uff0c\u8a8d\u70ba\u5373\u4f7f\u521d\u671f\u71df\u6536\u4f54\u6bd4\u5c0f\uff0c\u4f46\u9ad8\u6210\u9577\u7387\u503c\u5f97\u95dc\u6ce8\u3002"}, {"catalysts": ["\u6280\u8853\u9032\u6b65", "\u6982\u5ff5\u6027\u8a0e\u8ad6\u71b1\u70c8"], "date": "2026-06-10", "episode": "EP669 | \ud83c\udf88", "outlook": "neutral", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u9810\u671f\u904e\u9ad8", "\u77ed\u671f\u5167\u7121\u6cd5\u514c\u73fe\u7372\u5229"], "view": "\u76ee\u524d\u8a0e\u8ad6\u71b1\u5ea6\u5f88\u9ad8\uff0c\u4f46\u4e3b\u6301\u4eba\u8a8d\u70ba\u6a5f\u5668\u4eba\u6280\u8853\u5728\u6d88\u8cbb\u5e02\u5834\u5927\u898f\u6a21\u61c9\u7528\u4ecd\u97003-5\u5e74\u4ee5\u4e0a\uff0c\u7576\u524d\u7092\u4f5c\u53ef\u80fd\u904e\u65e9\uff0c\u77ed\u671f\u5167\u96e3\u4ee5\u770b\u5230\u5be6\u8cea\u7684\u6578\u5b57\u8207\u7372\u5229\u3002"}, {"catalysts": ["\u8eca\u7528\u96fb\u5b50\u5316", "\u6a5f\u5668\u4eba\u6280\u8853\u767c\u5c55\u8207\u666e\u53ca", "\u4f9b\u61c9\u5546\u7a4d\u6975\u4f48\u5c40"], "date": "2026-06-17", "episode": "EP671 | \ud83c\udf3c", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["TXN"], "risks": ["\u521d\u671f\u767c\u5c55\u7de9\u6162", "\u5e02\u5834\u63a5\u53d7\u5ea6"], "view": "\u8eca\u7528\u96fb\u5b50\u8207\u6a5f\u5668\u4eba\u9818\u57df\u6b63\u53d7\u5230\u4e3b\u8981\u96f6\u7d44\u4ef6\u4f9b\u61c9\u5546\uff08\u5982\u5fb7\u5dde\u5100\u5668\uff09\u7684\u7a4d\u6975\u52a0\u55ae\uff0c\u986f\u793a\u9019\u5169\u500b\u7522\u696d\u7684\u7528\u91cf\u5728\u672a\u4f86\u5c07\u986f\u8457\u63d0\u5347\u3002\u4e3b\u6301\u4eba\u8a8d\u70ba\u9019\u662f\u65b0\u8208\u7684\u6210\u9577\u984c\u6750\uff0c\u503c\u5f97\u9577\u671f\u95dc\u6ce8\u3002"}], "name": "\u6a5f\u5668\u4eba"}, "\u77fd\u6676\u5713": {"first_date": "2026-07-01", "mentions": [{"catalysts": ["\u8cc7\u91d1\u63d0\u65e9\u4f48\u5c40", "\u534a\u5c0e\u9ad4\u7522\u696d\u5fa9\u7526"], "date": "2026-07-01", "episode": "EP675 | \ud83c\udfa2", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": [], "view": "\u77fd\u6676\u5713\u5e02\u5834\u539f\u9810\u671f\u4e0b\u534a\u5e74\u624d\u6709\u6a5f\u6703\uff0c\u4f46\u5df2\u63d0\u65e9\u53cd\u61c9\uff0c\u986f\u793a\u5e02\u5834\u8cc7\u91d1\u5c0d\u5176\u5f8c\u5e02\u770b\u6cd5\u6a02\u89c0\uff0c\u63d0\u65e9\u9032\u5834\u4f48\u5c40\u3002"}], "name": "\u77fd\u6676\u5713"}, "\u88ab\u52d5\u5143\u4ef6": {"first_date": "2026-05-30", "mentions": [{"catalysts": ["\u5168\u7403\u6027\u9700\u6c42\u589e\u9577", "\u50f9\u683c\u6301\u7e8c\u4e0a\u6f32", "\u9ad8\u6bdb\u5229\u7387\u56de\u5347"], "date": "2026-05-27", "episode": "EP665 | \ud83c\udf38", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["2327", "VSH", "VPG", "\u6c5f\u6d77"], "risks": ["\u77ed\u671f\u6295\u6a5f\u904e\u71b1"], "view": "\u88ab\u52d5\u5143\u4ef6\u7522\u696d\u6b63\u7d93\u6b77\u5f37\u52c1\u7684\u725b\u5e02\uff0c\u5168\u7403\u9700\u6c42\u6301\u7e8c\u589e\u9577\uff0c\u5118\u7ba1\u5e02\u5834\u53ef\u80fd\u5b58\u5728\u77ed\u671f\u6295\u6a5f\uff0c\u4f46\u5168\u7403\u6027\u7684\u6f32\u50f9\u8da8\u52e2\u548c\u6578\u64da\u986f\u793a\u9700\u6c42\u65fa\u76db\uff0c\u57fa\u672c\u9762\u5805\u5be6\u3002\u9810\u8a08\u6bdb\u5229\u7387\u548c\u71df\u6536\u5c07\u6703\u6301\u7e8c\u63d0\u5347\u3002"}, {"catalysts": ["AI\u9700\u6c42\u5e36\u52d5", "\u65e5\u5ee0\u64f4\u7522", "\u73fe\u8ca8\u5e02\u5834\u6975\u5ea6\u7f3a\u4e4f"], "date": "2026-05-30", "episode": "EP666 | \ud83c\udf50", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["3008", "8299"], "risks": ["\u5e02\u5834\u53cd\u61c9\u904e\u6162\u5c0e\u81f4\u932f\u5931\u6a5f\u6703"], "view": "\u5e02\u5834\u76ee\u524d\u95dc\u6ce8\u5ea6\u9ad8\uff0c\u4f46\u4e3b\u6301\u4eba\u8a8d\u70ba\u5e02\u5834\u53cd\u61c9\u8f03\u6162\uff0c\u9664\u4e86MLCC\u5916\uff0c\u5766\u96fb\u3001\u92c1\u96fb\u89e3\u96fb\u5bb9\u7b49\u5176\u4ed6\u5b50\u985e\u5225\u4e5f\u6975\u5ea6\u7f3a\u4e4f\uff0c\u4e14\u65e5\u672c\u4f9b\u61c9\u5546\u64f4\u5ee0\u7a4d\u6975\uff0c\u9810\u8a08\u5c07\u6301\u7e8c\u767c\u9175\u548c\u6210\u9577\u3002"}, {"catalysts": ["\u5e02\u5834\u9700\u6c42\u5f37\u52c1"], "date": "2026-06-10", "episode": "EP669 | \ud83c\udf88", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["2327"], "risks": [], "view": "\u5728\u8fd1\u671f\u5e02\u5834\u9707\u76ea\u4e2d\u8868\u73fe\u5f37\u52e2\uff0c\u4e3b\u6301\u4eba\u7c21\u77ed\u63d0\u53ca\u5176\u7a69\u5065\u8868\u73fe\u3002"}, {"catalysts": ["\u4f9b\u61c9\u93c8\u5eab\u5b58\u53bb\u5316", "AI\u3001\u96fb\u52d5\u8eca\u7b49\u65b0\u61c9\u7528\u5e36\u52d5\u9700\u6c42", "\u5ee0\u5546\u8b39\u614e\u64f4\u7522"], "date": "2026-06-13", "episode": "EP670 | \ud83e\udee1", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["2327"], "risks": ["\u5e02\u5834\u7af6\u722d\u52a0\u5287", "\u9700\u6c42\u4e0d\u5982\u9810\u671f"], "view": "\u88ab\u52d5\u5143\u4ef6\u7522\u696d\u5df2\u51fa\u73fe\u660e\u78ba\u7684\u6f32\u50f9\u8a0a\u865f\uff0c\u4e14\u6f32\u50f9\u7bc4\u570d\u5ee3\u6cdb\uff08\u4e0d\u540c\u5c3a\u5bf8\u3001\u5730\u5340\uff09\uff0c\u9810\u671f\u672c\u8f2a\u6f32\u50f9\u9031\u671f\u6703\u76f8\u5c0d\u8f03\u9577\uff0c\u56e0\u70ba\u5ee0\u5546\u5728\u64f4\u7522\u65b9\u9762\u8b8a\u5f97\u66f4\u70ba\u8b39\u614e\uff0c\u907f\u514d\u91cd\u8e48\u904e\u53bb\u904e\u5ea6\u64f4\u7522\u5c0e\u81f4\u50f9\u683c\u5d29\u76e4\u7684\u8986\u8f4d\u3002\u4e3b\u6301\u4eba\u5c0d\u6b64\u7522\u696d\u6301\u6b63\u9762\u770b\u6cd5\u3002"}, {"catalysts": ["\u4f9b\u8ca8\u77ed\u7f3a", "\u50f9\u683c\u98c6\u5347"], "date": "2026-06-17", "episode": "EP671 | \ud83c\udf3c", "outlook": "neutral", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u5e02\u5834\u904e\u71b1", "\u8cc7\u91d1\u6d41\u5411\u65b0\u8208\u984c\u6750"], "view": "\u88ab\u52d5\u5143\u4ef6\u5e02\u5834\u71b1\u5ea6\u6975\u9ad8\uff0c\u751a\u81f3\u6709\u4f9b\u8ca8\u65b7\u88c2\u5c0e\u81f4\u7684\u50f9\u683c\u98c6\u6f32\u3002\u5118\u7ba1\u76ee\u524d\u662f\u5e02\u5834\u4e2d\u6700\u5674\u767c\u7684\u985e\u80a1\uff0c\u4f46\u904e\u9ad8\u7684\u71b1\u5ea6\u53ef\u80fd\u9810\u793a\u8457\u5176\u53ef\u80fd\u9032\u5165\u76e4\u6574\uff0c\u4fc3\u4f7f\u8cc7\u91d1\u5c0b\u627e\u65b0\u7684\u6a5f\u6703\u3002"}, {"catalysts": ["\u9700\u6c42\u7aef\u5f37\u52c1", "\u4f9b\u7d66\u7dca\u5f35", "\u6210\u672c\u8f49\u5ac1\u80fd\u529b"], "date": "2026-06-24", "episode": "EP673 | \ud83e\udd6c", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["2382"], "risks": ["\u7522\u80fd\u5229\u7528\u7387\u521d\u671f\u4f4e\u4f30"], "view": "\u88ab\u52d5\u5143\u4ef6\u7522\u696d\u5728\u9700\u6c42\u7aef\u51fa\u73fe\u610f\u5916\u7684\u5f37\u52c1\u8868\u73fe\uff0c\u5c0e\u81f4\u4f9b\u61c9\u7dca\u5f35\u548c\u6f32\u50f9\u9810\u671f\u3002\u4e3b\u6301\u4eba\u8a8d\u70ba\u5e02\u5834\u5c0d\u6b64\u7522\u696d\u7684\u614b\u5ea6\u5f9e\u6700\u521d\u7684\u5ffd\u8996\u8f49\u8b8a\u70ba\u7a4d\u6975\u95dc\u6ce8\uff0c\u9810\u8a08\u672a\u4f86\u5c07\u6709\u66f4\u591a\u6f32\u50f9\u767c\u751f\u3002"}, {"catalysts": ["\u5168\u9762\u6f32\u50f9", "\u4f9b\u61c9\u93c8\u5403\u7dca", "\u5eab\u5b58\u8abf\u6574\u7d50\u675f"], "date": "2026-07-01", "episode": "EP675 | \ud83c\udfa2", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u6f32\u5e45\u904e\u5927\u5f8c\u7684\u4fee\u6b63", "\u5e02\u5834\u8ffd\u9ad8\u98a8\u96aa"], "view": "\u5e02\u5834\u8cc7\u91d1\u5df2\u5927\u5e45\u6e67\u5165\uff0c\u6f32\u50f9\u6f6e\u5df2\u5168\u9762\u555f\u52d5\uff0c\u5404\u5927\u5ee0\u5546\u9678\u7e8c\u767c\u51fa\u6f32\u50f9\u51fd\u3002\u96d6\u7136\u5df2\u6f32\u591a\uff0c\u4f46\u77ed\u671f\u5167\u4ecd\u5177 momentum\uff0c\u4f46\u6295\u8cc7\u8005\u9700\u8b39\u614e\uff0c\u4e0d\u5efa\u8b70\u8ffd\u9ad8\u3002"}, {"catalysts": ["AI\u9700\u6c42\u62c9\u52d5", "\u7f3a\u6599\u6f32\u50f9"], "date": "2026-07-04", "episode": "EP676 | \ud83d\udc2c", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u80a1\u50f9\u5df2\u53cd\u61c9\u5927\u90e8\u5206\u5229\u591a", "\u77ed\u671f\u4fee\u6b63\u58d3\u529b"], "view": "\u5728\u5e02\u5834\u4fee\u6b63\u5f8c\uff0c\u88ab\u52d5\u5143\u4ef6\u662f\u7387\u5148\u8f49\u5f37\u7684\u677f\u584a\u4e4b\u4e00\uff0c\u986f\u793a\u5e02\u5834\u8cc7\u91d1\u95dc\u6ce8\u3002\u9762\u81e8\u7f3a\u6599\uff0c\u4f46\u80a1\u50f9\u5df2\u6709\u4e00\u6ce2\u6f32\u5e45\uff0c\u4e0d\u5efa\u8b70\u76f2\u76ee\u8ffd\u9ad8\u3002"}, {"catalysts": ["\u6f32\u50f9\u6210\u529f\u4e14\u6301\u7e8c", "\u5927\u5ee0\u5e36\u52d5\u4e2d\u5c0f\u5ee0\u6f32\u50f9"], "date": "2026-07-11", "episode": "EP678 | \ud83c\udfae", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u5c11\u6578\u5ee0\u5546\u6f32\u50f9\u5931\u6557"], "view": "\u5927\u90e8\u5206\u88ab\u52d5\u5143\u4ef6\u5ee0\u5546\u5df2\u6210\u529f\u6f32\u50f9\uff0c\u9810\u8a08\u672a\u4f86\u4e00\u5230\u5169\u500b\u5b63\u5ea6\u5c07\u6301\u7e8c\u3002\u6f32\u50f9\u7b56\u7565\u5448\u73fe\u300c\u6bcd\u96de\u5e36\u5c0f\u96de\u300d\u6a21\u5f0f\uff0c\u7531\u5927\u5ee0\u5e36\u52d5\u4e2d\u5c0f\u5ee0\u3002"}, {"catalysts": [], "date": "2026-07-08", "episode": "EP677 | \ud83d\udc0e", "outlook": "neutral", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["\u570b\u5de8", "\u83ef\u65b0\u79d1"], "risks": ["\u8cc7\u91d1\u6d41\u51fa", "\u5927\u578b\u6cd5\u4eba\u89c0\u671b", "\u5e02\u5834\u6d88\u5316\u6642\u9593"], "view": "\u904e\u53bb\u662f\u5927\u578b\u6cd5\u4eba\u8cc7\u91d1\u505c\u6cca\u7684\u9996\u9078\uff0c\u4f46\u76ee\u524d\u8a31\u591a\u88ab\u52d5\u5143\u4ef6\u80a1\u5df2\u9032\u5165\u4fee\u6b63\u5340\u9593\uff0c\u672a\u4f86\u53ef\u80fd\u9700\u8981\u8f03\u9577\u6642\u9593\u7684\u76e4\u6574\u3002"}, {"catalysts": [], "date": "2026-07-18", "episode": "EP680 | \ud83d\udc94", "outlook": "neutral", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["6462"], "risks": [], "view": "\u5728\u7bc0\u76ee\u4e2d\u7c21\u77ed\u63d0\u53ca\uff0c\u672a\u7d66\u51fa\u660e\u78ba\u770b\u6cd5\u3002"}, {"catalysts": [], "date": "2026-07-15", "episode": "EP679 | \ud83e\uddcc", "outlook": "bearish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u80a1\u50f9\u88ab\u904e\u5ea6\u7092\u4f5c", "\u5e02\u5834\u60c5\u7dd2\u5f71\u97ff", "\u5eab\u5b58\u8abf\u6574"], "view": "\u88ab\u52d5\u5143\u4ef6\uff08MLCC\uff09\u76ee\u524d\u57fa\u672c\u9762\u7121\u5be6\u8cea\u8b8a\u5316\uff0c\u4f46\u80a1\u50f9\u6ce2\u52d5\u5287\u70c8\uff0c\u5148\u524d\u88ab\u7092\u4f5c\u904e\u9ad8\uff0c\u73fe\u5728\u7d93\u6b77\u5927\u5e45\u56de\u6a94\u3002\u4e3b\u6301\u4eba\u5df2\u4e0d\u518d\u8a55\u8ad6\uff0c\u56e0\u5176\u6ce2\u52d5\u6027\u904e\u5927\u3002"}, {"catalysts": ["AI\u8cc7\u6599\u4e2d\u5fc3\u529f\u8017\u589e\u9577", "\u4f3a\u670d\u5668\u5347\u7d1a\u8207\u63db\u4ee3", "\u96fb\u52d5\u8eca\u7b49\u65b0\u8208\u61c9\u7528\u9700\u6c42"], "date": "2026-05-23", "episode": "EP664 | \ud83d\udc1f", "outlook": "strong_bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u4f9b\u61c9\u93c8\u74f6\u9838\u5c0e\u81f4\u7f3a\u8ca8", "\u539f\u6750\u6599\u6210\u672c\u4e0a\u6f32"], "view": "\u88ab\u52d5\u5143\u4ef6\u5e02\u5834\u6b63\u7d93\u6b77\u300c\u8d85\u7d1a\u5927\u5674\u767c\u300d\uff0c\u5c24\u5176MLCC\u548c\u92c1\u96fb\u89e3\u96fb\u5bb9\u56e0\u8cc7\u6599\u4e2d\u5fc3\u9ad8\u529f\u8017\u9700\u6c42\u800c\u51fa\u73fe\u56b4\u91cd\u77ed\u7f3a\u3002\u9019\u80a1\u8da8\u52e2\u9810\u8a08\u5c07\u6301\u7e8c\u4e00\u6bb5\u6642\u9593\uff0c\u5e02\u5834\u9700\u6c42\u975e\u5e38\u5f37\u52c1\u3002"}], "name": "\u88ab\u52d5\u5143\u4ef6"}, "\u8a18\u61b6\u9ad4": {"first_date": "2026-07-01", "mentions": [{"catalysts": ["\u50f9\u683c\u4e0a\u6f32", "\u5e02\u5834\u9700\u6c42"], "date": "2026-07-01", "episode": "EP675 | \ud83c\udfa2", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["MU"], "risks": ["\u5e02\u5834\u4fee\u6b63", "\u6f32\u591a\u62c9\u56de"], "view": "\u8a18\u61b6\u9ad4\u7522\u696d\u66fe\u7d93\u6b77\u8d85\u4e4e\u60f3\u50cf\u7684\u300c\u9ec3\u5e36\u9b5a\u300d\u884c\u60c5\uff0c\u6f32\u50f9\u6f6e\u6703\u6301\u7e8c\u5230\u71df\u6536\u958b\u59cb\u51fa\u4f86\u4e26\u9032\u5165\u300c\u731c\u71df\u6536\u300d\u968e\u6bb5\u3002\u5373\u4fbf\u5982\u6b64\uff0c\u9b5a\u5c3e\u884c\u60c5\u4ecd\u53ef\u80fd\u6301\u7e8c\u5f88\u4e45\u3002"}, {"catalysts": ["\u6301\u7e8c\u7684\u6f32\u50f9\u8da8\u52e2", "\u5de8\u982d\u63a1\u8cfc\u9700\u6c42\u4e0d\u6e1b"], "date": "2026-07-11", "episode": "EP678 | \ud83c\udfae", "outlook": "neutral", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u6f32\u5e45\u6536\u6582", "\u5e02\u5834\u904e\u5ea6\u64c1\u64e0"], "view": "\u8a18\u61b6\u9ad4\u7522\u696d\u76ee\u524d\u6f32\u50f9\u8da8\u52e2\u4ecd\u5728\uff0c\u4f46\u6f32\u5e45\u958b\u59cb\u6536\u6582\u3002\u96d6\u7136\u7d55\u5c0d\u6578\u5b57\u6210\u9577\u5f37\u52c1\uff0c\u4f46\u4e3b\u6301\u4eba\u8a8d\u70ba\u5df2\u662f\u300c\u5c04\u5230\u5b87\u5b99\u300d\u7684\u72c0\u614b\uff0c\u672a\u4f86\u5c07\u8da8\u65bc\u7a69\u5b9a\u800c\u975e\u7206\u767c\u6027\u6210\u9577\u3002"}, {"catalysts": ["AI\u61c9\u7528\u9a45\u52d5\u8a18\u61b6\u9ad4\u5347\u7d1a", "\u7d42\u7aef\u8a2d\u5099\u9700\u6c42\u589e\u9577"], "date": "2026-07-18", "episode": "EP680 | \ud83d\udc94", "outlook": "neutral", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u5e02\u5834\u60c5\u7dd2\u932f\u6bba", "\u4f9b\u61c9\u904e\u5269\u98a8\u96aa", "\u50f9\u683c\u6ce2\u52d5\u5287\u70c8"], "view": "\u8a18\u61b6\u9ad4\u7522\u696d\u8fd1\u671f\u51fa\u73fe\u5927\u5e45\u56de\u6a94\uff0c\u4f46\u4e3b\u6301\u4eba\u8a8d\u70ba\u9019\u4e26\u975e\u7522\u696d\u57fa\u672c\u9762\u60e1\u5316\uff0c\u800c\u662f\u5e02\u5834\u7684\u96c6\u9ad4\u932f\u5224\u548c\u60c5\u7dd2\u6027\u6bba\u76e4\u3002\u9577\u671f\u4f86\u770b\uff0c\u8a18\u61b6\u9ad4\u7684\u9700\u6c42\u4ecd\u6709\u6210\u9577\u7a7a\u9593\uff0c\u4f46\u77ed\u671f\u80a1\u50f9\u8868\u73fe\u53ef\u80fd\u53d7\u60c5\u7dd2\u5f71\u97ff\u3002"}, {"catalysts": ["AI\u4f3a\u670d\u5668\u5c0dHBM\u548cDRAM\u7b49\u9ad8\u6027\u80fd\u8a18\u61b6\u9ad4\u7684\u9700\u6c42"], "date": "2026-07-29", "episode": "EP683 | \ud83d\ude91", "outlook": "bearish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u5e02\u5834\u4e0b\u884c\u5c0e\u81f4\u4f30\u503c\u91cd\u4f30", "\u6f5b\u5728\u7684\u7522\u80fd\u904e\u5269\u6216\u50f9\u683c\u6230", "\u4e2d\u570b\u7684\u6280\u8853\u8ffd\u8d95"], "view": "\u8a18\u61b6\u9ad4\u88ab\u5e02\u5834\u666e\u904d\u8a8d\u70ba\u662f\u6700\u7a00\u7f3a\u4e14\u524d\u666f\u770b\u597d\u7684\u95dc\u9375\u96f6\u7d44\u4ef6\u3002\u7136\u800c\uff0c\u97d3\u570b\u8a18\u61b6\u9ad4\u5de8\u982d\u7684\u91cd\u632b\uff0c\u5f15\u767c\u4e86\u4e3b\u6301\u4eba\u5c0d\u5176\u9ad8\u4f30\u503c\u80fd\u5426\u7dad\u6301\u7684\u7591\u616e\uff0c\u64d4\u5fc3\u5373\u4f7f\u662f\u6700\u770b\u597d\u7684\u9818\u57df\u4e5f\u9762\u81e8\u6df1\u5ea6\u8abf\u6574\u3002"}, {"catalysts": ["AI\u61c9\u7528\u9700\u6c42\u589e\u9577"], "date": "2026-07-25", "episode": "EP682 | \ud83e\udd95", "outlook": "neutral", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u653f\u5e9c\u4ecb\u5165\u5e73\u6291\u50f9\u683c", "\u5e02\u5834\u60c5\u7dd2\u6ce2\u52d5"], "view": "\u8a18\u61b6\u9ad4\u7522\u696d\u8fd1\u671f\u56e0\u5229\u6f64\u904e\u9ad8\u53ef\u80fd\u9762\u81e8\u653f\u5e9c\u4ecb\u5165\u7684\u98a8\u96aa\uff0c\u4f46\u9810\u671f\u50f9\u683c\u5c07\u5728\u4eca\u5e74Q4\u5230\u660e\u5e74Q1\u958b\u59cb\u6301\u5e73\u3002\u9577\u671f\u4f86\u770b\uff0c\u96a8\u8457AI\u767c\u5c55\u9700\u6c42\u4ecd\u770b\u6f32\uff0c\u4f46\u77ed\u671f\u53ef\u80fd\u56e0\u653f\u6cbb\u5e72\u9810\u548c\u5e02\u5834\u60c5\u7dd2\u5f71\u97ff\u3002"}, {"catalysts": ["\u5b63\u7bc0\u6027\u9700\u6c42"], "date": "2026-08-08", "episode": "EP686 | \ud83d\udd78\ufe0f", "outlook": "neutral", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u77ed\u671f\u50f9\u683c\u6ce2\u52d5"], "view": "\u9810\u8a08\u5728\u7b2c\u4e09\u3001\u7b2c\u56db\u5b63\u5ea6\u5831\u50f9\u6703\u6709\u5c0f\u5e45\u8da8\u7de9\uff0c\u4f46\u4e26\u975e\u5d29\u8dcc\u3002\u6574\u9ad4\u57fa\u672c\u9762\u4ecd\u5065\u5eb7\uff0c\u4e0d\u5f71\u97ff\u9577\u671f\u9700\u6c42\u3002"}, {"catalysts": ["\u660e\u78ba\u7684\u9700\u6c42\u5c55\u671b", "\u4f9b\u7d66\u7aef\u5403\u7dca\u6709\u5229\u65bc\u50f9\u683c\u7dad\u6301"], "date": "2026-08-19", "episode": "EP689 | \ud83c\udfd0", "outlook": "neutral", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["MU"], "risks": ["\u80a1\u50f9\u6f32\u5e45\u53ef\u80fd\u5df2\u63d0\u524d\u53cd\u6620\u5229\u591a", "\u82e5\u7121\u6cd5\u6301\u7e8c\u5f37\u52e2\uff0c\u6050\u5f71\u97ff\u6574\u9ad4\u79d1\u6280\u5e02\u5834\u60c5\u7dd2"], "view": "\u8a18\u61b6\u9ad4\u7522\u696d\uff08\u5982DRAM\uff09\u88ab\u8996\u70ba\u79d1\u6280\u5e02\u5834\u7684\u98a8\u5411\u7403\u3002\u5118\u7ba1\u5176\u9700\u6c42\u548c\u5c55\u671b\u660e\u78ba\uff0c\u4f46\u5982\u679c\u8a18\u61b6\u9ad4\u80a1\u50f9\u672a\u80fd\u6301\u7e8c\u5f37\u52e2\uff0c\u53ef\u80fd\u6703\u62d6\u7d2f\u5176\u4ed6\u79d1\u6280\u5143\u4ef6\u7684\u8868\u73fe\u3002\u76ee\u524d\u6210\u7e3e\u55ae\u8868\u73fe\u4e0d\u932f\uff0c\u4f46\u672a\u4f86\u7684\u80a1\u50f9\u8d70\u52e2\u4ecd\u9700\u89c0\u5bdf\u3002"}, {"catalysts": ["AI\u6a21\u578b\u5c0dHBM\u9700\u6c42\u6fc0\u589e", "\u6280\u8853\u8fed\u4ee3\u63d0\u5347\u6027\u80fd", "\u7522\u80fd\u5229\u7528\u7387\u9ad8"], "date": "2026-09-19", "episode": "EP698 | \ud83c\udfae", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u4f9b\u61c9\u93c8\u74f6\u9838", "\u50f9\u683c\u6ce2\u52d5\u5287\u70c8", "\u66ff\u4ee3\u6280\u8853\u767c\u5c55"], "view": "\u8a18\u61b6\u9ad4\uff08\u7279\u5225\u662fHBM\uff09\u50f9\u683c\u4e0a\u6f32\u662f\u534a\u5c0e\u9ad4\u4f9b\u61c9\u93c8\u4e2d\u7684\u4e00\u500b\u4e3b\u8981\u75db\u9ede\uff0c\u5ee0\u5546\u70ba\u6b64\u958b\u59cb\u8a0e\u8ad6\u662f\u5426\u8981\u964d\u4f4eHBM\u5c64\u6578\u6216\u5c0b\u627e\u66ff\u4ee3\u65b9\u6848\u3002\u7136\u800c\uff0c\u9019\u50c5\u662f\u61c9\u5c0d\u77ed\u671f\u7f3a\u8ca8\u548c\u6210\u672c\u58d3\u529b\u7684\u7b56\u7565\uff0c\u9577\u671f\u5c0d\u66f4\u9ad8\u6027\u80fd\u8a18\u61b6\u9ad4\u7684\u9700\u6c42\u4e0d\u8b8a\u3002"}], "name": "\u8a18\u61b6\u9ad4"}, "\u8cc7\u6599\u4e2d\u5fc3": {"first_date": "Sat, 15 Au", "mentions": [{"catalysts": ["AI \u4f3a\u670d\u5668\u529f\u8017\u5bc6\u5ea6\u6301\u7e8c\u63d0\u5347", "\u7bc0\u80fd\u6e1b\u78b3\u9700\u6c42\u9a45\u52d5\u9ad8\u6548\u96fb\u6e90\u8f49\u63db", "\u9ad8\u58d3\u76f4\u6d41\u4f9b\u96fb\u6280\u8853\u7684\u6210\u719f\u8207\u61c9\u7528"], "date": "2026-08-15", "episode": "EP688 | \ud83e\udd7d", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["NVDA", "AMD"], "risks": ["\u8f49\u578b\u6210\u672c\u9ad8\u6602\u8207\u6280\u8853\u6574\u5408\u8907\u96dc\u6027", "\u6cd5\u898f\u8207\u74b0\u4fdd\u5be9\u6279\u6d41\u7a0b\u6f2b\u9577"], "view": "\u8cc7\u6599\u4e2d\u5fc3\u6b63\u7d93\u6b77\u5f9e 54V \u50b3\u7d71\u67b6\u69cb\u5411 800V DC \u9ad8\u58d3\u67b6\u69cb\u7684\u8f49\u578b\uff0c\u4ee5\u61c9\u5c0d\u6a5f\u6ac3\u529f\u8017\u6fc0\u589e\u7684\u6311\u6230\u3002\u9019\u4e00\u8f49\u8b8a\u5c07\u5206\u968e\u6bb5\u9032\u884c\uff0c\u4e26\u5c0d\u96fb\u6e90\u7ba1\u7406\u3001\u6563\u71b1\u53ca\u9023\u63a5\u6280\u8853\u5e36\u4f86\u5de8\u5927\u9700\u6c42\u3002"}, {"catalysts": ["AI\u904b\u7b97\u9700\u6c42", "\u4f01\u696d\u6578\u4f4d\u8f49\u578b", "\u5168\u7403\u8cc7\u6599\u91cf\u589e\u9577"], "date": "2026-09-09", "episode": "EP695 | \ud83c\udf4a", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["GOOGL", "MSFT", "NVDA"], "risks": ["\u80fd\u6e90\u6d88\u8017", "\u5efa\u8a2d\u6210\u672c\u9ad8", "\u6280\u8853\u5347\u7d1a\u58d3\u529b"], "view": "AI\u57fa\u790e\u8a2d\u65bd\u662f\u76ee\u524d\u56de\u5831\u7387\u6700\u9ad8\u7684\u6295\u8cc7\u4e4b\u4e00\uff0c\u7279\u5225\u662f\u81ea\u7814\u6676\u7247\u53ca\u4f3a\u670d\u5668\u3002\u5927\u578b\u79d1\u6280\u516c\u53f8\u6b63\u7a4d\u6975\u64f4\u5927\u90e8\u7f72\uff0c\u986f\u793a\u7522\u696d\u524d\u666f\u5ee3\u95ca\u3002"}], "name": "\u8cc7\u6599\u4e2d\u5fc3"}, "\u8edf\u9ad4": {"first_date": "2026-05-30", "mentions": [{"catalysts": ["AI\u6280\u8853\u7684\u6df1\u5ea6\u6574\u5408\u8207\u61c9\u7528", "\u65b0\u8a08\u8cbb\u6a21\u5f0f\uff08\u5982token-based\uff09\u7684\u666e\u53ca", "\u4f01\u696d\u5c0d\u9ad8\u6548\u6578\u4f4d\u5316\u89e3\u6c7a\u65b9\u6848\u7684\u9700\u6c42"], "date": "2026-05-30", "episode": "EP666 | \ud83c\udf50", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["CRM", "NOW", "OKTA", "SNOW", "PLTR", "NET", "CRWD"], "risks": ["\u7f3a\u4e4f\u7368\u7279\u6578\u64da\u6216\u696d\u52d9\u6574\u5408\u80fd\u529b\u7684\u8edf\u9ad4\u516c\u53f8\u53ef\u80fd\u88ab\u6dd8\u6c70", "\u5e02\u5834\u5c0d\u50b3\u7d71\u8edf\u9ad4\u516c\u53f8\u8f49\u578b\u7684\u63a5\u53d7\u5ea6"], "view": "\u8edf\u9ad4\u7522\u696d\u5728AI\u8da8\u52e2\u4e0b\u5c55\u73fe\u51fa\u5f37\u52c1\u7684\u6210\u9577\u6f5b\u529b\uff0c\u7279\u5225\u662f\u90a3\u4e9b\u80fd\u6709\u6548\u6574\u5408AI\u3001\u63d0\u4f9b\u300c\u53ef\u6b78\u8cac\u6027\u300d\u548c\u300c\u696d\u52d9\u80fd\u529b\u300d\u7684\u4f01\u696d\u3002\u5e02\u5834\u8cc7\u91d1\u6b63\u5f9e\u57fa\u790e\u5efa\u8a2d\u8f49\u5411\u8edf\u9ad4\u61c9\u7528\uff0c\u9810\u671f\u5c07\u6709\u66f4\u591a\u50b3\u7d71\u8edf\u9ad4\u516c\u53f8\u6210\u529f\u8f49\u578b\uff0c\u63a1\u7528\u300ctoken-based\u300d\u7b49\u65b0\u578b\u8a08\u8cbb\u6a21\u5f0f\uff0c\u4e26\u5f9eAI\u8ce6\u80fd\u4e2d\u53d7\u76ca\u3002"}, {"catalysts": ["AI\u6280\u8853\u666e\u53ca", "token\u6210\u672c\u4e0b\u964d", "\u4f01\u696d\u8f49\u578b\u9700\u6c42"], "date": "2026-07-08", "episode": "EP677 | \ud83d\udc0e", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["PLTR", "CRWD", "NET"], "risks": ["\u5e02\u5834\u904e\u5ea6\u7092\u4f5c", "\u672a\u80fd\u5982\u671f\u91cf\u7522", "\u6982\u5ff5\u80a1\u7092\u4f5c"], "view": "\u53d7\u60e0\u65bc AI \u767c\u5c55\uff0c\u7576 token \u6210\u672c\u4e0b\u964d\u6642\uff0c\u8edf\u9ad4\u80a1\u7684\u6536\u76ca\u6709\u671b\u4e0a\u5347\uff0c\u90e8\u5206\u8edf\u9ad4\u80a1\u76ee\u524d\u5df2\u5448\u73fe\u5f37\u52e2\u3002"}, {"catalysts": [], "date": "2026-08-01", "episode": "EP684 | \ud83d\udd26", "outlook": "neutral", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": [], "view": "\u5728 Situational Awareness \u57fa\u91d1\u591a\u7a7a\u96d9\u8ce0\u7684\u6848\u4f8b\u4e2d\uff0c\u8edf\u9ad4\u80a1\u88ab\u653e\u7a7a\uff0c\u4f46\u5728\u57fa\u91d1\u906d\u91cd\u5275\u6642\u53cd\u800c\u4e0a\u6f32\uff0c\u986f\u793a\u5176\u5728\u5e02\u5834\u6975\u7aef\u6ce2\u52d5\u4e2d\u53ef\u80fd\u5177\u5099\u4e00\u5b9a\u7684\u9632\u79a6\u6027\u6216\u53cd\u5411\u8d70\u52e2\u3002"}, {"catalysts": ["\u8cc7\u91d1\u56de\u6d41", "\u8ca1\u5831\u8868\u73fe\u4eae\u773c"], "date": "2026-08-08", "episode": "EP686 | \ud83d\udd78\ufe0f", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["PLTR", "CFLR"], "risks": ["\u4f30\u503c\u76f8\u5c0d\u8f03\u9ad8"], "view": "\u7f8e\u80a1\u8cc7\u91d1\u660e\u986f\u56de\u6d41\uff0c\u76f8\u95dc\u516c\u53f8\u8ca1\u5831\u5f8c\u5f37\u52e2\u4e0a\u6f32\uff0c\u986f\u793a\u8edf\u9ad4\u80a1\u4ecd\u662f\u5e02\u5834\u8ffd\u9010\u7684\u7126\u9ede\uff0c\u5118\u7ba1\u90e8\u5206\u4f30\u503c\u504f\u9ad8\u3002"}, {"catalysts": ["\u6fc0\u9032\u7684\u92b7\u552e\u8207\u878d\u8cc7\u7b56\u7565\u63d0\u4f9b\u77ed\u671f\u71df\u6536\u52d5\u529b"], "date": "2026-09-12", "episode": "EP696 | \ud83c\udf96\ufe0f", "outlook": "bearish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": [], "risks": ["\u9700\u6c42\u865b\u80d6", "\u9577\u671f\u53ef\u6301\u7e8c\u6027\u554f\u984c", "\u878d\u8cc7\u6a21\u5f0f\u53ef\u80fd\u9762\u81e8\u76e3\u7ba1\u5be9\u67e5"], "view": "\u7532\u9aa8\u6587\uff08Oracle\uff09\u8fd1\u671f\u8ca1\u5831\u8868\u73fe\u53d7\u5230\u5176\u6fc0\u9032\u8ca1\u52d9\u5de5\u7a0b\uff08\u5982\u9810\u4ed8\u8cbb\u3001\u81ea\u5e36\u786c\u9ad4\u670d\u52d9\u53ca\u4f9b\u61c9\u5546\u878d\u8cc7\uff09\u7684\u63d0\u632f\uff0c\u4e3b\u6301\u4eba\u5c0d\u6b64\u6301\u61f7\u7591\u614b\u5ea6\uff0c\u8a8d\u70ba\u5176\u6210\u9577\u5b58\u5728\u300c\u865b\u80d6\u300d\u98a8\u96aa\u3002\u9019\u7a2e\u7b56\u7565\u5f15\u767c\u5c0d\u9700\u6c42\u53ef\u6301\u7e8c\u6027\u548c\u771f\u5be6\u6709\u6a5f\u6210\u9577\u7684\u64d4\u6182\u3002"}], "name": "\u8edf\u9ad4"}, "\u96f2\u7aef\u670d\u52d9": {"first_date": "2026-08-12", "mentions": [{"catalysts": ["AI\u767c\u5c55\u5e36\u52d5\u7b97\u529b\u9700\u6c42", "\u4f01\u696d\u8f49\u578b\u4e0a\u96f2", "\u57fa\u790e\u8a2d\u65bd\u6295\u8cc7\u589e\u52a0"], "date": "2026-08-12", "episode": "EP687 | \ud83d\udc27", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["GOOGL", "AMD"], "risks": ["\u6210\u672c\u9ad8\u6602", "\u6280\u8853\u5feb\u901f\u8fed\u4ee3", "\u5927\u578b\u696d\u8005\u58df\u65b7"], "view": "\u96f2\u7aef\u670d\u52d9\u5728AI\u6642\u4ee3\u5c07\u6210\u70ba\u6838\u5fc3\u57fa\u790e\u8a2d\u65bd\uff0c\u985e\u4f3c\u65bc\u300c\u6578\u4f4d\u6642\u4ee3\u7684\u9435\u8def\u8207\u96fb\u7db2\u300d\u3002\u63d0\u4f9b\u7b97\u529b\u8207\u5e73\u53f0\u5c07\u662f\u91cd\u8981\u7684\u5546\u696d\u6a21\u5f0f\uff0c\u5438\u5f15\u50cf\u5df4\u83f2\u7279\u9019\u6a23\u7684\u5927\u578b\u6295\u8cc7\u8005\u3002"}], "name": "\u96f2\u7aef\u670d\u52d9"}, "\u96f2\u7aef\u904b\u7b97": {"first_date": "2026-05-27", "mentions": [{"catalysts": ["AI\u7b97\u529b\u9700\u6c42\u7121\u9650", "\u5730\u7de3\u653f\u6cbb\u8207\u57fa\u790e\u8a2d\u65bd\u9650\u5236", "\u6210\u672c\u512a\u52e2\u8207\u6548\u7387\u63d0\u5347"], "date": "2026-05-27", "episode": "EP665 | \ud83c\udf38", "outlook": "strong_bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["SPCX"], "risks": ["\u6280\u8853\u53ef\u884c\u6027", "\u653f\u7b56\u6cd5\u898f", "\u5b89\u5168\u554f\u984c"], "view": "\u6307\u7684\u662f\u885b\u661f\u8ecc\u9053\u4e0a\u7684AI\u904b\u7b97\u670d\u52d9\uff0c\u4e3b\u6301\u4eba\u9810\u8a08\u9019\u5c07\u6210\u70baAI\u7b97\u529b\u4f9b\u7d66\u7684\u65b0\u6a21\u5f0f\u3002\u9019\u4e0d\u50c5\u89e3\u6c7a\u4e86\u5730\u7403\u8cc7\u6e90\u9650\u5236\uff0c\u4e5f\u70ba\u65b0\u7684\u5546\u696d\u6a21\u5f0f\u548c\u6295\u8cc7\u6a5f\u6703\u6253\u958b\u5927\u9580\uff0c\u662f\u672a\u4f86\u9ad8\u79d1\u6280\u767c\u5c55\u7684\u91cd\u8981\u65b9\u5411\u3002"}, {"catalysts": ["\u4f01\u696d\u6578\u64da\u8655\u7406\u9700\u6c42\u589e\u52a0", "\u9ad8\u968e AI \u6a21\u578b\u4ecd\u9700\u96f2\u7aef\u652f\u63f4"], "date": "2026-06-03", "episode": "EP667 | \ud83c\udf0d", "outlook": "neutral", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["SNOW"], "risks": ["\u672c\u5730\u7aef\u6a21\u578b\u66ff\u4ee3\u90e8\u5206\u96f2\u7aef\u9700\u6c42", "\u6210\u672c\u7af6\u722d\u6fc0\u70c8"], "view": "\u96d6\u7136 AI PC \u7684\u767c\u5c55\u53ef\u80fd\u964d\u4f4e\u5c0d\u96f2\u7aef\u6700\u524d\u7aef\u6a21\u578b\u7684\u9700\u6c42\uff0c\u4f46\u96f2\u7aef\u57fa\u790e\u8a2d\u65bd\uff08Data Center\uff09\u7684\u9700\u6c42\u4e26\u4e0d\u6703\u6d88\u5931\uff0c\u53cd\u800c\u66f4\u9032\u968e\u7684\u96f2\u7aef\u670d\u52d9\u548c\u9023\u7d50\u9700\u6c42\u6703\u6301\u7e8c\u6210\u9577\u3002\u96f2\u7aef\u4f9b\u61c9\u5546\u5c07\u8f49\u578b\u63d0\u4f9b\u66f4\u8907\u96dc\u3001\u66f4\u524d\u6cbf\u7684\u670d\u52d9\u3002"}, {"catalysts": ["AI\u7b97\u529b\u9700\u6c42\u589e\u9577", "\u79d1\u6280\u5de8\u982d\u6295\u5165"], "date": "2026-07-04", "episode": "EP676 | \ud83d\udc2c", "outlook": "neutral", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["META", "GOOGL"], "risks": ["\u7af6\u722d\u52a0\u5287", "\u5b9a\u50f9\u58d3\u529b", "\u6280\u8853\u8fed\u4ee3\u901f\u5ea6\u5feb"], "view": "Meta\u63a8\u51faNeoCloud\u670d\u52d9\uff0c\u6a19\u8a8c\u8457\u66f4\u591a\u79d1\u6280\u5de8\u982d\u5c07\u5176AI\u7b97\u529b\u5546\u696d\u5316\uff0c\u9810\u8a08\u6703\u52a0\u5287\u96f2\u7aef\u670d\u52d9\u5e02\u5834\u7684\u7af6\u722d\uff0c\u5c0d\u5c0f\u578b\u96f2\u7aef\u4f9b\u61c9\u5546\u69cb\u6210\u5a01\u8105\u3002"}, {"catalysts": ["AI\u767c\u5c55\u63a8\u52d5\u96f2\u7aef\u904b\u7b97\u9700\u6c42", "\u5ba2\u6236\u9ecf\u8457\u5ea6\u9ad8", "\u9577\u671f\u5408\u7d04\u6a21\u5f0f"], "date": "2026-09-09", "episode": "EP695 | \ud83c\udf4a", "outlook": "bullish", "podcast": "Gooaye \u80a1\u764c", "related_stocks": ["GOOGL", "MSFT", "ORCL", "AMZN"], "risks": ["\u9ad8\u8cc7\u672c\u652f\u51fa", "\u5e02\u5834\u7af6\u722d", "\u672a\u4f86\u4f9b\u9700\u5931\u8861\u5c0e\u81f4\u50f9\u683c\u6230"], "view": "\u96f2\u7aef\u5de8\u982d\u7a4d\u6975\u6295\u8cc7AI\u57fa\u790e\u8a2d\u65bd\uff0c\u8f49\u578b\u70ba\u9ad8\u56de\u5831\u7684\u4f9b\u61c9\u5546\u3002\u5ba2\u6236\u8d85\u984d\u6d88\u8cbb\u548c\u65b0\u5ba2\u7372\u53d6\u901f\u5ea6\u986f\u793a\u5f37\u52c1\u589e\u9577\u3002\u5118\u7ba1\u524d\u671f\u8cc7\u672c\u652f\u51fa\u5927\uff0c\u4f46\u9577\u671f\u5408\u7d04\u6a21\u5f0f\u78ba\u4fdd\u7a69\u5b9a\u56de\u6536\u3002"}], "name": "\u96f2\u7aef\u904b\u7b97"}};
+
+function filterOutlook(val, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.ind-card').forEach(c => {
+    c.style.display = (val === 'ALL' || c.dataset.outlook === val) ? '' : 'none';
+  });
+}
+
+function openModal(name) {
+  const ind = industriesData[name];
+  if (!ind) return;
+
+  document.getElementById('modal-title').textContent = name;
+  const total = ind.mentions.length;
+  document.getElementById('modal-sub').textContent = `共 ${total} 次提及 · 首次：${ind.first_date}`;
+
+  const outlookLabel = { bullish: '📈 看漲', strong_bullish: '📈 看漲', neutral: '📊 中性', bearish: '📉 看跌', strong_bearish: '📉 看跌' };
+  const timeline = document.getElementById('modal-timeline');
+  timeline.innerHTML = '';
+
+  // 最新的排前面
+  const sorted = [...ind.mentions].sort((a, b) => new Date(b.date) - new Date(a.date));
+  sorted.forEach(m => {
+    const div = document.createElement('div');
+    div.className = 'tl-item';
+
+    const catalystsHtml = m.catalysts?.length
+      ? `<div class="factor-group">
+           <div class="factor-label">利多 / 驅動</div>
+           <ul class="factor-list catalysts">${m.catalysts.map(c => `<li>${c}</li>`).join('')}</ul>
+         </div>` : '';
+
+    const risksHtml = m.risks?.length
+      ? `<div class="factor-group">
+           <div class="factor-label">風險 / 隱憂</div>
+           <ul class="factor-list risks">${m.risks.map(r => `<li>${r}</li>`).join('')}</ul>
+         </div>` : '';
+
+    const stocksHtml = m.related_stocks?.length
+      ? `<div class="related-stocks-row">${m.related_stocks.map(s => `<span class="rel-stock" onclick="goToStock('${s}',event)">${s}</span>`).join('')}</div>` : '';
+
+    const factorHtml = (catalystsHtml || risksHtml)
+      ? `<div class="factor-row">${catalystsHtml}${risksHtml}</div>` : '';
+
+    div.innerHTML = `
+      <div class="tl-dot ${m.outlook}"></div>
+      <div class="tl-date">${m.date}</div>
+      <div class="tl-episode">📻 ${m.podcast} · ${m.episode}</div>
+      <span class="tl-outlook outlook-chip ${m.outlook}">${outlookLabel[m.outlook] || m.outlook}</span>
+      <div class="tl-view">${m.view}</div>
+      ${factorHtml}
+      ${stocksHtml}
+    `;
+    timeline.appendChild(div);
+  });
+
+  document.getElementById('overlay').classList.add('open');
+}
+
+// ── Merge Select Mode ──
+let mergeSelectSource = null;
+
+function startMergeSelect(name) {
+  mergeSelectSource = name;
+  const grid = document.getElementById('grid');
+  grid.classList.add('merge-select-mode');
+  document.querySelectorAll('.ind-card').forEach(c => {
+    if (c.dataset.name === name) c.classList.add('merge-source');
+  });
+  document.getElementById('mergeHint').classList.add('open');
+}
+
+function cancelMergeSelect() {
+  mergeSelectSource = null;
+  document.getElementById('grid').classList.remove('merge-select-mode');
+  document.querySelectorAll('.ind-card').forEach(c => c.classList.remove('merge-source'));
+  document.getElementById('mergeHint').classList.remove('open');
+}
+
+function cardClick(e, name) {
+  if (mergeSelectSource) {
+    if (name === mergeSelectSource) { cancelMergeSelect(); return; }
+    // 選定目標，開確認 dialog
+    pendingMerge = { source: mergeSelectSource, target: name };
+    document.getElementById('merge-source-name').textContent = mergeSelectSource;
+    document.getElementById('merge-target-name').textContent = name;
+    cancelMergeSelect();
+    document.getElementById('mergeOverlay').classList.add('open');
+  } else {
+    openModal(name);
+  }
+}
+
+// ── Drag & Drop Merge ──
+let dragSourceName = null;
+let pendingMerge = { source: null, target: null };
+
+function onDragStart(e, name) {
+  dragSourceName = name;
+  setTimeout(() => e.target.classList.add('dragging'), 0);
+  e.dataTransfer.effectAllowed = 'move';
+}
+
+function onDragOver(e) {
+  e.preventDefault();
+  const card = e.currentTarget;
+  if (card.dataset.name !== dragSourceName) {
+    card.classList.add('drop-target');
+  }
+  e.dataTransfer.dropEffect = 'move';
+}
+
+function onDragLeave(e) {
+  e.currentTarget.classList.remove('drop-target');
+}
+
+function onDrop(e, targetName) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('drop-target');
+  if (!dragSourceName || dragSourceName === targetName) return;
+  pendingMerge = { source: dragSourceName, target: targetName };
+  document.getElementById('merge-source-name').textContent = dragSourceName;
+  document.getElementById('merge-target-name').textContent = targetName;
+  document.getElementById('mergeOverlay').classList.add('open');
+}
+
+function onDragEnd(e) {
+  e.target.classList.remove('dragging');
+  document.querySelectorAll('.drop-target').forEach(c => c.classList.remove('drop-target'));
+  dragSourceName = null;
+}
+
+function closeMergeDialog() {
+  document.getElementById('mergeOverlay').classList.remove('open');
+  pendingMerge = { source: null, target: null };
+}
+
+function confirmMerge() {
+  if (STATIC_EXPORT) return; // 靜態存檔沒有後端可寫入
+  const { source, target } = pendingMerge;
+  if (!source || !target) return;
+  fetch('/api/industries/merge', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ source, target })
+  })
+  .then(r => r.json())
+  .then(d => {
+    if (d.ok) {
+      closeMergeDialog();
+      // 移除來源卡片
+      const sourceCard = document.querySelector(`.ind-card[data-name="${source}"]`);
+      if (sourceCard) {
+        sourceCard.style.transition = 'opacity 0.3s, transform 0.3s';
+        sourceCard.style.opacity = '0';
+        sourceCard.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          sourceCard.remove();
+          const allBtn = document.querySelector('.filter-btn.active');
+          if (allBtn && allBtn.textContent.startsWith('全部')) {
+            const remaining = document.querySelectorAll('.ind-card').length;
+            allBtn.textContent = `全部 (${remaining})`;
+          }
+        }, 300);
+      }
+      // 高亮目標卡片
+      const targetCard = document.querySelector(`.ind-card[data-name="${target}"]`);
+      if (targetCard) {
+        targetCard.style.transition = 'box-shadow 0.3s';
+        targetCard.style.boxShadow = '0 0 0 2px #6366f1';
+        setTimeout(() => targetCard.style.boxShadow = '', 1500);
+      }
+    }
+  });
+}
+
+function removeIndustry(name, cardEl) {
+  if (STATIC_EXPORT) return; // 靜態存檔沒有後端可寫入
+  const btn = cardEl.querySelector('.ind-remove-btn');
+  if (btn && btn.dataset.confirm !== '1') {
+    btn.dataset.confirm = '1';
+    btn.textContent = '確定？';
+    btn.style.background = 'rgba(239,68,68,0.2)';
+    btn.style.borderColor = '#ef4444';
+    btn.style.color = '#ef4444';
+    setTimeout(() => {
+      if (btn.dataset.confirm === '1') {
+        btn.dataset.confirm = '';
+        btn.textContent = '✕';
+        btn.style.background = '';
+        btn.style.borderColor = '';
+        btn.style.color = '';
+      }
+    }, 2500);
+    return;
+  }
+  fetch('/api/industries/remove', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name })
+  })
+  .then(r => r.json())
+  .then(d => {
+    if (d.ok) {
+      cardEl.style.transition = 'opacity 0.3s, transform 0.3s';
+      cardEl.style.opacity = '0';
+      cardEl.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        cardEl.remove();
+        // 更新全部計數
+        const allBtn = document.querySelector('.filter-btn.active');
+        if (allBtn && allBtn.textContent.startsWith('全部')) {
+          const remaining = document.querySelectorAll('.ind-card').length;
+          allBtn.textContent = `全部 (${remaining})`;
+        }
+      }, 300);
+    }
+  });
+}
+
+function closeModal() { document.getElementById('overlay').classList.remove('open'); }
+function closeOnOverlay(e) { if (e.target === document.getElementById('overlay')) closeModal(); }
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    cancelMergeSelect();
+    closeStockPopupBtn();
+    closeModal();
+  }
+});
+
+// ── Stock Popup ──
+let spChartInstance = null;
+
+function goToStock(symbol, e) {
+  if (e) e.stopPropagation();
+  const market = /^\d+$/.test(symbol) ? 'TW' : 'US';
+  showStockPopup(market, symbol);
+}
+
+async function showStockPopup(market, symbol) {
+  if (STATIC_EXPORT) return; // 靜態存檔沒有後端可查即時股價/追蹤清單
+  const overlay = document.getElementById('stockPopupOverlay');
+  overlay.classList.add('open');
+
+  document.getElementById('sp-symbol').textContent = symbol;
+  document.getElementById('sp-name').textContent = '載入中...';
+  document.getElementById('sp-base').textContent = '—';
+  document.getElementById('sp-cur').textContent = '—';
+  document.getElementById('sp-pct').textContent = '—';
+  document.getElementById('sp-pct').style.color = '';
+  document.getElementById('sp-mentions').innerHTML = '<div style="color:#444;font-size:13px;padding:12px 0">載入中...</div>';
+  document.getElementById('sp-wl-link').href = `/watchlist#${market}:${symbol}`;
+  if (spChartInstance) { spChartInstance.destroy(); spChartInstance = null; }
+
+  try {
+    const [priceRes, wlRes] = await Promise.all([
+      fetch(`/api/price/${market}/${symbol}`),
+      fetch('/api/watchlist')
+    ]);
+    const priceData = await priceRes.json();
+    const wl = await wlRes.json();
+    const key = `${market}:${symbol}`;
+    const stock = wl[key];
+
+    document.getElementById('sp-name').textContent =
+      (stock?.name ? stock.name + '  ·  ' : '') + (market === 'TW' ? '🇹🇼 台股' : '🇺🇸 美股');
+
+    if (priceData.closes && priceData.closes.length) {
+      const pct = priceData.pct_change;
+      document.getElementById('sp-base').textContent = priceData.base_price;
+      document.getElementById('sp-cur').textContent = priceData.current_price;
+      const pctEl = document.getElementById('sp-pct');
+      pctEl.textContent = (pct >= 0 ? '+' : '') + pct + '%';
+      pctEl.style.color = pct > 0 ? '#22c55e' : pct < 0 ? '#ef4444' : '#888';
+
+      const color = pct >= 0 ? '#22c55e' : '#ef4444';
+      const ctx = document.getElementById('sp-chart-canvas').getContext('2d');
+      spChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: { labels: priceData.dates, datasets: [{
+          data: priceData.closes, borderColor: color, borderWidth: 2,
+          pointRadius: 0, fill: true,
+          backgroundColor: pct >= 0 ? 'rgba(34,197,94,0.08)' : 'rgba(239,68,68,0.08)'
+        }]},
+        options: { responsive: true, maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { ticks: { color: '#3a3a3a', maxTicksLimit: 5, font: { size: 10 } }, grid: { color: '#1a1a1a' } },
+            y: { ticks: { color: '#3a3a3a', font: { size: 10 } }, grid: { color: '#222' } }
+          }
+        }
+      });
+    } else {
+      document.getElementById('sp-base').textContent = '未追蹤';
+    }
+
+    const mentionsEl = document.getElementById('sp-mentions');
+    if (!stock) {
+      mentionsEl.innerHTML = `<div class="sp-not-tracked">此股票尚未在追蹤清單中</div>`;
+    } else {
+      const ratingLabel = { strong_buy:'⭐ 強烈看好', buy:'👍 偏多', neutral:'🤝 觀望', sell:'👎 偏空', strong_sell:'🚨 強烈看空' };
+      const sorted = [...(stock.mentions || [])].sort((a,b) => b.date.localeCompare(a.date));
+      mentionsEl.innerHTML = sorted.map(m => `
+        <div class="sp-mention">
+          <div class="date">${m.date}  ·  ${m.podcast} · ${m.episode.slice(0,30)}
+            ${m.rating ? `  <span style="font-size:11px;color:#666">${ratingLabel[m.rating]||m.rating}</span>` : ''}
+          </div>
+          ${m.view ? `<div class="view">${m.view}</div>` : ''}
+        </div>`).join('');
+    }
+  } catch(e) {
+    document.getElementById('sp-mentions').innerHTML = `<div class="sp-not-tracked">載入失敗</div>`;
+  }
+}
+
+function closeStockPopupBtn() {
+  document.getElementById('stockPopupOverlay').classList.remove('open');
+  if (spChartInstance) { spChartInstance.destroy(); spChartInstance = null; }
+}
+function closeStockPopup(e) {
+  if (e.target === document.getElementById('stockPopupOverlay')) closeStockPopupBtn();
+}
+</script>
+
+    </main>
+  </div>
+</div>
+<script>
+(function() {
+  var saved = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+  document.getElementById('dr-theme-btn').textContent = saved === 'dark' ? '🌙' : '☀️';
+})();
+function drToggleTheme() {
+  var cur = document.documentElement.getAttribute('data-theme');
+  var next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+  document.getElementById('dr-theme-btn').textContent = next === 'dark' ? '🌙' : '☀️';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+window.TW_MARKET_OVERVIEW = {
+  "twii_close": 48353.48828125,
+  "twii_chg": 413.359375,
+  "twii_pct": 0.862240850057685,
+  "ytd_0050": 72.05409961864012,
+  "market_status": "強勢區",
+  "market_detail": "多頭慣性，00631L 站上 20MA（37.2）",
+  "etf_close": 39.619998931884766,
+  "etf_ma20": 37.204000282287595
+};

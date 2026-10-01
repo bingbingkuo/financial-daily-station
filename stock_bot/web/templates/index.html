@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>📈 股票機器人儀表板</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg:       #000000;
+      --surface:  #111111;
+      --border:   #222222;
+      --text:     #ffffff;
+      --muted:    #888888;
+      --green:    #22c55e;
+      --red:      #ef4444;
+      --accent:   #ff6eb4;
+      --accent2:  #ff9fd0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ── Navbar ── */
+    .navbar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 24px;
+    }
+    .navbar-brand {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text) !important;
+      letter-spacing: -.3px;
+    }
+    .navbar-brand span { color: var(--accent); }
+
+    /* ── Tabs ── */
+    .tab-bar {
+      display: flex;
+      gap: 4px;
+      background: var(--surface);
+      padding: 8px 24px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .tab-btn {
+      padding: 8px 20px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: .95rem;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .tab-btn.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    .tab-btn:hover:not(.active) { color: var(--text); }
+
+    /* ── Main container ── */
+    .main { padding: 24px; max-width: 1100px; margin: 0 auto; }
+
+    /* ── Action bar ── */
+    .action-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .btn-send {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 18px;
+      border: none; border-radius: 8px;
+      font-weight: 600; font-size: .9rem;
+      cursor: pointer; transition: all .2s;
+    }
+    .btn-send-tw { background: linear-gradient(135deg, #06b6d4, #0891b2); color: #fff; }
+    .btn-send-us { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; }
+    .btn-send:hover { opacity: .85; transform: translateY(-1px); }
+    .btn-send:active { transform: translateY(0); }
+    .btn-send:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+    .btn-refresh {
+      margin-left: auto;
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 16px;
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--muted); border-radius: 8px;
+      font-size: .88rem; font-weight: 600; cursor: pointer;
+      transition: all .2s;
+    }
+    .btn-refresh:hover { color: var(--text); border-color: var(--accent); }
+
+    /* ── Stock grid ── */
+    .stock-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+    .stock-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      position: relative;
+      transition: border-color .2s, transform .15s;
+    }
+    .stock-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    /* 美股：綠漲紅跌 */
+    .stock-card.up   { border-left: 3px solid var(--green); }
+    .stock-card.down { border-left: 3px solid var(--red); }
+    .stock-card.flat { border-left: 3px solid var(--muted); }
+    /* 台股：紅漲綠跌 */
+    .stock-card.tw-up   { border-left: 3px solid var(--red); }
+    .stock-card.tw-down { border-left: 3px solid var(--green); }
+
+    .card-code {
+      font-size: .8rem; font-weight: 700;
+      color: var(--muted); letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+    .card-name {
+      font-size: 1rem; font-weight: 700;
+      color: var(--text); margin: 2px 0 10px;
+    }
+    .card-price {
+      font-size: 1.5rem; font-weight: 700;
+      line-height: 1.1;
+    }
+    /* 美股：綠漲紅跌 */
+    .card-price.up   { color: var(--green); }
+    .card-price.down { color: var(--red); }
+    .card-price.flat { color: var(--muted); }
+    /* 台股：紅漲綠跌 */
+    .card-price.tw-up   { color: var(--red); }
+    .card-price.tw-down { color: var(--green); }
+    .card-change {
+      font-size: .82rem; font-weight: 600;
+      margin-top: 4px;
+    }
+    /* 美股：綠漲紅跌 */
+    .card-change.up   { color: var(--green); }
+    .card-change.down { color: var(--red); }
+    .card-change.flat { color: var(--muted); }
+    /* 台股：紅漲綠跌 */
+    .card-change.tw-up   { color: var(--red); }
+    .card-change.tw-down { color: var(--green); }
+
+    /* ── 注意 / 處置 badge ── */
+    .flag-badge {
+      display: inline-block;
+      font-size: .68rem; font-weight: 700;
+      padding: 2px 7px; border-radius: 4px;
+      margin-top: 6px; letter-spacing: .3px;
+    }
+    .flag-badge.attention  { background: rgba(245,158,11,.18); color: #f59e0b; border: 1px solid rgba(245,158,11,.35); }
+    .flag-badge.disposition{ background: rgba(239,68,68,.18);  color: #ef4444; border: 1px solid rgba(239,68,68,.35); }
+
+    .btn-del {
+      position: absolute; top: 10px; right: 10px;
+      background: transparent; border: none;
+      color: var(--border); font-size: 1rem;
+      cursor: pointer; padding: 2px 6px; border-radius: 4px;
+      transition: color .2s, background .2s;
+    }
+    .btn-del:hover { color: var(--red); background: rgba(239,68,68,.1); }
+
+    .loading-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100px; color: var(--muted); font-size: .9rem; gap: 8px;
+    }
+
+    /* ── Add form ── */
+    .add-section {
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+    }
+    .add-section h6 {
+      color: var(--muted); font-size: .8rem;
+      font-weight: 700; letter-spacing: .5px;
+      text-transform: uppercase; margin-bottom: 14px;
+    }
+    .add-form {
+      display: flex; gap: 10px; flex-wrap: wrap;
+    }
+    .add-input {
+      flex: 1; min-width: 130px;
+      background: var(--bg); border: 1px solid var(--border);
+      color: var(--text); border-radius: 8px;
+      padding: 9px 14px; font-size: .9rem;
+      outline: none; transition: border-color .2s;
+    }
+    .add-input:focus { border-color: var(--accent); }
+    .add-input::placeholder { color: var(--muted); }
+    .btn-add {
+      padding: 9px 20px;
+      background: var(--accent); color: #fff;
+      border: none; border-radius: 8px;
+      font-weight: 700; font-size: .9rem;
+      cursor: pointer; transition: all .2s;
+      white-space: nowrap;
+    }
+    .btn-add:hover { background: var(--accent2); }
+
+    /* ── Toast ── */
+    .toast-wrap {
+      position: fixed; bottom: 28px; right: 28px; z-index: 9999;
+      display: flex; flex-direction: column; gap: 10px;
+      pointer-events: none;
+    }
+    .toast-msg {
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--text); padding: 12px 18px;
+      border-radius: 10px; font-size: .9rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,.4);
+      animation: slideIn .3s ease;
+      pointer-events: auto;
+    }
+    .toast-msg.success { border-left: 3px solid var(--green); }
+    .toast-msg.error   { border-left: 3px solid var(--red); }
+    @keyframes slideIn {
+      from { opacity:0; transform: translateX(30px); }
+      to   { opacity:1; transform: translateX(0); }
+    }
+
+    /* ── Spinner ── */
+    .spinner {
+      width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      display: inline-block;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Empty state ── */
+    .empty-state {
+      text-align: center; padding: 40px 20px;
+      color: var(--muted); font-size: .95rem;
+    }
+    .empty-state i { font-size: 2.5rem; display: block; margin-bottom: 8px; }
+
+    /* ── Last updated ── */
+    .last-update {
+      font-size: .78rem; color: var(--muted);
+      margin-left: 8px;
+    }
+
+    /* Tab panel hidden */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <span class="navbar-brand"><span>📈</span> 股票機器人儀表板</span>
+  <span class="last-update" id="lastUpdate"></span>
+</nav>
+
+<!-- Tabs -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('tw', this)">
+    🇹🇼 台股持倉
+  </button>
+  <button class="tab-btn" onclick="switchTab('us', this)">
+    🇺🇸 美股持倉
+  </button>
+  <button class="tab-btn" onclick="switchTab('cal', this)">
+    📅 持倉行程
+  </button>
+  <button class="tab-btn" onclick="switchTab('macro', this)">
+    🌐 總體經濟
+  </button>
+  <button class="tab-btn" onclick="switchTab('radar', this)">
+    ⚡ 漲價雷達
+  </button>
+</div>
+
+<!-- Main -->
+<div class="main">
+
+  <!-- ── 台股 Panel ── -->
+  <div class="tab-panel active" id="panel-tw">
+    <div class="action-bar">
+      <button class="btn-send btn-send-tw" id="btn-trigger-tw" onclick="triggerReport('tw')">
+        <i class="bi bi-send-fill"></i> 發送台股報告
+      </button>
+      <button class="btn-refresh" onclick="loadPortfolio()">
+        <i class="bi bi-arrow-clockwise" id="refresh-icon"></i> 刷新報價
+      </button>
+    </div>
+    <div class="stock-grid" id="grid-tw">
+      <div class="loading-card"><span class="spinner"></span> 載入中...</div>
+    </div>
+    <div class="add-section">
+      <h6><i class="bi bi-plus-circle"></i> 新增台股</h6>
+      <div class="add-form">
+        <input class="add-input" id="tw-code" placeholder="股票代號（如 2330）" maxlength="10"/>
+        <input class="add-input" id="tw-name" placeholder="名稱（如 台積電）" maxlength="20"/>
+        <button class="btn-add" onclick="addStock('tw')">
+          <i class="bi bi-plus-lg"></i> 新增
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 美股 Panel ── -->
+  <div class="tab-panel" id="panel-us">
+    <div class="action-bar">
+      <button class="btn-send btn-send-us" id="btn-trigger-us" onclick="triggerReport('us')">
+        <i class="bi bi-send-fill"></i> 發送美股報告
+      </button>
+      <button class="btn-refresh" onclick="loadPortfolio()">
+        <i class="bi bi-arrow-clockwise"></i> 刷新報價
+      </button>
+    </div>
+    <div class="stock-grid" id="grid-us">
+      <div class="loading-card"><span class="spinner"></span> 載入中...</div>
+    </div>
+    <div class="add-section">
+      <h6><i class="bi bi-plus-circle"></i> 新增美股</h6>
+      <div class="add-form">
+        <input class="add-input" id="us-symbol" placeholder="Ticker（如 NVDA）" maxlength="10"/>
+        <input class="add-input" id="us-name"   placeholder="名稱（如 輝達）" maxlength="20"/>
+        <button class="btn-add" onclick="addStock('us')">
+          <i class="bi bi-plus-lg"></i> 新增
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 持倉行程 Calendar Panel ── -->
+  <div class="tab-panel" id="panel-cal">
+    <div class="action-bar">
+      <span style="color:var(--muted);font-size:.9rem">財報日 / 法說會行程（來自 yfinance，台股無資料者為季報截止估算）</span>
+      <button class="btn-refresh" onclick="loadCalendar(true)">
+        <i class="bi bi-arrow-clockwise" id="cal-refresh-icon"></i> 刷新
+      </button>
+    </div>
+
+    <!-- 月曆導覽 -->
+    <div class="cal-nav">
+      <button class="cal-nav-btn" onclick="changeMonth(-1)"><i class="bi bi-chevron-left"></i></button>
+      <span class="cal-month-label" id="calMonthLabel"></span>
+      <button class="cal-nav-btn" onclick="changeMonth(1)"><i class="bi bi-chevron-right"></i></button>
+    </div>
+
+    <!-- 月曆格子 -->
+    <div class="cal-grid" id="calGrid">
+      <div class="loading-card"><span class="spinner"></span> 載入行程...</div>
+    </div>
+
+    <!-- 事件清單 -->
+    <div class="event-list" id="eventList"></div>
+  </div>
+
+  <!-- ── 漲價雷達 Panel ── -->
+  <div class="tab-panel" id="panel-radar">
+    <div class="action-bar">
+      <span style="color:var(--muted);font-size:.9rem">功率元件漲價情報（近 14 天）</span>
+      <button class="btn-refresh" onclick="runRadar()" id="btn-radar-run">
+        <i class="bi bi-radar"></i> 立即掃描
+      </button>
+      <button class="btn-refresh" onclick="loadRadar(true)">
+        <i class="bi bi-arrow-clockwise" id="radar-refresh-icon"></i> 刷新
+      </button>
+    </div>
+    <div id="radar-list">
+      <div class="loading-card"><span class="spinner"></span> 載入中...</div>
+    </div>
+  </div>
+
+  <!-- ── 總體經濟 Panel ── -->
+  <div class="tab-panel" id="panel-macro">
+    <div class="action-bar">
+      <span style="color:var(--muted);font-size:.9rem">台灣 + 美國總體經濟即時指標</span>
+      <button class="btn-refresh" onclick="loadMacro(true)">
+        <i class="bi bi-arrow-clockwise" id="macro-refresh-icon"></i> 刷新
+      </button>
+    </div>
+    <div class="macro-grid" id="macro-grid">
+      <div class="macro-section">
+        <div class="macro-section-title">🇹🇼 台灣總經</div>
+        <div class="macro-cards" id="macro-tw">
+          <div class="loading-card"><span class="spinner"></span> 載入中...</div>
+        </div>
+      </div>
+      <div class="macro-section">
+        <div class="macro-section-title">🇺🇸 美國總經</div>
+        <div class="macro-cards" id="macro-us">
+          <div class="loading-card"><span class="spinner"></span> 載入中...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- News Drawer -->
+<div class="news-drawer" id="newsDrawer">
+  <div class="news-drawer-inner">
+    <div class="news-drawer-header">
+      <div>
+        <span class="news-drawer-name" id="newsDrawerName"></span>
+        <span class="news-drawer-code" id="newsDrawerCode"></span>
+      </div>
+      <button class="news-drawer-close" onclick="closeNews()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+    <div class="news-drawer-body" id="newsDrawerBody">
+      <div class="loading-card"><span class="spinner"></span> 抓取新聞中...</div>
+    </div>
+  </div>
+</div>
+<div class="news-backdrop" id="newsBackdrop" onclick="closeNews()"></div>
+
+<!-- Toast container -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<style>
+/* ── Macro styles ── */
+.macro-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 24px;
+  margin-bottom: 28px;
+}
+.macro-section-title {
+  font-size: 1rem; font-weight: 700; color: var(--text);
+  margin-bottom: 14px; letter-spacing: -.2px;
+}
+.macro-cards {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.macro-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px 16px;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 12px;
+}
+.macro-label {
+  font-size: .82rem; color: var(--muted); font-weight: 600;
+  white-space: nowrap;
+}
+.macro-value {
+  font-size: .9rem; color: var(--text); font-weight: 600;
+  text-align: right; flex: 1; word-break: break-all;
+}
+
+/* ── News Drawer ── */
+.news-backdrop {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,.55); z-index: 1000;
+}
+.news-backdrop.open { display: block; }
+.news-drawer {
+  position: fixed; right: 0; top: 0; bottom: 0;
+  width: min(480px, 100vw);
+  background: var(--surface); border-left: 1px solid var(--border);
+  z-index: 1001; transform: translateX(100%);
+  transition: transform .3s cubic-bezier(.4,0,.2,1);
+  display: flex; flex-direction: column;
+}
+.news-drawer.open { transform: translateX(0); }
+.news-drawer-inner { display: flex; flex-direction: column; height: 100%; }
+.news-drawer-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 20px; border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.news-drawer-name {
+  font-size: 1.1rem; font-weight: 700; color: var(--text);
+}
+.news-drawer-code {
+  font-size: .8rem; color: var(--muted); font-weight: 600;
+  margin-left: 8px;
+}
+.news-drawer-close {
+  background: transparent; border: none; color: var(--muted);
+  font-size: 1.1rem; cursor: pointer; padding: 4px 8px;
+  border-radius: 6px; transition: color .2s;
+}
+.news-drawer-close:hover { color: var(--text); }
+.news-drawer-body {
+  flex: 1; overflow-y: auto; padding: 16px 20px;
+}
+.news-item {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 10px; padding: 14px 16px; margin-bottom: 12px;
+}
+.news-item-title a {
+  font-size: .92rem; font-weight: 700; color: var(--text);
+  text-decoration: none; line-height: 1.4; display: block;
+  transition: color .15s;
+}
+.news-item-title a:hover { color: var(--accent); text-decoration: underline; }
+.news-item-date {
+  font-size: .75rem; color: var(--muted); margin-bottom: 8px;
+}
+.news-item-bullets {
+  list-style: none; padding: 0; margin: 0;
+}
+.news-item-bullets li {
+  font-size: .82rem; color: #a5b4c8; line-height: 1.55;
+  padding-left: 14px; position: relative; margin-bottom: 3px;
+}
+.news-item-bullets li::before {
+  content: '•'; position: absolute; left: 0; color: var(--accent);
+}
+.news-empty {
+  text-align: center; padding: 40px 20px;
+  color: var(--muted); font-size: .9rem;
+}
+
+/* ── Calendar styles ── */
+.cal-nav {
+  display: flex; align-items: center; justify-content: center;
+  gap: 16px; margin-bottom: 20px;
+}
+.cal-nav-btn {
+  background: var(--surface); border: 1px solid var(--border);
+  color: var(--muted); width: 34px; height: 34px;
+  border-radius: 8px; cursor: pointer; font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s;
+}
+.cal-nav-btn:hover { color: var(--text); border-color: var(--accent); }
+.cal-month-label {
+  font-size: 1.1rem; font-weight: 700; color: var(--text); min-width: 120px; text-align: center;
+}
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px; margin-bottom: 24px;
+}
+.cal-day-header {
+  text-align: center; font-size: .75rem; font-weight: 700;
+  color: var(--muted); padding: 6px 0;
+}
+.cal-cell {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 8px 6px; min-height: 72px;
+  position: relative; transition: border-color .2s;
+}
+.cal-cell.today { border-color: var(--accent); }
+.cal-cell.other-month { opacity: .35; }
+.cal-cell.has-event { cursor: pointer; }
+.cal-cell.has-event:hover { border-color: var(--accent); }
+.cal-date {
+  font-size: .78rem; font-weight: 700; color: var(--muted); margin-bottom: 4px;
+}
+.cal-date.today-num { color: var(--accent); }
+.cal-event-chip {
+  font-size: .68rem; font-weight: 600;
+  border-radius: 4px; padding: 2px 5px; margin-bottom: 2px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  display: block;
+}
+.cal-event-chip.tw { background: rgba(6,182,212,.15); color: #06b6d4; }
+.cal-event-chip.us { background: rgba(99,102,241,.15); color: #818cf8; }
+
+.event-list {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 16px 20px;
+}
+.event-list h6 {
+  color: var(--muted); font-size: .78rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .5px; margin-bottom: 12px;
+}
+.event-row {
+  display: flex; align-items: baseline; gap: 12px;
+  padding: 8px 0; border-bottom: 1px solid var(--border);
+  font-size: .9rem;
+}
+.event-row:last-child { border-bottom: none; }
+.event-date-col { color: var(--muted); font-size: .82rem; min-width: 52px; font-weight: 600; }
+.event-flag     { font-size: 1rem; }
+.event-name     { color: var(--text); font-weight: 600; flex: 1; }
+.event-label    { color: var(--muted); font-size: .8rem; }
+.event-label.conf   { color: #f59e0b; }
+.event-label.earn   { color: var(--green); }
+.event-label.est    { color: var(--muted); font-style: italic; }
+
+/* ── 漲價雷達 ── */
+.radar-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  gap: 12px;
+  align-items: start;
+}
+.radar-badge { font-size: 1.4rem; line-height: 1; padding-top: 2px; }
+.radar-body  { min-width: 0; }
+.radar-title { font-weight: 700; font-size: 1rem; margin-bottom: 4px; }
+.radar-meta  { display: flex; flex-wrap: wrap; gap: 8px; font-size: .82rem; color: var(--muted); }
+.radar-meta span { display: flex; align-items: center; gap: 3px; }
+.radar-reason { margin-top: 6px; font-size: .85rem; color: var(--text); opacity: .8; }
+.radar-conf {
+  font-size: .78rem; font-weight: 700;
+  padding: 3px 8px; border-radius: 20px;
+  white-space: nowrap; align-self: start;
+}
+.radar-conf.high   { background: #ef444420; color: #ef4444; }
+.radar-conf.medium { background: #f59e0b20; color: #f59e0b; }
+.radar-conf.low    { background: #64748b20; color: #94a3b8; }
+.radar-source { font-size: .75rem; color: var(--accent); text-decoration: none; }
+.radar-source:hover { text-decoration: underline; }
+.radar-empty { color: var(--muted); text-align: center; padding: 48px 0; font-size: .95rem; }
+</style>
+
+<script>
+// ── Tab switching ────────────────────────────────────────────
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(`panel-${name}`).classList.add('active');
+  if (name === 'cal')   loadCalendar();
+  if (name === 'macro') loadMacro();
+  if (name === 'radar') loadRadar();
+}
+
+// ── Toast ────────────────────────────────────────────────────
+function toast(msg, type = 'success') {
+  const wrap = document.getElementById('toastWrap');
+  const el   = document.createElement('div');
+  el.className = `toast-msg ${type}`;
+  el.textContent = msg;
+  wrap.appendChild(el);
+  setTimeout(() => el.style.opacity = '0', 3000);
+  setTimeout(() => el.remove(), 3400);
+}
+
+// ── Build stock card ─────────────────────────────────────────
+let _twFlags = { attention: [], disposition: {} };  // cached flags
+
+function buildCard(stock, market) {
+  const key   = market === 'tw' ? stock.code   : stock.symbol;
+  const label = market === 'tw' ? stock.code   : stock.symbol;
+
+  const hasPrice = stock.price != null;
+  // dir = 漲跌方向（控制箭頭）
+  const dir = !hasPrice ? 'flat' : (stock.pct > 0 ? 'up' : stock.pct < 0 ? 'down' : 'flat');
+  const arrow = dir === 'up' ? '▲' : dir === 'down' ? '▼' : '—';
+
+  // colorDir = 顏色慣例（台股紅漲綠跌，美股綠漲紅跌）
+  const colorDir = dir === 'flat' ? 'flat'
+    : market === 'tw'
+      ? (dir === 'up' ? 'tw-up' : 'tw-down')
+      : dir;
+
+  const priceStr  = hasPrice ? stock.price.toLocaleString('zh-TW', {minimumFractionDigits: 2}) : 'N/A';
+  const changeStr = hasPrice
+    ? `${arrow} ${stock.change > 0 ? '+' : ''}${stock.change.toFixed(2)}  (${stock.pct > 0 ? '+' : ''}${stock.pct.toFixed(2)}%)`
+    : '無法取得報價';
+
+  // 注意 / 處置 badge（台股專屬）
+  let flagHtml = '';
+  if (market === 'tw') {
+    const dispMeasure = _twFlags.disposition[key];
+    if (dispMeasure) {
+      flagHtml = `<span class="flag-badge disposition">🔴 處置｜${dispMeasure}</span>`;
+    } else if (_twFlags.attention.includes(key)) {
+      flagHtml = `<span class="flag-badge attention">⚠️ 注意股票</span>`;
+    }
+  }
+
+  return `
+    <div class="stock-card ${colorDir}" id="card-${market}-${key}"
+         data-market="${market}" data-key="${key}" data-name="${stock.name.replace(/"/g,'&quot;')}"
+         style="cursor:pointer">
+      <button class="btn-del" onclick="event.stopPropagation();deleteStock('${market}', '${key}')" title="移除">
+        <i class="bi bi-x"></i>
+      </button>
+      <div class="card-code">${label}</div>
+      <div class="card-name">${stock.name}</div>
+      <div class="card-price ${colorDir}">${priceStr}</div>
+      <div class="card-change ${colorDir}">${changeStr}</div>
+      ${flagHtml}
+    </div>`;
+}
+
+// ── Load portfolio ────────────────────────────────────────────
+async function loadPortfolio() {
+  const icon = document.getElementById('refresh-icon');
+  if (icon) icon.style.animation = 'spin .7s linear infinite';
+
+  try {
+    // 並行抓報價 + 注意/處置旗標
+    const [res, flagRes] = await Promise.all([
+      fetch('/api/portfolio'),
+      fetch('/api/tw/flags').catch(() => null),
+    ]);
+    const data = await res.json();
+    if (flagRes && flagRes.ok) {
+      _twFlags = await flagRes.json();
+    }
+
+    ['tw', 'us'].forEach(market => {
+      const grid  = document.getElementById(`grid-${market}`);
+      const items = data[market] || [];
+      if (items.length === 0) {
+        grid.innerHTML = `<div class="empty-state"><i class="bi bi-inbox"></i>尚無持股，請新增</div>`;
+        return;
+      }
+      grid.innerHTML = items.map(s => buildCard(s, market)).join('');
+    });
+
+    const now = new Date();
+    document.getElementById('lastUpdate').textContent =
+      `更新：${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+
+  } catch (e) {
+    toast('⚠️ 載入失敗：' + e.message, 'error');
+  } finally {
+    if (icon) icon.style.animation = '';
+  }
+}
+
+// ── Add stock ────────────────────────────────────────────────
+async function addStock(market) {
+  let body;
+  if (market === 'tw') {
+    const code = document.getElementById('tw-code').value.trim();
+    const name = document.getElementById('tw-name').value.trim();
+    if (!code || !name) { toast('⚠️ 請填寫代號和名稱', 'error'); return; }
+    body = { code, name };
+  } else {
+    const symbol = document.getElementById('us-symbol').value.trim().toUpperCase();
+    const name   = document.getElementById('us-name').value.trim();
+    if (!symbol || !name) { toast('⚠️ 請填寫代號和名稱', 'error'); return; }
+    body = { symbol, name };
+  }
+
+  try {
+    const res  = await fetch(`/api/${market}/add`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json();
+    if (data.ok) {
+      toast(`✅ 已新增 ${body.name}`);
+      // Clear inputs
+      if (market === 'tw') {
+        document.getElementById('tw-code').value = '';
+        document.getElementById('tw-name').value = '';
+      } else {
+        document.getElementById('us-symbol').value = '';
+        document.getElementById('us-name').value   = '';
+      }
+      await loadPortfolio();
+    } else {
+      toast('❌ ' + data.error, 'error');
+    }
+  } catch (e) {
+    toast('❌ 新增失敗：' + e.message, 'error');
+  }
+}
+
+// ── Delete stock ─────────────────────────────────────────────
+async function deleteStock(market, key) {
+  const card = document.getElementById(`card-${market}-${key}`);
+  if (card) card.style.opacity = '.4';
+
+  try {
+    const res  = await fetch(`/api/${market}/${key}`, { method: 'DELETE' });
+    const data = await res.json();
+    if (data.ok) {
+      toast(`🗑 已移除 ${key}`);
+      await loadPortfolio();
+    } else {
+      if (card) card.style.opacity = '1';
+      toast('❌ 移除失敗', 'error');
+    }
+  } catch (e) {
+    if (card) card.style.opacity = '1';
+    toast('❌ ' + e.message, 'error');
+  }
+}
+
+// ── Trigger report ───────────────────────────────────────────
+async function triggerReport(market) {
+  const btn = document.getElementById(`btn-trigger-${market}`);
+  const orig = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = `<span class="spinner"></span> 發送中...`;
+
+  try {
+    const res  = await fetch(`/api/trigger/${market}`, { method: 'POST' });
+    const data = await res.json();
+    if (data.ok) {
+      toast(data.msg || '✅ 報告已發送');
+    } else {
+      toast('❌ ' + (data.error || '發送失敗'), 'error');
+    }
+  } catch (e) {
+    toast('❌ ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = orig;
+  }
+}
+
+// ── Enter key on add inputs ──────────────────────────────────
+['tw-name', 'us-name'].forEach(id => {
+  document.getElementById(id)?.addEventListener('keydown', e => {
+    if (e.key === 'Enter') addStock(id.startsWith('tw') ? 'tw' : 'us');
+  });
+});
+
+// ══════════════════════════════════════════════════════════════
+//  📅 Calendar
+// ══════════════════════════════════════════════════════════════
+let _calEvents    = null;   // cached events array
+let _calYear      = new Date().getFullYear();
+let _calMonth     = new Date().getMonth();  // 0-indexed
+
+const WEEKDAYS = ['日','一','二','三','四','五','六'];
+const MONTHS   = ['1月','2月','3月','4月','5月','6月',
+                  '7月','8月','9月','10月','11月','12月'];
+
+async function loadCalendar(force = false) {
+  if (_calEvents && !force) { renderCalendar(); return; }
+  const icon = document.getElementById('cal-refresh-icon');
+  if (icon) icon.style.animation = 'spin .7s linear infinite';
+  try {
+    const res = await fetch('/api/schedule');
+    _calEvents = await res.json();
+    renderCalendar();
+  } catch (e) {
+    document.getElementById('calGrid').innerHTML =
+      `<div class="loading-card">⚠️ 載入失敗：${e.message}</div>`;
+  } finally {
+    if (icon) icon.style.animation = '';
+  }
+}
+
+function changeMonth(delta) {
+  _calMonth += delta;
+  if (_calMonth > 11) { _calMonth = 0;  _calYear++; }
+  if (_calMonth < 0)  { _calMonth = 11; _calYear--; }
+  renderCalendar();
+}
+
+function renderCalendar() {
+  if (!_calEvents) return;
+  const events = Array.isArray(_calEvents) ? _calEvents : [];
+
+  // Build date → events map
+  const evMap = {};
+  events.forEach(e => {
+    const k = e.date.slice(0, 10);
+    if (!evMap[k]) evMap[k] = [];
+    evMap[k].push(e);
+  });
+
+  const year = _calYear, month = _calMonth;
+  document.getElementById('calMonthLabel').textContent =
+    `${year} 年 ${MONTHS[month]}`;
+
+  const today     = new Date();
+  const firstDay  = new Date(year, month, 1).getDay();   // 0=Sun
+  const daysInMo  = new Date(year, month + 1, 0).getDate();
+  const prevDays  = new Date(year, month, 0).getDate();
+
+  let html = WEEKDAYS.map(d =>
+    `<div class="cal-day-header">${d}</div>`).join('');
+
+  // Fill leading blank cells
+  for (let i = 0; i < firstDay; i++) {
+    const d = prevDays - firstDay + 1 + i;
+    html += `<div class="cal-cell other-month"><div class="cal-date">${d}</div></div>`;
+  }
+
+  for (let d = 1; d <= daysInMo; d++) {
+    const iso = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const isToday = (year === today.getFullYear() && month === today.getMonth() && d === today.getDate());
+    const dayEvs  = evMap[iso] || [];
+    const hasEv   = dayEvs.length > 0;
+
+    html += `<div class="cal-cell${isToday?' today':''}${hasEv?' has-event':''}">
+      <div class="cal-date${isToday?' today-num':''}">${d}</div>`;
+
+    dayEvs.slice(0, 3).forEach(e => {
+      const short = e.name.length > 4 ? e.name.slice(0,4)+'…' : e.name;
+      html += `<span class="cal-event-chip ${e.market}">${short}</span>`;
+    });
+    if (dayEvs.length > 3)
+      html += `<span style="font-size:.65rem;color:var(--muted)">+${dayEvs.length-3}筆</span>`;
+    html += `</div>`;
+  }
+
+  // Trailing cells
+  const total = firstDay + daysInMo;
+  const trail = (7 - (total % 7)) % 7;
+  for (let i = 1; i <= trail; i++)
+    html += `<div class="cal-cell other-month"><div class="cal-date">${i}</div></div>`;
+
+  document.getElementById('calGrid').innerHTML = html;
+
+  // Event list (all events in this month, sorted)
+  const monthPfx = `${year}-${String(month+1).padStart(2,'0')}`;
+  const monthEvs = events
+    .filter(e => e.date.startsWith(monthPfx))
+    .sort((a,b) => a.date.localeCompare(b.date));
+
+  let listHtml = '<h6><i class="bi bi-list-ul"></i> 本月行程明細</h6>';
+  if (monthEvs.length === 0) {
+    listHtml += '<div style="color:var(--muted);font-size:.9rem">本月無行程</div>';
+  } else {
+    monthEvs.forEach(e => {
+      const parts = e.date.split('-');
+      const dateStr = `${parseInt(parts[1])}/${parseInt(parts[2])}`;
+      const flag  = e.market === 'tw' ? '🇹🇼' : '🇺🇸';
+      const isEst = e.label.includes('估');
+      const isConf = e.label.includes('法說');
+      const labelCls = isConf ? 'conf' : (isEst ? 'est' : 'earn');
+      listHtml += `
+        <div class="event-row">
+          <span class="event-date-col">${dateStr}</span>
+          <span class="event-flag">${flag}</span>
+          <span class="event-name">${e.name} <span style="color:var(--muted);font-weight:400">(${e.code})</span></span>
+          <span class="event-label ${labelCls}">${e.label}</span>
+        </div>`;
+    });
+  }
+  document.getElementById('eventList').innerHTML = listHtml;
+}
+
+// ══════════════════════════════════════════════════════════════
+//  🌐 Macro
+// ══════════════════════════════════════════════════════════════
+let _macroLoaded = false;
+
+async function loadMacro(force = false) {
+  if (_macroLoaded && !force) return;
+  const icon = document.getElementById('macro-refresh-icon');
+  if (icon) icon.style.animation = 'spin .7s linear infinite';
+
+  try {
+    const res  = await fetch('/api/macro');
+    const data = await res.json();
+    renderMacroSection('macro-tw', data.tw || {});
+    renderMacroSection('macro-us', data.us || {});
+    _macroLoaded = true;
+  } catch (e) {
+    ['macro-tw','macro-us'].forEach(id => {
+      document.getElementById(id).innerHTML =
+        `<div class="loading-card">⚠️ 載入失敗：${e.message}</div>`;
+    });
+  } finally {
+    if (icon) icon.style.animation = '';
+  }
+}
+
+function renderMacroSection(elId, data) {
+  const el = document.getElementById(elId);
+  if (!data || Object.keys(data).length === 0) {
+    el.innerHTML = '<div class="loading-card">⚠️ 無資料</div>';
+    return;
+  }
+  el.innerHTML = Object.entries(data).map(([label, value]) => `
+    <div class="macro-card">
+      <span class="macro-label">${label}</span>
+      <span class="macro-value">${value}</span>
+    </div>`).join('');
+}
+
+// ══════════════════════════════════════════════════════════════
+//  📰 News Drawer
+// ══════════════════════════════════════════════════════════════
+async function openNews(market, code, name) {
+  const drawer   = document.getElementById('newsDrawer');
+  const backdrop = document.getElementById('newsBackdrop');
+  const body     = document.getElementById('newsDrawerBody');
+
+  document.getElementById('newsDrawerName').textContent = name;
+  document.getElementById('newsDrawerCode').textContent = `(${code})`;
+  body.innerHTML = '<div class="loading-card"><span class="spinner"></span> 抓取新聞中…</div>';
+
+  drawer.classList.add('open');
+  backdrop.classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  try {
+    const res   = await fetch(`/api/news/${market}/${code}`);
+    const items = await res.json();
+
+    if (!Array.isArray(items) || items.length === 0) {
+      body.innerHTML = '<div class="news-empty">📭 目前無相關新聞</div>';
+      return;
+    }
+
+    body.innerHTML = items.map(item => {
+      // 解析 Gemini bullets（以換行分隔的多行文字）
+      const raw     = (item.summary || item.description || '').trim();
+      const lines   = raw.split('\n').map(l => l.replace(/^[-•*]\s*/, '').trim()).filter(Boolean);
+      const bullets = lines.length > 0
+        ? `<ul class="news-item-bullets">${lines.map(l => `<li>${l}</li>`).join('')}</ul>`
+        : `<p style="font-size:.82rem;color:var(--muted)">${raw}</p>`;
+
+      const dateStr = item.time || '';
+
+      return `
+        <div class="news-item">
+          <div class="news-item-title">
+            ${item.link
+              ? `<a href="${item.link}" target="_blank" rel="noopener">${item.title || '（無標題）'}</a>`
+              : (item.title || '（無標題）')}
+          </div>
+          ${dateStr ? `<div class="news-item-date">${dateStr}</div>` : ''}
+          ${bullets}
+        </div>`;
+    }).join('');
+
+  } catch (e) {
+    body.innerHTML = `<div class="news-empty">⚠️ 載入失敗：${e.message}</div>`;
+  }
+}
+
+function closeNews() {
+  document.getElementById('newsDrawer').classList.remove('open');
+  document.getElementById('newsBackdrop').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ── Stock card click → news drawer (event delegation) ────────
+document.addEventListener('click', e => {
+  const card = e.target.closest('.stock-card[data-market]');
+  if (!card) return;
+  if (e.target.closest('.btn-del')) return;
+  openNews(card.dataset.market, card.dataset.key, card.dataset.name);
+});
+
+// ── 漲價雷達 ─────────────────────────────────────────────────
+let radarLoaded = false;
+
+async function loadRadar(force = false) {
+  if (radarLoaded && !force) return;
+  const list = document.getElementById('radar-list');
+  list.innerHTML = '<div class="loading-card"><span class="spinner"></span> 載入中...</div>';
+  try {
+    const res  = await fetch('/api/radar/signals');
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    radarLoaded = true;
+    renderRadar(data);
+  } catch(e) {
+    list.innerHTML = `<div class="radar-empty">⚠️ 載入失敗：${e.message}</div>`;
+  }
+}
+
+function renderRadar(signals) {
+  const list = document.getElementById('radar-list');
+  if (!signals.length) {
+    list.innerHTML = '<div class="radar-empty">📭 近 14 天尚無情報，點「立即掃描」抓取最新資料</div>';
+    return;
+  }
+  list.innerHTML = signals.map(s => {
+    const conf = s.confidence || 0;
+    const badge   = conf >= 0.75 ? '🔴' : conf >= 0.5 ? '🟡' : '⚪';
+    const confCls = conf >= 0.75 ? 'high' : conf >= 0.5 ? 'medium' : 'low';
+    const confTxt = (conf * 100).toFixed(0) + '%';
+    const company = s.company || '不明廠商';
+    const product = s.product || '功率元件';
+    const pct     = s.price_change_pct ? `+${s.price_change_pct}%` : '幅度未揭露';
+    const eff     = s.effective_date   ? `生效 ${s.effective_date}` : '';
+    const down    = s.downstream       ? `下游：${s.downstream}` : '';
+    const reason  = s.reason           ? `<div class="radar-reason">📝 ${s.reason}</div>` : '';
+    const date    = s.published_at     ? s.published_at.substring(0,10) : (s.created_at||'').substring(0,10);
+    const src     = s.source_url ? `<a class="radar-source" href="${s.source_url}" target="_blank">${(s.source_title||'原文').substring(0,45)}…</a>` : '';
+    return `
+      <div class="radar-card">
+        <div class="radar-badge">${badge}</div>
+        <div class="radar-body">
+          <div class="radar-title">${company} · ${product}</div>
+          <div class="radar-meta">
+            <span>📈 ${pct}</span>
+            ${eff  ? `<span>📅 ${eff}</span>` : ''}
+            ${down ? `<span>🔗 ${down}</span>` : ''}
+            ${date ? `<span>🗓 ${date}</span>` : ''}
+          </div>
+          ${reason}
+          <div style="margin-top:6px">${src}</div>
+        </div>
+        <div class="radar-conf ${confCls}">${confTxt}</div>
+      </div>`;
+  }).join('');
+}
+
+async function runRadar() {
+  const btn = document.getElementById('btn-radar-run');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> 掃描中...';
+  try {
+    const res  = await fetch('/api/radar/run', { method: 'POST' });
+    const data = await res.json();
+    if (data.ok) {
+      toast(data.msg);
+      radarLoaded = false;
+      loadRadar(true);
+    } else {
+      toast('掃描失敗：' + (data.error || '未知錯誤'), 'error');
+    }
+  } catch(e) {
+    toast('掃描失敗：' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="bi bi-radar"></i> 立即掃描';
+  }
+}
+
+// ── Init ─────────────────────────────────────────────────────
+loadPortfolio();
+
+// Auto-refresh every 5 min
+setInterval(loadPortfolio, 5 * 60 * 1000);
+</script>
+</body>
+</html>

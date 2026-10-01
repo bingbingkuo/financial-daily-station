@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>財經日報站</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* ── tokens ── */
+:root {
+  --bg:       #0d1117;
+  --surface:  #161b22;
+  --surface2: #21262d;
+  --border:   #30363d;
+  --text:     #e6edf3;
+  --muted:    #7d8590;
+  --tw:       #ef4444;
+  --tw-dim:   rgba(239,68,68,.12);
+  --us:       #22c55e;
+  --us-dim:   rgba(34,197,94,.12);
+  --pod:      #a78bfa;
+  --pod-dim:  rgba(167,139,250,.12);
+  --twma:     #2dd4bf;
+  --twma-dim: rgba(45,212,191,.12);
+  --all:      #f59e0b;
+  --radius:   8px;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg:      #f6f8fa; --surface: #ffffff; --surface2: #f0f2f5;
+    --border:  #d0d7de; --text:    #1f2328; --muted:    #656d76;
+  }
+}
+:root[data-theme="dark"]  { --bg:#0d1117;--surface:#161b22;--surface2:#21262d;--border:#30363d;--text:#e6edf3;--muted:#7d8590; }
+:root[data-theme="light"] { --bg:#f6f8fa;--surface:#ffffff;--surface2:#f0f2f5;--border:#d0d7de;--text:#1f2328;--muted:#656d76; }
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+[hidden] { display:none !important; }
+body { font-family:'IBM Plex Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; display:flex; flex-direction:column; }
+
+/* ── layout ── */
+.layout { display:flex; flex:1; min-height:100vh; }
+
+/* ── sidebar ── */
+.sidebar {
+  width:220px; flex-shrink:0;
+  background:var(--surface); border-right:1px solid var(--border);
+  display:flex; flex-direction:column;
+  position:fixed; top:0; left:0; bottom:0; z-index:50; overflow-y:auto;
+}
+.brand { padding:20px 18px 16px; border-bottom:1px solid var(--border); }
+.brand-name { font-size:14px; font-weight:700; letter-spacing:.5px; }
+.brand-sub  { font-size:11px; color:var(--muted); margin-top:2px; }
+.nav { padding:12px 8px; flex:1; }
+.nav-label { font-size:10px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--muted); padding:4px 10px 8px; }
+.nav-item {
+  display:flex; align-items:center; gap:10px;
+  padding:9px 10px; border-radius:6px; cursor:pointer;
+  font-size:13.5px; font-weight:500; color:var(--muted);
+  transition:background .15s,color .15s; text-decoration:none; margin-bottom:2px;
+}
+.nav-item:hover { background:var(--surface2); color:var(--text); }
+.nav-item.active { color:var(--text); background:var(--surface2); }
+.dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; background:var(--border); }
+.dot-tw  { background:var(--tw); }
+.dot-us  { background:var(--us); }
+.dot-pod { background:var(--pod); }
+.dot-twma { background:var(--twma); }
+.nav-badge { margin-left:auto; font-size:10px; font-family:'IBM Plex Mono',monospace; background:var(--surface2); color:var(--muted); padding:1px 6px; border-radius:4px; }
+.nav-item.active .nav-badge { background:var(--border); }
+.nav-subitems { margin:0 0 4px 10px; padding-left:10px; border-left:1px solid var(--border); }
+.nav-subitem {
+  display:flex; align-items:center; gap:6px;
+  padding:5px 8px; border-radius:5px; cursor:pointer;
+  font-size:12px; color:var(--muted); text-decoration:none;
+  font-family:'IBM Plex Mono',monospace;
+}
+.nav-subitem:hover { background:var(--surface2); color:var(--text); }
+.nav-subitem.active { color:var(--text); font-weight:600; }
+.sidebar-footer { padding:12px 18px; border-top:1px solid var(--border); font-size:11px; color:var(--muted); }
+
+/* ── main ── */
+.main { margin-left:220px; flex:1; display:flex; flex-direction:column; }
+
+/* ── topbar ── */
+.topbar {
+  background:var(--surface); border-bottom:1px solid var(--border);
+  padding:12px 24px; display:flex; align-items:center; justify-content:space-between;
+  gap:12px; position:sticky; top:0; z-index:40;
+}
+.topbar-left { display:flex; align-items:center; gap:12px; }
+.page-title  { font-size:15px; font-weight:600; }
+.date-badge  { font-size:12px; font-family:'IBM Plex Mono',monospace; background:var(--surface2); color:var(--muted); padding:3px 10px; border-radius:20px; border:1px solid var(--border); }
+.theme-btn { background:var(--surface2); border:1px solid var(--border); border-radius:6px; padding:5px 10px; color:var(--muted); font-size:12px; cursor:pointer; transition:all .15s; }
+.theme-btn:hover { color:var(--text); }
+
+/* ── content ── */
+.content { padding:24px; flex:1; }
+
+/* ── market blocks ── */
+.mkt-block { margin-bottom:20px; display:flex; flex-direction:column; gap:8px; }
+.mkt-row { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; }
+.mkt-cells { display:flex; flex-wrap:wrap; }
+.mkt-cell { flex:1 1 130px; padding:11px 16px; border-right:1px solid var(--border); }
+.mkt-cell:last-child { border-right:none; }
+.mkt-label { font-size:10px; text-transform:uppercase; letter-spacing:.7px; color:var(--muted); margin-bottom:4px; white-space:nowrap; }
+.mkt-val { font-size:18px; font-weight:700; font-family:'IBM Plex Mono',monospace; line-height:1; }
+.mkt-val.up   { color:var(--tw); }
+.mkt-val.pos  { color:var(--us); }
+.mkt-val.warn { color:var(--all); }
+.mkt-val.neu  { color:var(--text); }
+.mkt-chg { font-size:11px; font-family:'IBM Plex Mono',monospace; margin-top:3px; }
+.mkt-chg.up  { color:var(--tw); }
+.mkt-chg.pos { color:var(--us); }
+.mkt-chg.neg { color:var(--tw); }
+
+/* ── section header ── */
+.section-hdr { display:flex; align-items:center; gap:10px; margin-bottom:16px; }
+.section-title { font-size:13px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.8px; }
+.section-line { flex:1; height:1px; background:var(--border); }
+
+/* ── report cards ── */
+.overview-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; margin-bottom:28px; }
+.report-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; cursor:pointer; transition:border-color .15s,transform .15s; text-decoration:none; display:block; color:inherit; }
+.report-card:hover { border-color:var(--muted); transform:translateY(-1px); }
+.card-header { padding:14px 16px 12px; display:flex; align-items:flex-start; justify-content:space-between; gap:8px; }
+.card-type { font-size:11px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; }
+.card-type.tw  { color:var(--tw); }
+.card-type.us  { color:var(--us); }
+.card-type.pod { color:var(--pod); }
+.card-type.twma { color:var(--twma); }
+.card-time { font-size:11px; font-family:'IBM Plex Mono',monospace; color:var(--muted); white-space:nowrap; }
+.card-title { padding:0 16px; font-size:14px; font-weight:600; line-height:1.4; }
+.card-meta { padding:10px 16px; display:flex; flex-wrap:wrap; gap:6px; }
+.meta-tag { font-size:11px; padding:2px 8px; border-radius:4px; font-family:'IBM Plex Mono',monospace; }
+.meta-tag.tw  { background:var(--tw-dim);  color:var(--tw); }
+.meta-tag.us  { background:var(--us-dim);  color:var(--us); }
+.meta-tag.pod { background:var(--pod-dim); color:var(--pod); }
+.meta-tag.twma { background:var(--twma-dim); color:var(--twma); }
+.card-body { padding:0 16px 14px; font-size:12.5px; color:var(--muted); line-height:1.6; }
+.card-footer { padding:10px 16px; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+.card-footer-stat { font-size:11px; color:var(--muted); }
+.stat-val { font-family:'IBM Plex Mono',monospace; font-weight:500; }
+.stat-val.up  { color:var(--tw); }
+.stat-val.pos { color:var(--us); }
+.read-btn { font-size:11px; color:var(--muted); }
+
+/* coming-soon card */
+.report-card.soon { opacity:.5; cursor:default; pointer-events:none; }
+.report-card.soon:hover { transform:none; border-color:var(--border); }
+
+/* ── archive ── */
+.archive-wrap { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; }
+.archive-tabs { display:flex; border-bottom:1px solid var(--border); }
+.archive-tab { flex:1; padding:9px 0; font-size:12px; font-weight:500; background:transparent; border:none; color:var(--muted); cursor:pointer; border-right:1px solid var(--border); transition:all .15s; }
+.archive-tab:last-child { border-right:none; }
+.archive-tab.active { background:var(--surface2); color:var(--text); font-weight:600; }
+.archive-list { padding:0; }
+.archive-row { display:flex; align-items:center; padding:9px 16px; gap:12px; border-bottom:1px solid var(--border); cursor:pointer; text-decoration:none; color:inherit; transition:background .1s; }
+.archive-row:last-child { border-bottom:none; }
+.archive-row:hover { background:var(--surface2); }
+.archive-date { font-size:11px; font-family:'IBM Plex Mono',monospace; color:var(--muted); width:68px; flex-shrink:0; }
+.archive-title { font-size:13px; flex:1; }
+.archive-badge { font-size:11px; padding:2px 8px; border-radius:4px; white-space:nowrap; }
+.archive-badge.tw  { background:var(--tw-dim);  color:var(--tw); }
+.archive-badge.us  { background:var(--us-dim);  color:var(--us); }
+.archive-badge.pod { background:var(--pod-dim); color:var(--pod); }
+.archive-badge.twma { background:var(--twma-dim); color:var(--twma); }
+.archive-empty { padding:20px 16px; font-size:13px; color:var(--muted); }
+
+/* ── bottom tabs ── */
+.bottom-tabs { display:none; position:fixed; bottom:0; left:0; right:0; background:var(--surface); border-top:1px solid var(--border); z-index:100; }
+.tab-bar { display:flex; list-style:none; }
+.tab-item { flex:1; display:flex; flex-direction:column; align-items:center; padding:10px 4px 12px; cursor:pointer; font-size:10px; color:var(--muted); gap:4px; }
+.tab-item.active { color:var(--text); }
+.tab-icon { font-size:18px; line-height:1; }
+
+/* ── mobile ── */
+@media (max-width:767px) {
+  .sidebar { display:none; }
+  .main { margin-left:0; }
+  .bottom-tabs { display:block; }
+  .content { padding:16px 16px 80px; }
+  .topbar { padding:10px 16px; }
+  .overview-grid { grid-template-columns:1fr; }
+  .mkt-cell { flex:1 1 110px; padding:9px 12px; }
+  .mkt-val { font-size:15px; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-name">📡 財經日報站</div>
+      <div class="brand-sub">Stock · Market · Podcast</div>
+    </div>
+    <nav class="nav">
+      <div class="nav-label">報告</div>
+      <a class="nav-item active" id="nav-overview" href="index.html">
+        <span class="dot" style="background:var(--all)"></span> 總覽
+        <span class="nav-badge">今日</span>
+      </a>
+      <a class="nav-item" id="nav-pod" href="podcast/latest.html">
+        <span class="dot dot-pod"></span> Podcast 摘要
+      </a>
+      <a class="nav-item" id="nav-tw-scout" href="tw_scout/latest.html">
+        <span class="dot dot-tw"></span> 台股選股雷達
+        <span class="nav-badge">16:30</span>
+      </a>
+      <div class="nav-subitems" id="tw-scout-subnav"></div>
+      <a class="nav-item" id="nav-us-scout" href="us_scout/latest.html">
+        <span class="dot dot-us"></span> 美股選股雷達
+        <span class="nav-badge">21:00</span>
+      </a>
+      <div class="nav-subitems" id="us-scout-subnav"></div>
+      <a class="nav-item" id="nav-tw-ma" href="tw_ma/latest.html">
+        <span class="dot dot-twma"></span> 台股族群強弱
+      </a>
+      <div class="nav-subitems" id="tw-ma-subnav"></div>
+      <div class="nav-label" style="margin-top:16px">快速跳轉</div>
+      <a class="nav-item" href="#archive" style="font-size:12.5px">
+        <span class="dot" style="background:var(--muted)"></span> 歷史存檔
+      </a>
+    </nav>
+    <div class="sidebar-footer" id="last-updated">載入中…</div>
+  </aside>
+
+  <div class="main">
+    <!-- Topbar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <span class="page-title">今日總覽</span>
+        <span class="date-badge" id="today-badge">—</span>
+      </div>
+      <button class="theme-btn" onclick="toggleTheme()" id="theme-btn">🌙</button>
+    </header>
+
+    <!-- Content -->
+    <main class="content">
+
+    <div id="view-overview">
+
+      <!-- 台股大盤 -->
+      <div class="section-hdr">
+        <span class="section-title">台股概覽</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="mkt-block">
+        <div class="mkt-row">
+          <div class="mkt-cells">
+            <div class="mkt-cell">
+              <div class="mkt-label">加權指數 ^TWII</div>
+              <div class="mkt-val neu" id="twii-val">—</div>
+              <div class="mkt-chg" id="twii-chg">—</div>
+            </div>
+            <div class="mkt-cell">
+              <div class="mkt-label">0050 YTD</div>
+              <div class="mkt-val up" id="ytd-val">—</div>
+              <div class="mkt-chg" style="color:var(--muted)">元大台灣 50</div>
+            </div>
+            <div class="mkt-cell">
+              <div class="mkt-label">大盤狀態</div>
+              <div class="mkt-val" id="status-val" style="font-size:14px">—</div>
+              <div class="mkt-chg" id="status-sub" style="color:var(--muted)">00631L vs 20MA</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 美股大盤 -->
+      <div class="section-hdr">
+        <span class="section-title">美股概覽</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="mkt-block">
+        <div class="mkt-row">
+          <div class="mkt-cells">
+            <div class="mkt-cell">
+              <div class="mkt-label">費城半導體 ^SOX</div>
+              <div class="mkt-val neu" id="sox-val">—</div>
+              <div class="mkt-chg" id="sox-chg">—</div>
+            </div>
+            <div class="mkt-cell">
+              <div class="mkt-label">納斯達克 ^IXIC</div>
+              <div class="mkt-val neu" id="ixic-val">—</div>
+              <div class="mkt-chg" id="ixic-chg">—</div>
+            </div>
+            <div class="mkt-cell">
+              <div class="mkt-label">道瓊工業 ^DJI</div>
+              <div class="mkt-val neu" id="dji-val">—</div>
+              <div class="mkt-chg" id="dji-chg">—</div>
+            </div>
+            <div class="mkt-cell">
+              <div class="mkt-label">VIX 恐慌指數</div>
+              <div class="mkt-val neu" id="vix-val">—</div>
+              <div class="mkt-chg" id="vix-chg" style="color:var(--muted)">—</div>
+            </div>
+            <div class="mkt-cell">
+              <div class="mkt-label">10Y 美債 ^TNX</div>
+              <div class="mkt-val neu" id="tnx-val">—</div>
+              <div class="mkt-chg" id="tnx-chg">—</div>
+            </div>
+            <div class="mkt-cell">
+              <div class="mkt-label">30Y 美債 ^TYX</div>
+              <div class="mkt-val neu" id="tyx-val">—</div>
+              <div class="mkt-chg" id="tyx-chg">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 今日報告 -->
+      <div class="section-hdr">
+        <span class="section-title">今日報告</span>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="overview-grid">
+
+        <!-- 台股選股雷達（動態） -->
+        <a class="report-card" id="tw-scout-card" href="tw_scout/latest.html">
+          <div class="card-header">
+            <span class="card-type tw">台股選股雷達</span>
+            <span class="card-time" id="tw-scout-time">16:30 更新</span>
+          </div>
+          <div class="card-title" id="tw-scout-title">載入中…</div>
+          <div class="card-meta" id="tw-scout-meta"></div>
+          <div class="card-body" id="tw-scout-body"></div>
+          <div class="card-footer">
+            <span class="card-footer-stat" id="tw-scout-stat"></span>
+            <span class="read-btn">閱讀完整報告 →</span>
+          </div>
+        </a>
+
+        <!-- 美股選股雷達（動態） -->
+        <a class="report-card" id="us-scout-card" href="us_scout/latest.html">
+          <div class="card-header">
+            <span class="card-type us">美股選股雷達</span>
+            <span class="card-time" id="us-scout-time">21:00 更新</span>
+          </div>
+          <div class="card-title" id="us-scout-title">載入中…</div>
+          <div class="card-meta" id="us-scout-meta"></div>
+          <div class="card-body" id="us-scout-body"></div>
+          <div class="card-footer">
+            <span class="card-footer-stat" id="us-scout-stat"></span>
+            <span class="read-btn">閱讀完整報告 →</span>
+          </div>
+        </a>
+
+        <!-- Podcast 摘要（動態） -->
+        <a class="report-card" id="pod-card" href="podcast/latest.html">
+          <div class="card-header">
+            <span class="card-type pod">Podcast 摘要</span>
+            <span class="card-time" id="pod-time">週三 / 週六</span>
+          </div>
+          <div class="card-title" id="pod-title">載入中…</div>
+          <div class="card-meta" id="pod-meta"></div>
+          <div class="card-body" id="pod-body"></div>
+          <div class="card-footer">
+            <span class="card-footer-stat" id="pod-stat"></span>
+            <span class="read-btn">閱讀完整報告 →</span>
+          </div>
+        </a>
+
+        <!-- 台股族群強弱（動態） -->
+        <a class="report-card" id="tw-ma-card" href="tw_ma/latest.html">
+          <div class="card-header">
+            <span class="card-type twma">台股族群強弱</span>
+            <span class="card-time" id="tw-ma-time">14:30 更新</span>
+          </div>
+          <div class="card-title" id="tw-ma-title">載入中…</div>
+          <div class="card-meta" id="tw-ma-meta"></div>
+          <div class="card-body" id="tw-ma-body"></div>
+          <div class="card-footer">
+            <span class="card-footer-stat" id="tw-ma-stat"></span>
+            <span class="read-btn">閱讀完整報告 →</span>
+          </div>
+        </a>
+
+      </div>
+
+      <!-- 歷史存檔 -->
+      <div id="archive">
+        <div class="section-hdr">
+          <span class="section-title">歷史存檔</span>
+          <div class="section-line"></div>
+        </div>
+        <div class="archive-wrap">
+          <div class="archive-tabs">
+            <button class="archive-tab active" onclick="switchTab(this,'tw')">台股選股雷達</button>
+            <button class="archive-tab" onclick="switchTab(this,'us')">美股選股雷達</button>
+            <button class="archive-tab" onclick="switchTab(this,'pod')">Podcast</button>
+            <button class="archive-tab" onclick="switchTab(this,'twma')">台股族群強弱</button>
+          </div>
+          <div class="archive-list" id="archive-list">
+            <div class="archive-empty">載入中…</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    </main>
+  </div>
+
+  <!-- Bottom tabs (mobile) -->
+  <nav class="bottom-tabs">
+    <ul class="tab-bar">
+      <li class="tab-item active" id="tab-overview" onclick="location.href='index.html'"><span class="tab-icon">🏠</span><span>總覽</span></li>
+      <li class="tab-item" id="tab-tw-scout" onclick="location.href='tw_scout/'+currentTwFile()"><span class="tab-icon">📡</span><span>台股</span></li>
+      <li class="tab-item" id="tab-us-scout" onclick="location.href='us_scout/'+currentUsFile()"><span class="tab-icon">🔭</span><span>美股</span></li>
+      <li class="tab-item" id="tab-pod" onclick="location.href='podcast/'+currentPodFile()"><span class="tab-icon">🎙</span><span>Podcast</span></li>
+    </ul>
+  </nav>
+</div>
+
+<script src="tw_scout/manifest.js"></script>
+<script src="tw_scout/market.js"></script>
+<script src="us_scout/manifest.js"></script>
+<script src="us_scout/market.js"></script>
+<script src="podcast/manifest.js"></script>
+<script src="tw_ma/manifest.js"></script>
+<script>
+/* ── theme ── */
+(function() {
+  const saved = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+})();
+
+function toggleTheme() {
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+  document.getElementById('theme-btn').textContent = next === 'dark' ? '🌙' : '☀️';
+}
+
+// Sync button on load
+document.getElementById('theme-btn').textContent =
+  document.documentElement.getAttribute('data-theme') === 'dark' ? '🌙' : '☀️';
+
+/* ── today badge ── */
+const now = new Date();
+const todayLabel =
+  `${now.getFullYear()} / ${String(now.getMonth()+1).padStart(2,'0')} / ${String(now.getDate()).padStart(2,'0')}`;
+document.getElementById('today-badge').textContent = todayLabel;
+
+/* ── archive tabs ── */
+let currentTab = 'tw';
+const manifests = { tw: null, us: null, pod: null, twma: null };
+
+function switchTab(btn, tab) {
+  document.querySelectorAll('.archive-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentTab = tab;
+  renderArchive(tab);
+}
+
+const ARCHIVE_META = {
+  tw:   { label: '台股選股雷達', dir: 'tw_scout' },
+  us:   { label: '美股選股雷達', dir: 'us_scout' },
+  pod:  { label: 'Podcast 摘要', dir: 'podcast' },
+  twma: { label: '台股族群強弱', dir: 'tw_ma' },
+};
+
+function renderArchive(tab) {
+  const list = document.getElementById('archive-list');
+  const data = manifests[tab];
+  if (!data || data.length === 0) {
+    list.innerHTML = '<div class="archive-empty">暫無資料</div>';
+    return;
+  }
+  const { label, dir } = ARCHIVE_META[tab];
+  list.innerHTML = data.map(entry => {
+    return `<a class="archive-row" href="${dir}/${entry.file}">
+      <span class="archive-date">${entry.date}</span>
+      <span class="archive-title">${label}</span>
+      <span class="archive-badge ${tab}">查看報告</span>
+    </a>`;
+  }).join('');
+}
+
+/* ── 側欄「台股選股雷達」/「美股選股雷達」下方：近五日快速切換 ──
+   純 <a href> 連結，不攔截 click——嵌入 iframe 或用 JS 攔截導覽在
+   file:// 下都會被瀏覽器擋掉變空白，純導覽才保證雙擊本機檔案也能用。 */
+function currentTwFile() {
+  return (manifests.tw && manifests.tw.length > 0) ? manifests.tw[0].file : 'latest.html';
+}
+function currentUsFile() {
+  return (manifests.us && manifests.us.length > 0) ? manifests.us[0].file : 'latest.html';
+}
+function currentPodFile() {
+  return (manifests.pod && manifests.pod.length > 0) ? manifests.pod[0].file : 'latest.html';
+}
+function currentTwMaFile() {
+  return (manifests.twma && manifests.twma.length > 0) ? manifests.twma[0].file : 'latest.html';
+}
+
+function renderTwSubnav() {
+  const el = document.getElementById('tw-scout-subnav');
+  const data = manifests.tw;
+  if (!data || data.length === 0) { el.innerHTML = ''; return; }
+  el.innerHTML = data.slice(0, 5).map(entry =>
+    `<a class="nav-subitem" href="tw_scout/${entry.file}">${entry.date}</a>`
+  ).join('');
+}
+
+function renderUsSubnav() {
+  const el = document.getElementById('us-scout-subnav');
+  const data = manifests.us;
+  if (!data || data.length === 0) { el.innerHTML = ''; return; }
+  el.innerHTML = data.slice(0, 5).map(entry =>
+    `<a class="nav-subitem" href="us_scout/${entry.file}">${entry.date}</a>`
+  ).join('');
+}
+
+function renderTwMaSubnav() {
+  const el = document.getElementById('tw-ma-subnav');
+  const data = manifests.twma;
+  if (!data || data.length === 0) { el.innerHTML = ''; return; }
+  el.innerHTML = data.slice(0, 5).map(entry =>
+    `<a class="nav-subitem" href="tw_ma/${entry.file}">${entry.date}</a>`
+  ).join('');
+}
+
+/* ── 首頁總覽：台股大盤概況 ── */
+function handleMarketOverview(data) {
+  if (!data) return;
+  if (data.twii_close != null && data.twii_pct != null) {
+    const up = data.twii_chg >= 0;
+    const arrow = up ? '▲' : '▼';
+    const sign = up ? '+' : '';
+    document.getElementById('twii-val').textContent = data.twii_close.toLocaleString('en-US', {maximumFractionDigits:0});
+    document.getElementById('twii-val').className = 'mkt-val ' + (up ? 'up' : 'pos');
+    document.getElementById('twii-chg').textContent =
+      `${arrow} ${sign}${data.twii_chg.toLocaleString('en-US',{maximumFractionDigits:0})}　(${sign}${data.twii_pct.toFixed(2)}%)`;
+    document.getElementById('twii-chg').className = 'mkt-chg ' + (up ? 'up' : 'pos');
+  }
+  if (data.ytd_0050 != null) {
+    const up = data.ytd_0050 >= 0;
+    document.getElementById('ytd-val').textContent = `${up ? '▲' : '▼'} ${up ? '+' : ''}${data.ytd_0050.toFixed(2)}%`;
+    document.getElementById('ytd-val').className = 'mkt-val ' + (up ? 'up' : 'pos');
+  }
+  if (data.market_status) {
+    const cls = data.market_status === '強勢區' ? 'pos' : data.market_status === '縮量破位' ? 'warn' : 'up';
+    document.getElementById('status-val').innerHTML =
+      `<span class="mkt-val ${cls}" style="font-size:14px">${data.market_status}</span>`;
+    document.getElementById('status-sub').textContent = data.market_detail || '00631L vs 20MA';
+  }
+}
+
+function handleMarketOverviewError() {
+  // 抓不到就維持預設的「—」佔位符，不特別處理。
+}
+
+if (window.TW_MARKET_OVERVIEW) {
+  handleMarketOverview(window.TW_MARKET_OVERVIEW);
+} else {
+  fetch('tw_scout/market.json')
+    .then(r => r.json())
+    .then(handleMarketOverview)
+    .catch(handleMarketOverviewError);
+}
+
+/* ── 首頁總覽：美股大盤概況（美股慣例：綠漲紅跌，與台股相反） ── */
+function handleUsMarketOverview(data) {
+  if (!data) return;
+  const idxCells = [
+    ['sox', 'sox-val', 'sox-chg'],
+    ['ndx', 'ixic-val', 'ixic-chg'],
+    ['dji', 'dji-val', 'dji-chg'],
+  ];
+  idxCells.forEach(([key, valId, chgId]) => {
+    const d = data[key];
+    if (!d || d.close == null) return;
+    const up = d.chg_pct >= 0;
+    const sign = up ? '+' : '';
+    document.getElementById(valId).textContent = d.close.toLocaleString('en-US', {maximumFractionDigits:0});
+    document.getElementById(valId).className = 'mkt-val ' + (up ? 'pos' : 'up');
+    if (d.chg_pct != null) {
+      document.getElementById(chgId).textContent = `${up ? '▲' : '▼'} ${sign}${d.chg_pct.toFixed(2)}%`;
+      document.getElementById(chgId).className = 'mkt-chg ' + (up ? 'pos' : 'up');
+    }
+  });
+  if (data.vix && data.vix.close != null) {
+    document.getElementById('vix-val').textContent = data.vix.close.toFixed(1);
+    document.getElementById('vix-val').className = 'mkt-val neu';
+    if (data.vix.chg_pct != null) {
+      const up = data.vix.chg_pct >= 0;
+      document.getElementById('vix-chg').textContent = `${up ? '▲' : '▼'} ${up ? '+' : ''}${data.vix.chg_pct.toFixed(2)}%`;
+    }
+  }
+  if (data.tnx && data.tnx.close != null) {
+    document.getElementById('tnx-val').textContent = `${data.tnx.close.toFixed(2)}%`;
+    document.getElementById('tnx-val').className = 'mkt-val neu';
+    document.getElementById('tnx-chg').textContent = '10 年期美債殖利率';
+  }
+}
+
+if (window.US_MARKET_OVERVIEW) {
+  handleUsMarketOverview(window.US_MARKET_OVERVIEW);
+} else {
+  fetch('us_scout/market.json')
+    .then(r => r.json())
+    .then(handleUsMarketOverview)
+    .catch(() => {});
+}
+
+/* ── load tw_scout manifest ──
+   優先讀 manifest.js 寫入的 window.TW_SCOUT_MANIFEST（<script src> 不受
+   file:// 的 CORS 限制，雙擊本機檔案打開也能用）；抓不到才 fallback 用
+   fetch 讀 manifest.json（跑本地伺服器 / GitHub Pages 時用）。 */
+function handleTwScoutManifest(data) {
+  manifests.tw = data;
+
+  // Update sidebar footer
+  if (data.length > 0) {
+    document.getElementById('last-updated').textContent = `最新：${data[0].date}`;
+  }
+
+  // Update tw scout card
+  if (data.length > 0) {
+    const latest = data[0];
+    document.getElementById('tw-scout-card').href = `tw_scout/${latest.file}`;
+    document.getElementById('tw-scout-title').textContent = `${latest.date} 台股選股雷達`;
+    document.getElementById('tw-scout-time').textContent = latest.date.slice(5) + ' 更新';
+    document.getElementById('tw-scout-meta').innerHTML =
+      `<span class="meta-tag tw">${latest.date}</span>`;
+    document.getElementById('tw-scout-body').textContent = '點擊查看完整選股分析報告。';
+    document.getElementById('tw-scout-stat').innerHTML =
+      `共 <span class="stat-val">${data.length}</span> 份存檔`;
+  }
+
+  // Render archive
+  if (currentTab === 'tw') renderArchive('tw');
+
+  // Sidebar 近五日快速切換
+  renderTwSubnav();
+}
+
+function handleTwScoutManifestError() {
+  document.getElementById('tw-scout-title').textContent = '暫無資料';
+  document.getElementById('archive-list').innerHTML =
+    '<div class="archive-empty">無法載入存檔列表</div>';
+}
+
+if (window.TW_SCOUT_MANIFEST) {
+  handleTwScoutManifest(window.TW_SCOUT_MANIFEST);
+} else {
+  fetch('tw_scout/manifest.json')
+    .then(r => r.json())
+    .then(handleTwScoutManifest)
+    .catch(handleTwScoutManifestError);
+}
+
+/* ── load us_scout manifest（同樣優先讀 manifest.js，fetch 只作 fallback） ── */
+function handleUsScoutManifest(data) {
+  manifests.us = data;
+
+  if (data.length > 0) {
+    const latest = data[0];
+    document.getElementById('us-scout-card').href = `us_scout/${latest.file}`;
+    document.getElementById('us-scout-title').textContent = `${latest.date} 美股選股雷達`;
+    document.getElementById('us-scout-time').textContent = latest.date.slice(5) + ' 更新';
+    document.getElementById('us-scout-meta').innerHTML =
+      `<span class="meta-tag us">${latest.date}</span>`;
+    document.getElementById('us-scout-body').textContent = '點擊查看完整選股分析報告。';
+    document.getElementById('us-scout-stat').innerHTML =
+      `共 <span class="stat-val">${data.length}</span> 份存檔`;
+  }
+
+  if (currentTab === 'us') renderArchive('us');
+  renderUsSubnav();
+}
+
+function handleUsScoutManifestError() {
+  document.getElementById('us-scout-title').textContent = '暫無資料';
+}
+
+if (window.US_SCOUT_MANIFEST) {
+  handleUsScoutManifest(window.US_SCOUT_MANIFEST);
+} else {
+  fetch('us_scout/manifest.json')
+    .then(r => r.json())
+    .then(handleUsScoutManifest)
+    .catch(handleUsScoutManifestError);
+}
+
+/* ── load podcast manifest（同樣優先讀 manifest.js，fetch 只作 fallback） ── */
+function handlePodManifest(data) {
+  manifests.pod = data;
+
+  if (data.length > 0) {
+    const latest = data[0];
+    document.getElementById('pod-card').href = `podcast/${latest.file}`;
+    document.getElementById('pod-title').textContent = `${latest.date} Podcast 摘要`;
+    document.getElementById('pod-meta').innerHTML =
+      `<span class="meta-tag pod">${latest.date}</span>`;
+    document.getElementById('pod-body').textContent = '點擊查看最新集數摘要與股票追蹤清單。';
+    document.getElementById('pod-stat').innerHTML =
+      `共 <span class="stat-val">${data.length}</span> 份存檔`;
+  }
+
+  if (currentTab === 'pod') renderArchive('pod');
+}
+
+function handlePodManifestError() {
+  document.getElementById('pod-title').textContent = '暫無資料';
+}
+
+if (window.PODCAST_MANIFEST) {
+  handlePodManifest(window.PODCAST_MANIFEST);
+} else {
+  fetch('podcast/manifest.json')
+    .then(r => r.json())
+    .then(handlePodManifest)
+    .catch(handlePodManifestError);
+}
+
+/* ── load tw_ma manifest（同樣優先讀 manifest.js，fetch 只作 fallback） ── */
+function handleTwMaManifest(data) {
+  manifests.twma = data;
+
+  if (data.length > 0) {
+    const latest = data[0];
+    document.getElementById('tw-ma-card').href = `tw_ma/${latest.file}`;
+    document.getElementById('tw-ma-title').textContent = `${latest.date} 台股族群強弱`;
+    document.getElementById('tw-ma-time').textContent = latest.date.slice(5) + ' 更新';
+    document.getElementById('tw-ma-meta').innerHTML =
+      `<span class="meta-tag twma">${latest.date}</span>`;
+    document.getElementById('tw-ma-body').textContent = '點擊查看族群 x 大盤均線強弱分析。';
+    document.getElementById('tw-ma-stat').innerHTML =
+      `共 <span class="stat-val">${data.length}</span> 份存檔`;
+  }
+
+  if (currentTab === 'twma') renderArchive('twma');
+  renderTwMaSubnav();
+}
+
+function handleTwMaManifestError() {
+  document.getElementById('tw-ma-title').textContent = '暫無資料';
+}
+
+if (window.TW_MA_MANIFEST) {
+  handleTwMaManifest(window.TW_MA_MANIFEST);
+} else {
+  fetch('tw_ma/manifest.json')
+    .then(r => r.json())
+    .then(handleTwMaManifest)
+    .catch(handleTwMaManifestError);
+}
+</script>
+</body>
+</html>

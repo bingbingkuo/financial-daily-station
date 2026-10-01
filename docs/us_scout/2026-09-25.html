@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>美股選股雷達 · 2026-09-25 · 財經日報站</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --dr-bg:#0d1117; --dr-surface:#161b22; --dr-surface2:#21262d; --dr-border:#30363d;
+  --dr-text:#e6edf3; --dr-muted:#7d8590; --dr-tw:#ef4444; --dr-us:#22c55e; --dr-pod:#a78bfa;
+  --dr-twma:#2dd4bf; --dr-all:#f59e0b; --dr-radius:8px;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --dr-bg:#f6f8fa; --dr-surface:#ffffff; --dr-surface2:#f0f2f5;
+    --dr-border:#d0d7de; --dr-text:#1f2328; --dr-muted:#656d76;
+  }
+}
+:root[data-theme="dark"]  { --dr-bg:#0d1117;--dr-surface:#161b22;--dr-surface2:#21262d;--dr-border:#30363d;--dr-text:#e6edf3;--dr-muted:#7d8590; }
+:root[data-theme="light"] { --dr-bg:#f6f8fa;--dr-surface:#ffffff;--dr-surface2:#f0f2f5;--dr-border:#d0d7de;--dr-text:#1f2328;--dr-muted:#656d76; }
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+[hidden] { display:none !important; }
+/* 注意：下面的殼層樣式全部用 .dr- 前綴 class 跟 --dr- 前綴變數，
+   跟被包進來的報告自己的 CSS（.nav/.header/--bg 這類常見命名、
+   甚至 body{} 全站選取器）完全不共用命名，兩邊不會互相覆蓋。
+   側欄／頂部列因此不管包哪份報告，字體、字級、顏色都固定一致。 */
+.dr-layout {
+  display:flex; min-height:100vh;
+  font-family:'IBM Plex Sans',sans-serif;
+}
+.dr-sidebar {
+  width:220px; flex-shrink:0; background:var(--dr-surface); border-right:1px solid var(--dr-border);
+  display:flex; flex-direction:column; position:fixed; top:0; left:0; bottom:0; z-index:50; overflow-y:auto;
+}
+.dr-brand { padding:20px 18px 16px; border-bottom:1px solid var(--dr-border); text-decoration:none; display:block; }
+.dr-brand-name { font-size:14px; font-weight:700; letter-spacing:.5px; color:var(--dr-text); }
+.dr-brand-sub  { font-size:11px; color:var(--dr-muted); margin-top:2px; }
+.dr-nav { padding:12px 8px; flex:1; }
+.dr-nav-item {
+  display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:6px;
+  font-size:13.5px; font-weight:500; color:var(--dr-muted); text-decoration:none; margin-bottom:2px;
+}
+.dr-nav-item:hover { background:var(--dr-surface2); color:var(--dr-text); }
+.dr-nav-item.active { color:var(--dr-text); background:var(--dr-surface2); }
+.dr-nav-item.soon { opacity:.5; pointer-events:none; }
+.dr-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; background:var(--dr-border); }
+.dr-dot-tw  { background:var(--dr-tw); }
+.dr-dot-us  { background:var(--dr-us); }
+.dr-dot-pod { background:var(--dr-pod); }
+.dr-dot-twma { background:var(--dr-twma); }
+.dr-nav-subitems { margin:0 0 4px 10px; padding-left:10px; border-left:1px solid var(--dr-border); }
+.dr-nav-subitem {
+  display:flex; align-items:center; gap:6px; padding:5px 8px; border-radius:5px;
+  font-size:12px; color:var(--dr-muted); text-decoration:none; font-family:'IBM Plex Mono',monospace;
+}
+.dr-nav-subitem:hover { background:var(--dr-surface2); color:var(--dr-text); }
+.dr-nav-subitem.active { color:var(--dr-text); font-weight:600; }
+.dr-main { margin-left:220px; flex:1; display:flex; flex-direction:column; min-width:0; }
+.dr-topbar {
+  background:var(--dr-surface); border-bottom:1px solid var(--dr-border); padding:12px 24px;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  position:sticky; top:0; z-index:40;
+}
+.dr-topbar-left { display:flex; align-items:center; gap:12px; }
+.dr-page-title { font-size:15px; font-weight:600; color:var(--dr-text); }
+.dr-date-badge {
+  font-size:12px; font-family:'IBM Plex Mono',monospace; background:var(--dr-surface2); color:var(--dr-muted);
+  padding:3px 10px; border-radius:20px; border:1px solid var(--dr-border);
+}
+.dr-theme-btn {
+  background:var(--dr-surface2); border:1px solid var(--dr-border); border-radius:6px;
+  padding:5px 10px; color:var(--dr-muted); font-size:12px; cursor:pointer; font-family:inherit;
+}
+.dr-theme-btn:hover { color:var(--dr-text); }
+.dr-content { padding:24px; flex:1; background:var(--dr-bg); color:var(--dr-text); }
+@media (max-width:767px) {
+  .dr-sidebar { position:static; width:100%; height:auto; border-right:none; border-bottom:1px solid var(--dr-border); }
+  .dr-main { margin-left:0; }
+  .dr-content { padding:16px; }
+}
+</style>
+<style>
+    body{font-family:'Helvetica Neue',Arial,sans-serif;background:#0d1117;margin:0;padding:20px}
+    .wrap{max-width:720px;margin:0 auto;background:#161b22;border-radius:8px;
+          box-shadow:0 2px 8px rgba(0,0,0,.1);overflow:hidden}
+    .hdr{background:#1a237e;color:#fff;padding:18px 24px}
+    .hdr h2{margin:0;font-size:20px}
+    .hdr p{margin:4px 0 0;font-size:13px;opacity:.8}
+    .card{border-left:4px solid #6674e0;margin:16px;padding:12px 16px;
+          background:#21262d;border-radius:4px}
+    .card h3{margin:0 0 6px;font-size:16px;color:#8ab4f8}
+    .row{font-size:13px;margin:3px 0;color:#e6edf3}
+    table.fin{border-collapse:collapse;font-size:13px;margin:6px 0;width:100%}
+    table.fin td{padding:3px 12px 3px 0;color:#d0d7de;vertical-align:top}
+    table.fin td:first-child{color:#9198a1;white-space:nowrap;font-weight:500;width:110px}
+    .growth-box{background:rgba(74,222,128,.12);border-radius:4px;padding:8px 12px;font-size:14px;
+                font-weight:bold;margin:6px 0;color:#4ade80;line-height:1.6}
+    .gm-box{background:rgba(74,222,128,.12);border-radius:4px;padding:6px 10px;font-size:13px;margin:4px 0}
+    .pe-bar{background:rgba(96,165,250,.12);border-radius:4px;padding:6px 10px;font-size:13px;margin:4px 0}
+    .price-box{background:#161b223e0;border-radius:4px;padding:6px 10px;font-size:13px;margin:4px 0}
+    .analyst-box{background:rgba(192,132,252,.12);border-radius:4px;padding:6px 10px;font-size:13px;margin:4px 0}
+    .risk-box{background:#161b228e1;border-radius:4px;padding:6px 10px;font-size:13px;
+              margin:4px 0;color:#fb923c}
+    .verdict-box{border-radius:6px;padding:8px 12px;font-size:14px;font-weight:bold;margin:8px 0}
+    .v-aggressive{background:#1b5e20;color:#fff}
+    .v-watch{background:#1565c0;color:#fff}
+    .v-dip{background:#e65100;color:#fff}
+    .v-wait{background:#37474f;color:#fff}
+    .footer{text-align:center;font-size:11px;color:#6e7681;padding:14px;border-top:1px solid #30363d}
+    /* Market */
+    .mkt-wrap{max-width:720px;margin:0 auto 16px;background:#161b22;border-radius:8px;
+              box-shadow:0 2px 8px rgba(0,0,0,.1);overflow:hidden}
+    .mkt-hdr{background:#263238;color:#fff;padding:14px 20px}
+    .mkt-hdr h2{margin:0;font-size:18px}
+    .mkt-hdr p{margin:3px 0 0;font-size:12px;opacity:.8}
+    .mkt-body{display:flex;flex-wrap:wrap;padding:0}
+    .mkt-item{flex:1 1 20%;padding:12px 16px;border-right:1px solid #f0f0f0;
+              border-bottom:1px solid #30363d;min-width:130px;box-sizing:border-box}
+    .mkt-item-label{font-size:10px;color:#7d8590;text-transform:uppercase;
+                    letter-spacing:.5px;margin-bottom:4px}
+    .mkt-item-val{font-size:19px;font-weight:bold;margin-bottom:2px}
+    .mkt-item-sub{font-size:12px;color:#9198a1}
+    .mkt-up{color:#4ade80} .mkt-dn{color:#f87171} .mkt-neu{color:#c9d1d9}
+    /* Themes */
+    .theme-wrap{max-width:720px;margin:0 auto 16px;background:#161b22;border-radius:8px;
+                box-shadow:0 2px 8px rgba(0,0,0,.1);overflow:hidden}
+    .theme-hdr{background:#4527a0;color:#fff;padding:14px 20px}
+    .theme-hdr h2{margin:0;font-size:18px}
+    .theme-hdr p{margin:3px 0 0;font-size:12px;opacity:.85}
+    .theme-card{padding:14px 20px;border-bottom:1px solid #30363d;background:#1f1b2e}
+    .theme-card:last-child{border-bottom:none}
+    .theme-name{font-size:15px;font-weight:bold;color:#c4b5fd;margin-bottom:5px}
+    .theme-catalyst{font-size:13px;color:#e6edf3;line-height:1.65;margin-bottom:4px}
+    .theme-meta{font-size:12px;color:#7d8590;margin-bottom:6px}
+    .theme-risk{background:#161b228e1;border-radius:4px;padding:2px 8px;font-size:12px;
+                color:#fb923c;display:inline-block}
+    /* Review */
+    .review-wrap{max-width:720px;margin:16px auto 0;background:#161b22;border-radius:8px;
+                 box-shadow:0 2px 8px rgba(0,0,0,.1);overflow:hidden}
+    .review-hdr{background:#37474f;color:#fff;padding:14px 20px}
+    .review-hdr h2{margin:0;font-size:18px}
+    .review-hdr p{margin:3px 0 0;font-size:12px;opacity:.85}
+    .review-body{padding:12px 16px}
+    .review-table{width:100%;border-collapse:collapse;font-size:13px}
+    .review-table th{background:#21262d;color:#c9d1d9;padding:7px 10px;
+                     text-align:left;font-weight:600;white-space:nowrap}
+    .review-table td{padding:7px 10px;border-bottom:1px solid #30363d;vertical-align:top}
+    .review-table tr:last-child td{border-bottom:none}
+    .small-cap-warn{background:#161b229c4;border-radius:4px;padding:2px 7px;
+                    font-size:11px;color:#fbbf24;margin-left:5px}
+    </style>
+</head>
+<body>
+<div class="dr-layout">
+  <aside class="dr-sidebar">
+    <a class="dr-brand" href="../index.html">
+      <div class="dr-brand-name">📡 財經日報站</div>
+      <div class="dr-brand-sub">Stock · Market · Podcast</div>
+    </a>
+    <nav class="dr-nav">
+      <a class="dr-nav-item" href="../index.html">
+        <span class="dr-dot" style="background:var(--dr-all)"></span> 總覽
+      </a>
+      <a class="dr-nav-item" href="../podcast/latest.html">
+        <span class="dr-dot dr-dot-pod"></span> Podcast 摘要
+      </a>
+      <a class="dr-nav-item" href="../tw_scout/latest.html">
+        <span class="dr-dot dr-dot-tw"></span> 台股選股雷達
+      </a>
+      <div class="dr-nav-subitems"><a class="dr-nav-subitem" href="../tw_scout/2026-10-01.html">2026-10-01</a><a class="dr-nav-subitem" href="../tw_scout/2026-09-30.html">2026-09-30</a><a class="dr-nav-subitem" href="../tw_scout/2026-09-29.html">2026-09-29</a><a class="dr-nav-subitem" href="../tw_scout/2026-09-28.html">2026-09-28</a><a class="dr-nav-subitem" href="../tw_scout/2026-09-25.html">2026-09-25</a></div>
+      <a class="dr-nav-item active" href="../us_scout/latest.html">
+        <span class="dr-dot dr-dot-us"></span> 美股選股雷達
+      </a>
+      <div class="dr-nav-subitems"><a class="dr-nav-subitem" href="../us_scout/2026-09-30.html">2026-09-30</a><a class="dr-nav-subitem" href="../us_scout/2026-09-29.html">2026-09-29</a><a class="dr-nav-subitem" href="../us_scout/2026-09-28.html">2026-09-28</a><a class="dr-nav-subitem active" href="../us_scout/2026-09-25.html">2026-09-25</a><a class="dr-nav-subitem" href="../us_scout/2026-09-24.html">2026-09-24</a></div>
+      <a class="dr-nav-item" href="../tw_ma/latest.html">
+        <span class="dr-dot dr-dot-twma"></span> 台股族群強弱
+      </a>
+      <div class="dr-nav-subitems"><a class="dr-nav-subitem" href="../tw_ma/2026-10-01.html">2026-10-01</a><a class="dr-nav-subitem" href="../tw_ma/2026-09-30.html">2026-09-30</a><a class="dr-nav-subitem" href="../tw_ma/2026-09-29.html">2026-09-29</a><a class="dr-nav-subitem" href="../tw_ma/2026-09-28.html">2026-09-28</a></div>
+    </nav>
+  </aside>
+
+  <div class="dr-main">
+    <header class="dr-topbar">
+      <div class="dr-topbar-left">
+        <span class="dr-page-title">美股選股雷達</span>
+        <span class="dr-date-badge">2026-09-25</span>
+      </div>
+      <button class="dr-theme-btn" onclick="drToggleTheme()" id="dr-theme-btn">🌙</button>
+    </header>
+    <main class="dr-content">
+      
+      
+      
+      
+      
+      
+      
+  
+  <div class="mkt-wrap">
+    <div class="mkt-hdr">
+      <h2>📊 今日大盤概況</h2>
+      <p>2026/09/25　資料來源：yfinance（^SOX / ^IXIC / ^DJI / ^VIX / ^TNX）</p>
+    </div>
+    <div class="mkt-body">
+      <div class="mkt-item"><div class="mkt-item-label">費城半導體 ^SOX</div><div class="mkt-item-val mkt-dn">12,493</div><div class="mkt-item-sub mkt-dn">▼ -0.33%</div><div class="mkt-item-sub mkt-up">YTD +69.6%</div></div>
+      <div class="mkt-item"><div class="mkt-item-label">納斯達克 ^IXIC</div><div class="mkt-item-val mkt-neu">—</div></div>
+      <div class="mkt-item"><div class="mkt-item-label">道瓊工業 ^DJI</div><div class="mkt-item-val mkt-dn">51,350</div><div class="mkt-item-sub mkt-dn">▼ -0.31%</div><div class="mkt-item-sub mkt-up">YTD +6.1%</div></div>
+      <div class="mkt-item"><div class="mkt-item-label">VIX 恐慌指數</div><div class="mkt-item-val mkt-neu">15.2</div><div class="mkt-item-sub mkt-neu">▼ -3.00%</div></div><div class="mkt-item"><div class="mkt-item-label">10Y 美債殖利率</div><div class="mkt-item-val mkt-dn">5.18%</div><div class="mkt-item-sub">⚠️ 利率偏高</div></div>
+    </div>
+  </div>
+  
+  <div class="theme-wrap">
+    <div class="theme-hdr">
+      <h2>🔍 今日熱門投資主題</h2>
+      <p>2026/09/25　資料來源：CNBC / Yahoo Finance / MarketWatch / Reuters / Finviz → Gemini AI 識別</p>
+    </div>
+    
+    <div class="theme-card">
+      <div class="theme-name">📌 AI雲端基礎設施</div>
+      <div class="theme-catalyst">AI模型訓練與部署需求激增，Oracle雲端基礎設施收入翻倍成長，顯示企業對高效能運算需求強勁。</div>
+      <div class="theme-meta">預計持續：24-36個月</div>
+      <div><a href="https://finance.yahoo.com/quote/ORCL" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">ORCL</a> <a href="https://finance.yahoo.com/quote/MSFT" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">MSFT</a> <a href="https://finance.yahoo.com/quote/AMZN" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">AMZN</a> <a href="https://finance.yahoo.com/quote/GOOGL" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">GOOGL</a> <a href="https://finance.yahoo.com/quote/SMCI" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">SMCI</a> <a href="https://finance.yahoo.com/quote/NVDA" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">NVDA</a> <a href="https://finance.yahoo.com/quote/AMD" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">AMD</a> <a href="https://finance.yahoo.com/quote/AVGO" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">AVGO</a></div>
+      <div style="margin-top:6px"><span class="theme-risk">⚠️ 風險：AI投資過熱，競爭加劇</span></div>
+    </div>
+    <div class="theme-card">
+      <div class="theme-name">📌 先進晶片製造與供應</div>
+      <div class="theme-catalyst">全球AI晶片需求爆發帶動台積電8月營收激增53%創紀錄，凸顯晶圓代工與相關供應鏈的結構性成長。</div>
+      <div class="theme-meta">預計持續：18-30個月</div>
+      <div><a href="https://finance.yahoo.com/quote/TSM" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">TSM</a> <a href="https://finance.yahoo.com/quote/ASML" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">ASML</a> <a href="https://finance.yahoo.com/quote/KLAC" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">KLAC</a> <a href="https://finance.yahoo.com/quote/LRCX" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">LRCX</a> <a href="https://finance.yahoo.com/quote/AMAT" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">AMAT</a> <a href="https://finance.yahoo.com/quote/MU" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">MU</a> <a href="https://finance.yahoo.com/quote/INTC" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">INTC</a> <a href="https://finance.yahoo.com/quote/SK" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">SK</a> <a href="https://finance.yahoo.com/quote/HYNIX" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">HYNIX</a></div>
+      <div style="margin-top:6px"><span class="theme-risk">⚠️ 風險：地緣政治風險，晶片週期波動</span></div>
+    </div>
+    <div class="theme-card">
+      <div class="theme-name">📌 AI光學與高速互連</div>
+      <div class="theme-catalyst">AI晶片性能提升對光學傳輸速度與互連技術產生更高要求，Lumentum大漲顯示AI光學元件需求爆發。</div>
+      <div class="theme-meta">預計持續：12-24個月</div>
+      <div><a href="https://finance.yahoo.com/quote/LITE" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">LITE</a> <a href="https://finance.yahoo.com/quote/IIVI" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">IIVI</a> <a href="https://finance.yahoo.com/quote/INFN" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">INFN</a> <a href="https://finance.yahoo.com/quote/MRVL" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">MRVL</a> <a href="https://finance.yahoo.com/quote/CSCO" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">CSCO</a> <a href="https://finance.yahoo.com/quote/ACIA" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">ACIA</a> <a href="https://finance.yahoo.com/quote/CNXC" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">CNXC</a> <a href="https://finance.yahoo.com/quote/MPWR" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">MPWR</a></div>
+      <div style="margin-top:6px"><span class="theme-risk">⚠️ 風險：技術迭代快速，市場競爭激烈</span></div>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="hdr">
+      <h2>🔭 主題基本面選股雷達</h2>
+      <p>2026/09/25　共 19 支通過篩選（最多 30 支）
+        &nbsp;|&nbsp; 條件：營收YoY>10% + EPS正/加速，或虧轉盈，或分析師看漲>20%
+      </p>
+    </div>
+    <div class="card"><h3>▶ ORCL <a href="https://finance.yahoo.com/quote/ORCL" style="color:#8ab4f8;text-decoration:none">Oracle Corporation</a>&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">昨收 $139.54</span>&nbsp;<span style="background:rgba(248,113,113,.12);color:#f87171;padding:1px 8px;border-radius:10px;font-size:12px;font-weight:bold">盤前 ▼ -0.49%&nbsp;<span style="font-weight:normal">$138.83</span></span>&nbsp;<span style="font-weight:normal;font-size:11px;color:#6e7681">Technology · $421.9B</span></h3><div class="verdict-box v-aggressive">🚀 積極布局&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">雲端基礎設施成長強勁，目標價空間大，估值合理。</span></div><div class="row" style="margin:5px 0"><span style="background:rgba(167,139,250,.12);color:#c4b5fd;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">🔖 AI雲端基礎設施</span><span style="background:rgba(96,165,250,.12);color:#60a5fa;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">Technology</span></div><div class="growth-box">📈 營收 YoY <span style="color:#4ade80">+30%</span><span style="font-size:12px;color:#9198a1">↓減速</span>　　EPS YoY <span style="color:#4ade80">+52%</span><span style="font-size:12px;color:#9198a1"></span><div style="font-size:11px;font-weight:normal;color:#4ade80;margin-top:3px">篩選依據：A: 營收 YoY +30% + EPS 正  |  C: 分析師看漲 70%</div></div><table class="fin"><tr><td>營收（年）</td><td><b>$67.36B</b><span style="color:#6e7681;font-size:11px"> (2026)</span></td><td><b>$57.40B</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b>$52.96B</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td></tr><tr><td>EPS（年）</td><td><b style="color:#4ade80">+$5.94</b><span style="color:#6e7681;font-size:11px"> (2026)</span></td><td><b style="color:#4ade80">+$4.46</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b style="color:#4ade80">+$3.82</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td></tr><tr style="background:#161b22de7"><td style="color:#fbbf24;font-weight:bold">最新季 (2026Q3)</td><td colspan="3">營收 <b>$19.34B</b>&nbsp;｜&nbsp;EPS <b style="color:#4ade80">+$1.58</b></td></tr></table><div class="gm-box">▪ 毛利率 <b>60.0%</b>（去年同期 67.3%）<b style="color:#f87171"> ↓ 收縮 -7.3%</b></div><div class="analyst-box">🎯 目標 <b>$237.97</b>&nbsp;|&nbsp;距目標 <b style="color:#4ade80">+70%</b>&nbsp;|&nbsp;共識 <b>Buy</b>（41 位）</div><div class="risk-box">⚠️ 最大風險：大型企業雲端支出放緩</div><div class="pe-bar">▪ 本益比：目前 <b>21.9x</b>&nbsp;|&nbsp;52W 18x ~ 51x&nbsp;|&nbsp;前瞻 <b>12.7x</b></div><div class="price-box">▪ 合理股價 <b>$218.5</b>（52W PE中位 × EPS）&nbsp;|&nbsp;預測股價 <b>$238.0</b>（分析師目標）</div><div style="background:rgba(244,114,182,.12);border-radius:4px;padding:5px 10px;font-size:13px;margin:4px 0">🔻 空單 <b>2.7%</b>&nbsp;|&nbsp;Days to Cover 1.8</div></div><div class="card"><h3>▶ MRVL <a href="https://finance.yahoo.com/quote/MRVL" style="color:#8ab4f8;text-decoration:none">Marvell Technology, Inc.</a>&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">昨收 $258.95</span>&nbsp;<span style="background:rgba(74,222,128,.12);color:#4ade80;padding:1px 8px;border-radius:10px;font-size:12px;font-weight:bold">盤前 ▲ +2.05%&nbsp;<span style="font-weight:normal">$264.26</span></span>&nbsp;<span style="font-weight:normal;font-size:11px;color:#6e7681">Technology · $232.7B</span></h3><div class="verdict-box v-aggressive">🚀 積極布局&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">AI晶片光學互連關鍵，營收和毛利率健康成長。</span></div><div class="row" style="margin:5px 0"><span style="background:rgba(167,139,250,.12);color:#c4b5fd;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">🔖 AI光學與高速互連</span><span style="background:rgba(167,139,250,.12);color:#c4b5fd;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">🔖 先進晶片製造與供應</span><span style="background:rgba(96,165,250,.12);color:#60a5fa;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">Technology</span></div><div class="growth-box">📈 營收 YoY <span style="color:#4ade80">+36%</span><span style="font-size:12px;color:#9198a1">↓減速</span>　　EPS YoY <span style="color:#4ade80">+48%</span><span style="font-size:12px;color:#9198a1"></span><div style="font-size:11px;font-weight:normal;color:#4ade80;margin-top:3px">篩選依據：A: 營收 YoY +36% + EPS 正</div></div><table class="fin"><tr><td>營收（年）</td><td><b>$8.19B</b><span style="color:#6e7681;font-size:11px"> (2026)</span></td><td><b>$5.77B</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b>$5.51B</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td></tr><tr><td>EPS（年）</td><td><b style="color:#4ade80">+$3.10</b><span style="color:#6e7681;font-size:11px"> (2026)</span></td><td><b style="color:#f87171">$-1.02</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b style="color:#f87171">$-1.08</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td></tr><tr style="background:#161b22de7"><td style="color:#fbbf24;font-weight:bold">最新季 (2026Q3)</td><td colspan="3">營收 <b>$2.74B</b>&nbsp;｜&nbsp;EPS <b style="color:#4ade80">+$0.34</b></td></tr></table><div class="gm-box">▪ 毛利率 <b>53.1%</b>（去年同期 50.4%）<b style="color:#4ade80"> ↑ 擴張 +2.7%</b></div><div class="analyst-box">🎯 目標 <b>$289.11</b>&nbsp;|&nbsp;距目標 <b style="color:#4ade80">+12%</b>&nbsp;|&nbsp;共識 <b>Strong Buy</b>（43 位）</div><div class="risk-box">⚠️ 最大風險：新產品推出不如預期</div><div class="pe-bar">▪ 本益比：目前 <b>85.5x</b>&nbsp;|&nbsp;52W 23x ~ 109x&nbsp;|&nbsp;前瞻 <b>38.3x</b></div><div class="price-box">▪ 合理股價 <b>$200.3</b>（52W PE中位 × EPS）&nbsp;|&nbsp;預測股價 <b>$289.1</b>（分析師目標）</div><div style="background:rgba(244,114,182,.12);border-radius:4px;padding:5px 10px;font-size:13px;margin:4px 0">🔻 空單 <b>4.2%</b>&nbsp;|&nbsp;Days to Cover 1.3</div></div><div class="card"><h3>▶ SMCI <a href="https://finance.yahoo.com/quote/SMCI" style="color:#8ab4f8;text-decoration:none">Super Micro Computer, Inc.</a>&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">昨收 $41.51</span>&nbsp;<span style="background:rgba(74,222,128,.12);color:#4ade80;padding:1px 8px;border-radius:10px;font-size:12px;font-weight:bold">盤前 ▲ +1.37%&nbsp;<span style="font-weight:normal">$42.08</span></span>&nbsp;<span style="font-weight:normal;font-size:11px;color:#6e7681">Technology · $27.3B</span></h3><div class="verdict-box v-aggressive">🚀 積極布局&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">AI伺服器需求爆發，估值偏低，營收成長驚人。</span></div><div class="row" style="margin:5px 0"><span style="background:rgba(167,139,250,.12);color:#c4b5fd;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">🔖 AI雲端基礎設施</span><span style="background:rgba(167,139,250,.12);color:#c4b5fd;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">🔖 先進晶片製造與供應</span><span style="background:rgba(96,165,250,.12);color:#60a5fa;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">Technology</span></div><div class="growth-box">📈 營收 YoY <span style="color:#4ade80">+93%</span><span style="font-size:12px;color:#9198a1">↓減速</span><div style="font-size:11px;font-weight:normal;color:#4ade80;margin-top:3px">篩選依據：A: 營收 YoY +93% + EPS 正</div></div><table class="fin"><tr><td>營收（年）</td><td><b>$39.06B</b><span style="color:#6e7681;font-size:11px"> (2026)</span></td><td><b>$21.97B</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b>$14.99B</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td></tr><tr><td>EPS（年）</td><td><b style="color:#4ade80">+$3.65</b><span style="color:#6e7681;font-size:11px"> (2026)</span></td><td><b style="color:#4ade80">+$1.77</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b style="color:#4ade80">+$2.17</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td></tr><tr style="background:#161b22de7"><td style="color:#fbbf24;font-weight:bold">最新季 (2026Q2)</td><td colspan="3">營收 <b>$11.12B</b>&nbsp;｜&nbsp;EPS <b style="color:#4ade80">+$1.83</b></td></tr></table><div class="gm-box">▪ 毛利率 <b>17.5%</b>（去年同期 9.5%）<b style="color:#4ade80"> ↑ 擴張 +8.0%</b></div><div class="analyst-box">🎯 目標 <b>$42.38</b>&nbsp;|&nbsp;距目標 <b style="color:#4ade80">+2%</b>&nbsp;|&nbsp;共識 <b>Hold</b>（16 位）</div><div class="risk-box">⚠️ 最大風險：競爭加劇，毛利率受壓</div><div class="pe-bar">▪ 本益比：目前 <b>12.7x</b>&nbsp;|&nbsp;52W 6x ~ 18x&nbsp;|&nbsp;前瞻 <b>7.8x</b></div><div class="price-box">▪ 合理股價 <b>$39.1</b>（52W PE中位 × EPS）&nbsp;|&nbsp;預測股價 <b>$42.4</b>（分析師目標）</div><div style="background:rgba(244,114,182,.12);border-radius:4px;padding:5px 10px;font-size:13px;margin:4px 0">🔻 空單 <b>18.8%</b>&nbsp;|&nbsp;Days to Cover 2.5 ⚠️ 高空單</div></div><div class="card"><h3>▶ UBER <a href="https://finance.yahoo.com/quote/UBER" style="color:#8ab4f8;text-decoration:none">Uber Technologies, Inc.</a>&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">昨收 $69.22</span>&nbsp;<span style="background:rgba(74,222,128,.12);color:#4ade80;padding:1px 8px;border-radius:10px;font-size:12px;font-weight:bold">盤前 ▲ +0.17%&nbsp;<span style="font-weight:normal">$69.29</span></span>&nbsp;<span style="font-weight:normal;font-size:11px;color:#6e7681">Technology · $141.4B</span></h3><div class="verdict-box v-watch">🔎 值得追蹤&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">基本面穩健，出行與外送需求持續，但受宏觀影響。</span></div><div class="row" style="margin:5px 0"><span style="background:rgba(96,165,250,.12);color:#60a5fa;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">Technology</span></div><div class="growth-box">📈 營收 YoY <span style="color:#4ade80">+12%</span><span style="font-size:12px;color:#9198a1">↓減速</span>　　EPS YoY <span style="color:#4ade80">+82%</span><span style="font-size:12px;color:#9198a1"></span><div style="font-size:11px;font-weight:normal;color:#4ade80;margin-top:3px">篩選依據：A: 營收 YoY +12% + EPS 正  |  C: 分析師看漲 46%</div></div><table class="fin"><tr><td>營收（年）</td><td><b>$52.02B</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b>$43.98B</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td><td><b>$37.28B</b><span style="color:#6e7681;font-size:11px"> (2023)</span></td></tr><tr><td>EPS（年）</td><td><b style="color:#4ade80">+$4.82</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b style="color:#4ade80">+$4.71</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td><td><b style="color:#4ade80">+$0.93</b><span style="color:#6e7681;font-size:11px"> (2023)</span></td></tr><tr style="background:#161b22de7"><td style="color:#fbbf24;font-weight:bold">最新季 (2026Q2)</td><td colspan="3">營收 <b>$14.19B</b>&nbsp;｜&nbsp;EPS <b style="color:#4ade80">+$1.18</b></td></tr></table><div class="gm-box">▪ 毛利率 <b>44.9%</b>（去年同期 39.8%）<b style="color:#4ade80"> ↑ 擴張 +5.1%</b></div><div class="analyst-box">🎯 目標 <b>$100.77</b>&nbsp;|&nbsp;距目標 <b style="color:#4ade80">+46%</b>&nbsp;|&nbsp;共識 <b>Buy</b>（47 位）</div><div class="risk-box">⚠️ 最大風險：監管風險，司機成本上升</div><div class="pe-bar">▪ 本益比：目前 <b>15.2x</b>&nbsp;|&nbsp;52W 14x ~ 22x&nbsp;|&nbsp;前瞻 <b>15.7x</b></div><div class="price-box">▪ 合理股價 <b>$83.2</b>（52W PE中位 × EPS）&nbsp;|&nbsp;預測股價 <b>$100.8</b>（分析師目標）</div><div style="background:rgba(244,114,182,.12);border-radius:4px;padding:5px 10px;font-size:13px;margin:4px 0">🔻 空單 <b>2.3%</b>&nbsp;|&nbsp;Days to Cover 2.6</div></div><div class="card"><h3>▶ MSFT <a href="https://finance.yahoo.com/quote/MSFT" style="color:#8ab4f8;text-decoration:none">Microsoft Corporation</a>&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">昨收 $497.93</span>&nbsp;<span style="background:rgba(74,222,128,.12);color:#4ade80;padding:1px 8px;border-radius:10px;font-size:12px;font-weight:bold">盤前 ▲ +0.21%&nbsp;<span style="font-weight:normal">$499.00</span></span>&nbsp;<span style="font-weight:normal;font-size:11px;color:#6e7681">Technology · $3697.4B</span></h3><div class="verdict-box v-watch">🔎 值得追蹤&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">AI整合推動雲端增長，但短期估值偏高。</span></div><div class="row" style="margin:5px 0"><span style="background:rgba(167,139,250,.12);color:#c4b5fd;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">🔖 AI雲端基礎設施</span><span style="background:rgba(96,165,250,.12);color:#60a5fa;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">Technology</span></div><div class="growth-box">📈 營收 YoY <span style="color:#4ade80">+18%</span><span style="font-size:12px;color:#9198a1">↓減速</span>　　EPS YoY <span style="color:#4ade80">+32%</span><span style="font-size:12px;color:#9198a1"></span><div style="font-size:11px;font-weight:normal;color:#4ade80;margin-top:3px">篩選依據：A: 營收 YoY +18% + EPS 正</div></div><table class="fin"><tr><td>營收（年）</td><td><b>$331.84B</b><span style="color:#6e7681;font-size:11px"> (2026)</span></td><td><b>$281.72B</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b>$245.12B</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td></tr><tr><td>EPS（年）</td><td><b style="color:#4ade80">+$18.00</b><span style="color:#6e7681;font-size:11px"> (2026)</span></td><td><b style="color:#4ade80">+$13.70</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b style="color:#4ade80">+$11.86</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td></tr><tr style="background:#161b22de7"><td style="color:#fbbf24;font-weight:bold">最新季 (2026Q2)</td><td colspan="3">營收 <b>$90.01B</b>&nbsp;｜&nbsp;EPS <b style="color:#4ade80">+$4.82</b></td></tr></table><div class="gm-box">▪ 毛利率 <b>67.2%</b>（去年同期 68.6%）<b style="color:#f87171"> ↓ 收縮 -1.4%</b></div><div class="analyst-box">🎯 目標 <b>$577.26</b>&nbsp;|&nbsp;距目標 <b style="color:#4ade80">+16%</b>&nbsp;|&nbsp;共識 <b>Strong Buy</b>（52 位）</div><div class="risk-box">⚠️ 最大風險：宏觀經濟放緩影響企業支出</div><div class="pe-bar">▪ 本益比：目前 <b>27.8x</b>&nbsp;|&nbsp;52W 20x ~ 31x&nbsp;|&nbsp;前瞻 <b>21.0x</b></div><div class="price-box">▪ 合理股價 <b>$451.8</b>（52W PE中位 × EPS）&nbsp;|&nbsp;預測股價 <b>$577.3</b>（分析師目標）</div><div style="background:rgba(244,114,182,.12);border-radius:4px;padding:5px 10px;font-size:13px;margin:4px 0">🔻 空單 <b>0.9%</b>&nbsp;|&nbsp;Days to Cover 3.2</div></div><div class="card"><h3>▶ CRWD <a href="https://finance.yahoo.com/quote/CRWD" style="color:#8ab4f8;text-decoration:none">CrowdStrike Holdings, Inc.</a>&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">昨收 $259.67</span>&nbsp;<span style="background:rgba(248,113,113,.12);color:#f87171;padding:1px 8px;border-radius:10px;font-size:12px;font-weight:bold">盤前 ▼ -0.24%&nbsp;<span style="font-weight:normal">$259.04</span></span>&nbsp;<span style="font-weight:normal;font-size:11px;color:#6e7681">Technology · $265.9B</span></h3><div class="verdict-box v-watch">🔎 值得追蹤&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">網絡安全需求增長，但估值過高，等待回調。</span></div><div class="row" style="margin:5px 0"><span style="background:rgba(167,139,250,.12);color:#c4b5fd;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">🔖 AI雲端基礎設施</span><span style="background:rgba(96,165,250,.12);color:#60a5fa;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">Technology</span></div><div class="growth-box">📈 營收 YoY <span style="color:#4ade80">+26%</span><span style="font-size:12px;color:#9198a1">↓減速</span>　　EPS YoY <span style="color:#4ade80">+113%</span><span style="font-size:12px;color:#9198a1"> 🔄虧轉盈</span><div style="font-size:11px;font-weight:normal;color:#4ade80;margin-top:3px">篩選依據：A: 營收 YoY +26% + EPS 正  |  B: 虧損轉盈利</div></div><table class="fin"><tr><td>營收（年）</td><td><b>$4.81B</b><span style="color:#6e7681;font-size:11px"> (2026)</span></td><td><b>$3.95B</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b>$3.06B</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td></tr><tr><td>EPS（年）</td><td><b style="color:#f87171">$-0.16</b><span style="color:#6e7681;font-size:11px"> (2026)</span></td><td><b style="color:#f87171">$-0.02</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b style="color:#4ade80">+$0.09</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td></tr><tr style="background:#161b22de7"><td style="color:#fbbf24;font-weight:bold">最新季 (2026Q3)</td><td colspan="3">營收 <b>$1.47B</b>&nbsp;｜&nbsp;EPS <b style="color:#4ade80">+$0.01</b></td></tr></table><div class="gm-box">▪ 毛利率 <b>74.6%</b>（去年同期 73.6%）<b style="color:#4ade80"> ↑ 擴張 +1.0%</b></div><div class="analyst-box">🎯 目標 <b>$235.67</b>&nbsp;|&nbsp;距目標 <b style="color:#f87171">-9%</b>&nbsp;|&nbsp;共識 <b>Buy</b>（50 位）</div><div class="risk-box">⚠️ 最大風險：競爭激烈，企業安全預算收緊</div><div class="pe-bar">▪ 本益比：目前 <b>8655.7x</b>&nbsp;|&nbsp;52W 2856x ~ 8796x&nbsp;|&nbsp;前瞻 <b>161.7x</b></div><div class="price-box">▪ 合理股價 <b>$174.8</b>（52W PE中位 × EPS）&nbsp;|&nbsp;預測股價 <b>$235.7</b>（分析師目標）</div><div style="background:rgba(244,114,182,.12);border-radius:4px;padding:5px 10px;font-size:13px;margin:4px 0">🔻 空單 <b>2.8%</b>&nbsp;|&nbsp;Days to Cover 2.4</div></div><div class="card"><h3>▶ DDOG <a href="https://finance.yahoo.com/quote/DDOG" style="color:#8ab4f8;text-decoration:none">Datadog, Inc.</a>&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">昨收 $256.92</span>&nbsp;<span style="background:rgba(74,222,128,.12);color:#4ade80;padding:1px 8px;border-radius:10px;font-size:12px;font-weight:bold">盤前 ▲ +1.59%&nbsp;<span style="font-weight:normal">$261.00</span></span>&nbsp;<span style="font-weight:normal;font-size:11px;color:#6e7681">Technology · $92.3B</span></h3><div class="verdict-box v-dip">⏳ 等待回調&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">雲端監控需求旺盛，但高估值已部分反映成長。</span></div><div class="row" style="margin:5px 0"><span style="background:rgba(167,139,250,.12);color:#c4b5fd;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">🔖 AI雲端基礎設施</span><span style="background:rgba(96,165,250,.12);color:#60a5fa;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">Technology</span></div><div class="growth-box">📈 營收 YoY <span style="color:#4ade80">+36%</span><span style="font-size:12px;color:#9198a1">↓減速</span>　　EPS YoY <span style="color:#4ade80">+1200%</span><span style="font-size:12px;color:#9198a1"></span><div style="font-size:11px;font-weight:normal;color:#4ade80;margin-top:3px">篩選依據：A: 營收 YoY +36% + EPS 正</div></div><table class="fin"><tr><td>營收（年）</td><td><b>$3.43B</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b>$2.68B</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td><td><b>$2.13B</b><span style="color:#6e7681;font-size:11px"> (2023)</span></td></tr><tr><td>EPS（年）</td><td><b style="color:#4ade80">+$0.31</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b style="color:#4ade80">+$0.55</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td><td><b style="color:#4ade80">+$0.15</b><span style="color:#6e7681;font-size:11px"> (2023)</span></td></tr><tr style="background:#161b22de7"><td style="color:#fbbf24;font-weight:bold">最新季 (2026Q2)</td><td colspan="3">營收 <b>$1.12B</b>&nbsp;｜&nbsp;EPS <b style="color:#4ade80">+$0.13</b></td></tr></table><div class="gm-box">▪ 毛利率 <b>78.6%</b>（去年同期 79.9%）<b style="color:#f87171"> ↓ 收縮 -1.3%</b></div><div class="analyst-box">🎯 目標 <b>$285.28</b>&nbsp;|&nbsp;距目標 <b style="color:#4ade80">+11%</b>&nbsp;|&nbsp;共識 <b>Strong Buy</b>（46 位）</div><div class="risk-box">⚠️ 最大風險：客戶增長放緩，競爭激烈</div><div class="pe-bar">▪ 本益比：目前 <b>524.3x</b>&nbsp;|&nbsp;52W 200x ~ 597x&nbsp;|&nbsp;前瞻 <b>86.4x</b></div><div class="price-box">▪ 合理股價 <b>$195.4</b>（52W PE中位 × EPS）&nbsp;|&nbsp;預測股價 <b>$285.3</b>（分析師目標）</div><div style="background:rgba(244,114,182,.12);border-radius:4px;padding:5px 10px;font-size:13px;margin:4px 0">🔻 空單 <b>3.5%</b>&nbsp;|&nbsp;Days to Cover 2.8</div></div><div class="card"><h3>▶ MDB <a href="https://finance.yahoo.com/quote/MDB" style="color:#8ab4f8;text-decoration:none">MongoDB, Inc.</a>&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">昨收 $421.40</span>&nbsp;<span style="background:rgba(74,222,128,.12);color:#4ade80;padding:1px 8px;border-radius:10px;font-size:12px;font-weight:bold">盤前 ▲ +0.49%&nbsp;<span style="font-weight:normal">$423.48</span></span>&nbsp;<span style="font-weight:normal;font-size:11px;color:#6e7681">Technology · $33.9B</span></h3><div class="verdict-box v-dip">⏳ 等待回調&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">資料庫需求強勁，但高估值反映多數成長預期。</span></div><div class="row" style="margin:5px 0"><span style="background:rgba(167,139,250,.12);color:#c4b5fd;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">🔖 AI雲端基礎設施</span><span style="background:rgba(96,165,250,.12);color:#60a5fa;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">Technology</span></div><div class="growth-box">📈 營收 YoY <span style="color:#4ade80">+30%</span><span style="font-size:12px;color:#9198a1">↓減速</span>　　EPS YoY <span style="color:#4ade80">+188%</span><span style="font-size:12px;color:#9198a1"> 🔄虧轉盈</span><div style="font-size:11px;font-weight:normal;color:#4ade80;margin-top:3px">篩選依據：A: 營收 YoY +30% + EPS 正  |  B: 虧損轉盈利</div></div><table class="fin"><tr><td>營收（年）</td><td><b>$2.46B</b><span style="color:#6e7681;font-size:11px"> (2026)</span></td><td><b>$2.01B</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b>$1.68B</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td></tr><tr><td>EPS（年）</td><td><b style="color:#f87171">$-0.88</b><span style="color:#6e7681;font-size:11px"> (2026)</span></td><td><b style="color:#f87171">$-1.73</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b style="color:#f87171">$-2.48</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td></tr><tr style="background:#161b22de7"><td style="color:#fbbf24;font-weight:bold">最新季 (2026Q3)</td><td colspan="3">營收 <b>$0.77B</b>&nbsp;｜&nbsp;EPS <b style="color:#4ade80">+$0.51</b></td></tr></table><div class="gm-box">▪ 毛利率 <b>73.8%</b>（去年同期 71.0%）<b style="color:#4ade80"> ↑ 擴張 +2.8%</b></div><div class="analyst-box">🎯 目標 <b>$456.88</b>&nbsp;|&nbsp;距目標 <b style="color:#4ade80">+8%</b>&nbsp;|&nbsp;共識 <b>Buy</b>（37 位）</div><div class="risk-box">⚠️ 最大風險：雲端競爭加劇，客戶流失</div><div class="pe-bar">▪ 本益比：目前 <b>585.3x</b>&nbsp;|&nbsp;52W 300x ~ 657x&nbsp;|&nbsp;前瞻 <b>54.1x</b></div><div class="price-box">▪ 合理股價 <b>$344.4</b>（52W PE中位 × EPS）&nbsp;|&nbsp;預測股價 <b>$456.9</b>（分析師目標）</div><div style="background:rgba(244,114,182,.12);border-radius:4px;padding:5px 10px;font-size:13px;margin:4px 0">🔻 空單 <b>3.7%</b>&nbsp;|&nbsp;Days to Cover 1.5</div></div><div class="card"><h3>▶ NRG <a href="https://finance.yahoo.com/quote/NRG" style="color:#8ab4f8;text-decoration:none">NRG Energy, Inc.</a>&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">昨收 $97.85</span>&nbsp;<span style="background:rgba(74,222,128,.12);color:#4ade80;padding:1px 8px;border-radius:10px;font-size:12px;font-weight:bold">盤前 ▲ +1.01%&nbsp;<span style="font-weight:normal">$98.84</span></span>&nbsp;<span style="font-weight:normal;font-size:11px;color:#6e7681">Utilities · $20.6B</span></h3><div class="verdict-box v-wait">👁 暫時觀望&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">公用事業波動較小，但高殖利率環境下吸引力有限。</span></div><div class="row" style="margin:5px 0"><span style="background:rgba(96,165,250,.12);color:#60a5fa;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">Utilities</span></div><div class="growth-box">📈 營收 YoY <span style="color:#4ade80">+11%</span><span style="font-size:12px;color:#9198a1">↓減速</span>　　EPS YoY <span style="color:#4ade80">+474%</span><span style="font-size:12px;color:#9198a1">↑加速 🔄虧轉盈</span><div style="font-size:11px;font-weight:normal;color:#4ade80;margin-top:3px">篩選依據：A: 營收 YoY +11% + EPS 加速  |  B: 虧損轉盈利  |  C: 分析師看漲 93%</div></div><table class="fin"><tr><td>營收（年）</td><td><b>$30.71B</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b>$28.13B</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td><td><b>$28.82B</b><span style="color:#6e7681;font-size:11px"> (2023)</span></td></tr><tr><td>EPS（年）</td><td><b style="color:#4ade80">+$4.09</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b style="color:#4ade80">+$5.14</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td><td><b style="color:#f87171">$-1.12</b><span style="color:#6e7681;font-size:11px"> (2023)</span></td></tr><tr style="background:#161b22de7"><td style="color:#fbbf24;font-weight:bold">最新季 (2026Q2)</td><td colspan="3">營收 <b>$7.48B</b>&nbsp;｜&nbsp;EPS <b style="color:#4ade80">+$2.32</b></td></tr></table><div class="gm-box">▪ 毛利率 <b>26.9%</b>（去年同期 16.5%）<b style="color:#4ade80"> ↑ 擴張 +10.4%</b></div><div class="analyst-box">🎯 目標 <b>$188.56</b>&nbsp;|&nbsp;距目標 <b style="color:#4ade80">+93%</b>&nbsp;|&nbsp;共識 <b>Buy</b>（16 位）</div><div class="risk-box">⚠️ 最大風險：能源政策變動</div><div class="pe-bar">▪ 本益比：目前 <b>25.5x</b>&nbsp;|&nbsp;52W 25x ~ 50x&nbsp;|&nbsp;前瞻 <b>8.7x</b></div><div class="price-box">▪ 合理股價 <b>$143.8</b>（52W PE中位 × EPS）&nbsp;|&nbsp;預測股價 <b>$188.6</b>（分析師目標）</div><div style="background:rgba(244,114,182,.12);border-radius:4px;padding:5px 10px;font-size:13px;margin:4px 0">🔻 空單 <b>3.7%</b>&nbsp;|&nbsp;Days to Cover 2.2</div></div><div class="card"><h3>▶ APP <a href="https://finance.yahoo.com/quote/APP" style="color:#8ab4f8;text-decoration:none">AppLovin Corporation</a>&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">昨收 $312.47</span>&nbsp;<span style="background:rgba(74,222,128,.12);color:#4ade80;padding:1px 8px;border-radius:10px;font-size:12px;font-weight:bold">盤前 ▲ +0.17%&nbsp;<span style="font-weight:normal">$312.99</span></span>&nbsp;<span style="font-weight:normal;font-size:11px;color:#6e7681">Communication Services · $105.0B</span></h3><div class="verdict-box v-wait">👁 暫時觀望&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">廣告科技受宏觀影響，營收下滑，估值偏高。</span></div><div class="row" style="margin:5px 0"><span style="background:rgba(96,165,250,.12);color:#60a5fa;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">Communication Services</span></div><div class="growth-box">📈 營收 YoY <span style="color:#4ade80">+53%</span><span style="font-size:12px;color:#9198a1">↓減速</span>　　EPS YoY <span style="color:#4ade80">+56%</span><span style="font-size:12px;color:#9198a1"></span><div style="font-size:11px;font-weight:normal;color:#4ade80;margin-top:3px">篩選依據：A: 營收 YoY +53% + EPS 正  |  C: 分析師看漲 60%</div></div><table class="fin"><tr><td>營收（年）</td><td><b>$5.48B</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b>$3.22B</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td><td><b>$1.84B</b><span style="color:#6e7681;font-size:11px"> (2023)</span></td></tr><tr><td>EPS（年）</td><td><b style="color:#4ade80">+$9.84</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b style="color:#4ade80">+$4.68</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td><td><b style="color:#4ade80">+$1.01</b><span style="color:#6e7681;font-size:11px"> (2023)</span></td></tr><tr style="background:#161b22de7"><td style="color:#fbbf24;font-weight:bold">最新季 (2026Q2)</td><td colspan="3">營收 <b>$1.92B</b>&nbsp;｜&nbsp;EPS <b style="color:#4ade80">+$3.77</b></td></tr></table><div class="gm-box">▪ 毛利率 <b>88.3%</b>（去年同期 87.7%）<b style="color:#4ade80"> ↑ 擴張 +0.6%</b></div><div class="analyst-box">🎯 目標 <b>$498.37</b>&nbsp;|&nbsp;距目標 <b style="color:#4ade80">+60%</b>&nbsp;|&nbsp;共識 <b>Buy</b>（31 位）</div><div class="risk-box">⚠️ 最大風險：廣告支出放緩</div><div class="pe-bar">▪ 本益比：目前 <b>24.0x</b>&nbsp;|&nbsp;52W 23x ~ 57x&nbsp;|&nbsp;前瞻 <b>14.9x</b></div><div class="price-box">▪ 合理股價 <b>$521.9</b>（52W PE中位 × EPS）&nbsp;|&nbsp;預測股價 <b>$498.4</b>（分析師目標）</div><div style="background:rgba(244,114,182,.12);border-radius:4px;padding:5px 10px;font-size:13px;margin:4px 0">🔻 空單 <b>3.8%</b>&nbsp;|&nbsp;Days to Cover 2.4</div></div><div class="card"><h3>▶ AXON <a href="https://finance.yahoo.com/quote/AXON" style="color:#8ab4f8;text-decoration:none">Axon Enterprise, Inc.</a>&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">昨收 $445.00</span>&nbsp;<span style="background:rgba(74,222,128,.12);color:#4ade80;padding:1px 8px;border-radius:10px;font-size:12px;font-weight:bold">盤前 ▲ +0.07%&nbsp;<span style="font-weight:normal">$445.30</span></span>&nbsp;<span style="font-weight:normal;font-size:11px;color:#6e7681">Industrials · $36.2B</span></h3><div class="verdict-box v-wait">👁 暫時觀望&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">執法科技需求，但EPS下滑，估值偏高。</span></div><div class="row" style="margin:5px 0"><span style="background:rgba(96,165,250,.12);color:#60a5fa;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">Industrials</span></div><div class="growth-box">📈 營收 YoY <span style="color:#4ade80">+35%</span><span style="font-size:12px;color:#9198a1">↓減速</span>　　EPS YoY <span style="color:#f87171">-20%</span><span style="font-size:12px;color:#9198a1"></span><div style="font-size:11px;font-weight:normal;color:#4ade80;margin-top:3px">篩選依據：A: 營收 YoY +35% + EPS 正  |  C: 分析師看漲 58%</div></div><table class="fin"><tr><td>營收（年）</td><td><b>$2.78B</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b>$2.08B</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td><td><b>$1.56B</b><span style="color:#6e7681;font-size:11px"> (2023)</span></td></tr><tr><td>EPS（年）</td><td><b style="color:#4ade80">+$1.60</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b style="color:#4ade80">+$4.98</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td><td><b style="color:#4ade80">+$2.37</b><span style="color:#6e7681;font-size:11px"> (2023)</span></td></tr><tr style="background:#161b22de7"><td style="color:#fbbf24;font-weight:bold">最新季 (2026Q2)</td><td colspan="3">營收 <b>$0.90B</b>&nbsp;｜&nbsp;EPS <b style="color:#4ade80">+$0.37</b></td></tr></table><div class="gm-box">▪ 毛利率 <b>60.4%</b>（去年同期 60.4%）<b style="color:#4ade80"> ↑ 擴張 +0.0%</b></div><div class="analyst-box">🎯 目標 <b>$704.11</b>&nbsp;|&nbsp;距目標 <b style="color:#4ade80">+58%</b>&nbsp;|&nbsp;共識 <b>Buy</b>（19 位）</div><div class="risk-box">⚠️ 最大風險：政府預算限制</div><div class="pe-bar">▪ 本益比：目前 <b>185.4x</b>&nbsp;|&nbsp;52W 141x ~ 318x&nbsp;|&nbsp;前瞻 <b>42.2x</b></div><div class="price-box">▪ 合理股價 <b>$551.5</b>（52W PE中位 × EPS）&nbsp;|&nbsp;預測股價 <b>$704.1</b>（分析師目標）</div><div style="background:rgba(244,114,182,.12);border-radius:4px;padding:5px 10px;font-size:13px;margin:4px 0">🔻 空單 <b>5.3%</b>&nbsp;|&nbsp;Days to Cover 4.3</div></div><div class="card"><h3>▶ CELH <a href="https://finance.yahoo.com/quote/CELH" style="color:#8ab4f8;text-decoration:none">Celsius Holdings, Inc.</a>&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">昨收 $28.43</span>&nbsp;<span style="background:rgba(74,222,128,.12);color:#4ade80;padding:1px 8px;border-radius:10px;font-size:12px;font-weight:bold">盤前 ▲ +0.21%&nbsp;<span style="font-weight:normal">$28.49</span></span>&nbsp;<span style="font-weight:normal;font-size:11px;color:#6e7681">Consumer Defensive · $7.2B</span></h3><div class="verdict-box v-wait">👁 暫時觀望&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">能量飲料市場競爭激烈，EPS下滑，宏觀逆風。</span></div><div class="row" style="margin:5px 0"><span style="background:rgba(96,165,250,.12);color:#60a5fa;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">Consumer Defensive</span></div><div class="growth-box">📈 營收 YoY <span style="color:#4ade80">+11%</span><span style="font-size:12px;color:#9198a1">↓減速</span>　　EPS YoY <span style="color:#f87171">-58%</span><span style="font-size:12px;color:#9198a1"></span><div style="font-size:11px;font-weight:normal;color:#4ade80;margin-top:3px">篩選依據：A: 營收 YoY +11% + EPS 正  |  C: 分析師看漲 49%</div></div><table class="fin"><tr><td>營收（年）</td><td><b>$2.52B</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b>$1.36B</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td><td><b>$1.32B</b><span style="color:#6e7681;font-size:11px"> (2023)</span></td></tr><tr><td>EPS（年）</td><td><b style="color:#4ade80">+$0.25</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b style="color:#4ade80">+$0.46</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td><td><b style="color:#4ade80">+$0.79</b><span style="color:#6e7681;font-size:11px"> (2023)</span></td></tr><tr style="background:#161b22de7"><td style="color:#fbbf24;font-weight:bold">最新季 (2026Q2)</td><td colspan="3">營收 <b>$0.82B</b>&nbsp;｜&nbsp;EPS <b style="color:#4ade80">+$0.14</b></td></tr></table><div class="gm-box">▪ 毛利率 <b>48.1%</b>（去年同期 51.5%）<b style="color:#f87171"> ↓ 收縮 -3.4%</b></div><div class="analyst-box">🎯 目標 <b>$42.29</b>&nbsp;|&nbsp;距目標 <b style="color:#4ade80">+49%</b>&nbsp;|&nbsp;共識 <b>Buy</b>（21 位）</div><div class="risk-box">⚠️ 最大風險：市場競爭加劇</div><div class="pe-bar">▪ 本益比：目前 <b>123.6x</b>&nbsp;|&nbsp;52W 102x ~ 290x&nbsp;|&nbsp;前瞻 <b>16.4x</b></div><div class="price-box">▪ 合理股價 <b>$45.1</b>（52W PE中位 × EPS）&nbsp;|&nbsp;預測股價 <b>$42.3</b>（分析師目標）</div><div style="background:rgba(244,114,182,.12);border-radius:4px;padding:5px 10px;font-size:13px;margin:4px 0">🔻 空單 <b>12.3%</b>&nbsp;|&nbsp;Days to Cover 3.6 ⚠️ 高空單</div></div><div class="card"><h3>▶ RKLB <a href="https://finance.yahoo.com/quote/RKLB" style="color:#8ab4f8;text-decoration:none">Rocket Lab Corporation</a>&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">昨收 $73.61</span>&nbsp;<span style="background:rgba(74,222,128,.12);color:#4ade80;padding:1px 8px;border-radius:10px;font-size:12px;font-weight:bold">盤前 ▲ +1.15%&nbsp;<span style="font-weight:normal">$74.46</span></span>&nbsp;<span style="font-weight:normal;font-size:11px;color:#6e7681">Industrials · $47.1B</span></h3><div class="verdict-box v-wait">👁 暫時觀望&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">太空發射有潛力，但EPS表現不佳，風險高。</span></div><div class="row" style="margin:5px 0"><span style="background:rgba(96,165,250,.12);color:#60a5fa;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">Industrials</span></div><div class="growth-box">📈 營收 YoY <span style="color:#4ade80">+62%</span><span style="font-size:12px;color:#9198a1">↓減速</span>　　EPS YoY <span style="color:#4ade80">+38%</span><span style="font-size:12px;color:#9198a1"></span><div style="font-size:11px;font-weight:normal;color:#4ade80;margin-top:3px">篩選依據：C: 分析師看漲 49%</div></div><table class="fin"><tr><td>營收（年）</td><td><b>$0.60B</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b>$0.44B</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td><td><b>$0.24B</b><span style="color:#6e7681;font-size:11px"> (2023)</span></td></tr><tr><td>EPS（年）</td><td><b style="color:#f87171">$-0.37</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b style="color:#f87171">$-0.38</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td><td><b style="color:#f87171">$-0.38</b><span style="color:#6e7681;font-size:11px"> (2023)</span></td></tr><tr style="background:#161b22de7"><td style="color:#fbbf24;font-weight:bold">最新季 (2026Q2)</td><td colspan="3">營收 <b>$0.23B</b>&nbsp;｜&nbsp;EPS <b style="color:#f87171">$-0.08</b></td></tr></table><div class="gm-box">▪ 毛利率 <b>36.1%</b>（去年同期 32.1%）<b style="color:#4ade80"> ↑ 擴張 +4.0%</b></div><div class="analyst-box">🎯 目標 <b>$109.37</b>&nbsp;|&nbsp;距目標 <b style="color:#4ade80">+49%</b>&nbsp;|&nbsp;共識 <b>Buy</b>（19 位）</div><div class="risk-box">⚠️ 最大風險：發射失敗風險</div><div class="pe-bar">▪ 本益比：前瞻 <b>1615.7x</b></div><div class="price-box">▪ 預測股價 <b>$109.4</b>（分析師目標）</div><div style="background:rgba(244,114,182,.12);border-radius:4px;padding:5px 10px;font-size:13px;margin:4px 0">🔻 空單 <b>7.3%</b>&nbsp;|&nbsp;Days to Cover 2.6</div></div><div class="card"><h3>▶ CEG <a href="https://finance.yahoo.com/quote/CEG" style="color:#8ab4f8;text-decoration:none">Constellation Energy Corporation</a>&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">昨收 $261.62</span>&nbsp;<span style="background:rgba(74,222,128,.12);color:#4ade80;padding:1px 8px;border-radius:10px;font-size:12px;font-weight:bold">盤前 ▲ +0.44%&nbsp;<span style="font-weight:normal">$262.77</span></span>&nbsp;<span style="font-weight:normal;font-size:11px;color:#6e7681">Utilities · $92.7B</span></h3><div class="verdict-box v-wait">👁 暫時觀望&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">公用事業波動較小，但高殖利率環境下吸引力有限。</span></div><div class="row" style="margin:5px 0"><span style="background:rgba(96,165,250,.12);color:#60a5fa;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">Utilities</span></div><div class="growth-box">📈 營收 YoY <span style="color:#4ade80">+23%</span><span style="font-size:12px;color:#9198a1">↓減速</span>　　EPS YoY <span style="color:#f87171">-47%</span><span style="font-size:12px;color:#9198a1"></span><div style="font-size:11px;font-weight:normal;color:#4ade80;margin-top:3px">篩選依據：A: 營收 YoY +23% + EPS 正  |  C: 分析師看漲 33%</div></div><table class="fin"><tr><td>營收（年）</td><td><b>$25.53B</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b>$23.57B</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td><td><b>$24.92B</b><span style="color:#6e7681;font-size:11px"> (2023)</span></td></tr><tr><td>EPS（年）</td><td><b style="color:#4ade80">+$7.40</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b style="color:#4ade80">+$11.91</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td><td><b style="color:#4ade80">+$5.02</b><span style="color:#6e7681;font-size:11px"> (2023)</span></td></tr><tr style="background:#161b22de7"><td style="color:#fbbf24;font-weight:bold">最新季 (2026Q2)</td><td colspan="3">營收 <b>$7.50B</b>&nbsp;｜&nbsp;EPS <b style="color:#4ade80">+$1.42</b></td></tr></table><div class="gm-box">▪ 毛利率 <b>16.4%</b>（去年同期 22.2%）<b style="color:#f87171"> ↓ 收縮 -5.8%</b></div><div class="analyst-box">🎯 目標 <b>$347.28</b>&nbsp;|&nbsp;距目標 <b style="color:#4ade80">+33%</b>&nbsp;|&nbsp;共識 <b>Buy</b>（20 位）</div><div class="risk-box">⚠️ 最大風險：能源政策變動</div><div class="pe-bar">▪ 本益比：目前 <b>25.6x</b>&nbsp;|&nbsp;52W 22x ~ 40x&nbsp;|&nbsp;前瞻 <b>19.6x</b></div><div class="price-box">▪ 合理股價 <b>$320.2</b>（52W PE中位 × EPS）&nbsp;|&nbsp;預測股價 <b>$347.3</b>（分析師目標）</div><div style="background:rgba(244,114,182,.12);border-radius:4px;padding:5px 10px;font-size:13px;margin:4px 0">🔻 空單 <b>3.7%</b>&nbsp;|&nbsp;Days to Cover 4.6</div></div><div class="card"><h3>▶ CSCO <a href="https://finance.yahoo.com/quote/CSCO" style="color:#8ab4f8;text-decoration:none">Cisco Systems, Inc.</a>&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">昨收 $106.97</span>&nbsp;<span style="background:rgba(74,222,128,.12);color:#4ade80;padding:1px 8px;border-radius:10px;font-size:12px;font-weight:bold">盤前 ▲ +0.26%&nbsp;<span style="font-weight:normal">$107.25</span></span>&nbsp;<span style="font-weight:normal;font-size:11px;color:#6e7681">Technology · $421.7B</span></h3><div class="verdict-box v-wait">👁 暫時觀望&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">傳統業務增長放緩，AI轉型效應待觀察。</span></div><div class="row" style="margin:5px 0"><span style="background:rgba(167,139,250,.12);color:#c4b5fd;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">🔖 AI光學與高速互連</span><span style="background:rgba(167,139,250,.12);color:#c4b5fd;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">🔖 AI雲端基礎設施</span><span style="background:rgba(96,165,250,.12);color:#60a5fa;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">Technology</span></div><div class="growth-box">📈 營收 YoY <span style="color:#4ade80">+18%</span><span style="font-size:12px;color:#9198a1">↓減速</span>　　EPS YoY <span style="color:#4ade80">+38%</span><span style="font-size:12px;color:#9198a1"></span><div style="font-size:11px;font-weight:normal;color:#4ade80;margin-top:3px">篩選依據：A: 營收 YoY +18% + EPS 正  |  C: 分析師看漲 28%</div></div><table class="fin"><tr><td>營收（年）</td><td><b>$63.33B</b><span style="color:#6e7681;font-size:11px"> (2026)</span></td><td><b>$56.65B</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b>$53.80B</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td></tr><tr><td>EPS（年）</td><td><b style="color:#4ade80">+$2.56</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b style="color:#4ade80">+$2.55</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td></tr><tr style="background:#161b22de7"><td style="color:#fbbf24;font-weight:bold">最新季 (2026Q3)</td><td colspan="3">營收 <b>$17.25B</b>&nbsp;｜&nbsp;EPS <b style="color:#4ade80">+$0.98</b></td></tr></table><div class="gm-box">▪ 毛利率 <b>64.1%</b>（去年同期 63.2%）<b style="color:#4ade80"> ↑ 擴張 +0.9%</b></div><div class="analyst-box">🎯 目標 <b>$137.25</b>&nbsp;|&nbsp;距目標 <b style="color:#4ade80">+28%</b>&nbsp;|&nbsp;共識 <b>Buy</b>（24 位）</div><div class="risk-box">⚠️ 最大風險：轉型進度慢於預期</div><div class="pe-bar">▪ 本益比：目前 <b>32.1x</b>&nbsp;|&nbsp;52W 20x ~ 39x&nbsp;|&nbsp;前瞻 <b>19.0x</b></div><div class="price-box">▪ 合理股價 <b>$98.7</b>（52W PE中位 × EPS）&nbsp;|&nbsp;預測股價 <b>$137.2</b>（分析師目標）</div><div style="background:rgba(244,114,182,.12);border-radius:4px;padding:5px 10px;font-size:13px;margin:4px 0">🔻 空單 <b>1.5%</b>&nbsp;|&nbsp;Days to Cover 4.0</div></div><div class="card"><h3>▶ ENTG <a href="https://finance.yahoo.com/quote/ENTG" style="color:#8ab4f8;text-decoration:none">Entegris, Inc.</a>&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">昨收 $148.63</span>&nbsp;<span style="background:rgba(74,222,128,.12);color:#4ade80;padding:1px 8px;border-radius:10px;font-size:12px;font-weight:bold">盤前 ▲ +1.05%&nbsp;<span style="font-weight:normal">$150.19</span></span>&nbsp;<span style="font-weight:normal;font-size:11px;color:#6e7681">Technology · $22.7B</span></h3><div class="verdict-box v-wait">👁 暫時觀望&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">半導體材料供應，宏觀逆風下需求不明。</span></div><div class="row" style="margin:5px 0"><span style="background:rgba(167,139,250,.12);color:#c4b5fd;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">🔖 先進晶片製造與供應</span><span style="background:rgba(96,165,250,.12);color:#60a5fa;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">Technology</span></div><div class="growth-box">📈 營收 YoY <span style="color:#4ade80">+12%</span><span style="font-size:12px;color:#9198a1">↓減速</span>　　EPS YoY <span style="color:#4ade80">+74%</span><span style="font-size:12px;color:#9198a1"></span><div style="font-size:11px;font-weight:normal;color:#4ade80;margin-top:3px">篩選依據：A: 營收 YoY +12% + EPS 正</div></div><table class="fin"><tr><td>營收（年）</td><td><b>$3.20B</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b>$3.24B</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td><td><b>$3.52B</b><span style="color:#6e7681;font-size:11px"> (2023)</span></td></tr><tr><td>EPS（年）</td><td><b style="color:#4ade80">+$1.55</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b style="color:#4ade80">+$1.94</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td><td><b style="color:#4ade80">+$1.21</b><span style="color:#6e7681;font-size:11px"> (2023)</span></td></tr><tr style="background:#161b22de7"><td style="color:#fbbf24;font-weight:bold">最新季 (2026Q2)</td><td colspan="3">營收 <b>$0.88B</b>&nbsp;｜&nbsp;EPS <b style="color:#4ade80">+$0.61</b></td></tr></table><div class="gm-box">▪ 毛利率 <b>47.6%</b>（去年同期 44.4%）<b style="color:#4ade80"> ↑ 擴張 +3.2%</b></div><div class="analyst-box">🎯 目標 <b>$173.36</b>&nbsp;|&nbsp;距目標 <b style="color:#4ade80">+17%</b>&nbsp;|&nbsp;共識 <b>None</b>（11 位）</div><div class="risk-box">⚠️ 最大風險：半導體週期下行風險</div><div class="pe-bar">▪ 本益比：目前 <b>73.9x</b>&nbsp;|&nbsp;52W 34x ~ 93x&nbsp;|&nbsp;前瞻 <b>29.6x</b></div><div class="price-box">▪ 合理股價 <b>$127.4</b>（52W PE中位 × EPS）&nbsp;|&nbsp;預測股價 <b>$173.4</b>（分析師目標）</div><div style="background:rgba(244,114,182,.12);border-radius:4px;padding:5px 10px;font-size:13px;margin:4px 0">🔻 空單 <b>6.7%</b>&nbsp;|&nbsp;Days to Cover 3.9</div></div><div class="card"><h3>▶ REGN <a href="https://finance.yahoo.com/quote/REGN" style="color:#8ab4f8;text-decoration:none">Regeneron Pharmaceuticals, Inc.</a>&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">昨收 $796.02</span>&nbsp;<span style="background:rgba(74,222,128,.12);color:#4ade80;padding:1px 8px;border-radius:10px;font-size:12px;font-weight:bold">盤前 ▲ +0.12%&nbsp;<span style="font-weight:normal">$797.00</span></span>&nbsp;<span style="font-weight:normal;font-size:11px;color:#6e7681">Healthcare · $82.0B</span></h3><div class="verdict-box v-wait">👁 暫時觀望&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">藥品研發具不確定性，EPS下滑，高利率下承壓。</span></div><div class="row" style="margin:5px 0"><span style="background:rgba(96,165,250,.12);color:#60a5fa;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">Healthcare</span></div><div class="growth-box">📈 營收 YoY <span style="color:#4ade80">+17%</span><span style="font-size:12px;color:#9198a1">↓減速</span>　　EPS YoY <span style="color:#f87171">-5%</span><span style="font-size:12px;color:#9198a1"></span><div style="font-size:11px;font-weight:normal;color:#4ade80;margin-top:3px">篩選依據：A: 營收 YoY +17% + EPS 正</div></div><table class="fin"><tr><td>營收（年）</td><td><b>$14.34B</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b>$14.20B</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td><td><b>$13.12B</b><span style="color:#6e7681;font-size:11px"> (2023)</span></td></tr><tr><td>EPS（年）</td><td><b style="color:#4ade80">+$43.07</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b style="color:#4ade80">+$40.90</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td><td><b style="color:#4ade80">+$37.05</b><span style="color:#6e7681;font-size:11px"> (2023)</span></td></tr><tr style="background:#161b22de7"><td style="color:#fbbf24;font-weight:bold">最新季 (2026Q2)</td><td colspan="3">營收 <b>$4.29B</b>&nbsp;｜&nbsp;EPS <b style="color:#4ade80">+$12.62</b></td></tr></table><div class="gm-box">▪ 毛利率 <b>86.6%</b>（去年同期 85.6%）<b style="color:#4ade80"> ↑ 擴張 +1.0%</b></div><div class="analyst-box">🎯 目標 <b>$850.88</b>&nbsp;|&nbsp;距目標 <b style="color:#4ade80">+7%</b>&nbsp;|&nbsp;共識 <b>Buy</b>（26 位）</div><div class="risk-box">⚠️ 最大風險：藥品審批風險</div><div class="pe-bar">▪ 本益比：目前 <b>19.7x</b>&nbsp;|&nbsp;52W 13x ~ 21x&nbsp;|&nbsp;前瞻 <b>13.1x</b></div><div class="price-box">▪ 合理股價 <b>$699.6</b>（52W PE中位 × EPS）&nbsp;|&nbsp;預測股價 <b>$850.9</b>（分析師目標）</div><div style="background:rgba(244,114,182,.12);border-radius:4px;padding:5px 10px;font-size:13px;margin:4px 0">🔻 空單 <b>2.6%</b>&nbsp;|&nbsp;Days to Cover 4.0</div></div><div class="card"><h3>▶ TSLA <a href="https://finance.yahoo.com/quote/TSLA" style="color:#8ab4f8;text-decoration:none">Tesla, Inc.</a>&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">昨收 $377.94</span>&nbsp;<span style="background:rgba(74,222,128,.12);color:#4ade80;padding:1px 8px;border-radius:10px;font-size:12px;font-weight:bold">盤前 ▲ +0.21%&nbsp;<span style="font-weight:normal">$378.74</span></span>&nbsp;<span style="font-weight:normal;font-size:11px;color:#6e7681">Consumer Cyclical · $1492.7B</span></h3><div class="verdict-box v-wait">👁 暫時觀望&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">電動車競爭加劇，EPS下滑，估值高企。</span></div><div class="row" style="margin:5px 0"><span style="background:rgba(96,165,250,.12);color:#60a5fa;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">Consumer Cyclical</span></div><div class="growth-box">📈 營收 YoY <span style="color:#4ade80">+26%</span><span style="font-size:12px;color:#9198a1">↓減速</span>　　EPS YoY <span style="color:#f87171">-6%</span><span style="font-size:12px;color:#9198a1"></span><div style="font-size:11px;font-weight:normal;color:#4ade80;margin-top:3px">篩選依據：A: 營收 YoY +26% + EPS 正</div></div><table class="fin"><tr><td>營收（年）</td><td><b>$94.83B</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b>$97.69B</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td><td><b>$96.77B</b><span style="color:#6e7681;font-size:11px"> (2023)</span></td></tr><tr><td>EPS（年）</td><td><b style="color:#4ade80">+$1.18</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b style="color:#4ade80">+$2.23</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td><td><b style="color:#4ade80">+$4.73</b><span style="color:#6e7681;font-size:11px"> (2023)</span></td></tr><tr style="background:#161b22de7"><td style="color:#fbbf24;font-weight:bold">最新季 (2026Q2)</td><td colspan="3">營收 <b>$28.24B</b>&nbsp;｜&nbsp;EPS <b style="color:#4ade80">+$0.34</b></td></tr></table><div class="gm-box">▪ 毛利率 <b>16.8%</b>（去年同期 17.2%）<b style="color:#4ade80"> ↑ 擴張 -0.4%</b></div><div class="analyst-box">🎯 目標 <b>$396.62</b>&nbsp;|&nbsp;距目標 <b style="color:#4ade80">+5%</b>&nbsp;|&nbsp;共識 <b>Buy</b>（38 位）</div><div class="risk-box">⚠️ 最大風險：市場競爭，電動車需求放緩</div><div class="pe-bar">▪ 本益比：目前 <b>343.6x</b>&nbsp;|&nbsp;52W 270x ~ 454x&nbsp;|&nbsp;前瞻 <b>172.0x</b></div><div class="price-box">▪ 合理股價 <b>$398.1</b>（52W PE中位 × EPS）&nbsp;|&nbsp;預測股價 <b>$396.6</b>（分析師目標）</div><div style="background:rgba(244,114,182,.12);border-radius:4px;padding:5px 10px;font-size:13px;margin:4px 0">🔻 空單 <b>1.9%</b>&nbsp;|&nbsp;Days to Cover 1.8</div></div><div class="card"><h3>▶ DUOL <a href="https://finance.yahoo.com/quote/DUOL" style="color:#8ab4f8;text-decoration:none">Duolingo, Inc.</a>&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">昨收 $147.75</span>&nbsp;<span style="background:rgba(248,113,113,.12);color:#f87171;padding:1px 8px;border-radius:10px;font-size:12px;font-weight:bold">盤前 ▼ -0.85%&nbsp;<span style="font-weight:normal">$146.50</span></span>&nbsp;<span style="font-weight:normal;font-size:11px;color:#6e7681">Technology · $6.9B</span></h3><div class="verdict-box v-wait">👁 暫時觀望&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">訂閱制模式有潛力，但成長放緩，宏觀逆風影響。</span></div><div class="row" style="margin:5px 0"><span style="background:rgba(96,165,250,.12);color:#60a5fa;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">Technology</span></div><div class="growth-box">📈 營收 YoY <span style="color:#4ade80">+18%</span><span style="font-size:12px;color:#9198a1">↓減速</span>　　EPS YoY <span style="color:#f87171">-28%</span><span style="font-size:12px;color:#9198a1"></span><div style="font-size:11px;font-weight:normal;color:#4ade80;margin-top:3px">篩選依據：A: 營收 YoY +18% + EPS 正</div></div><table class="fin"><tr><td>營收（年）</td><td><b>$1.04B</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b>$0.75B</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td><td><b>$0.53B</b><span style="color:#6e7681;font-size:11px"> (2023)</span></td></tr><tr><td>EPS（年）</td><td><b style="color:#4ade80">+$8.88</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b style="color:#4ade80">+$1.97</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td><td><b style="color:#4ade80">+$0.39</b><span style="color:#6e7681;font-size:11px"> (2023)</span></td></tr><tr style="background:#161b22de7"><td style="color:#fbbf24;font-weight:bold">最新季 (2026Q2)</td><td colspan="3">營收 <b>$0.30B</b>&nbsp;｜&nbsp;EPS <b style="color:#4ade80">+$0.71</b></td></tr></table><div class="gm-box">▪ 毛利率 <b>72.6%</b>（去年同期 72.4%）<b style="color:#4ade80"> ↑ 擴張 +0.2%</b></div><div class="analyst-box">🎯 目標 <b>$134.29</b>&nbsp;|&nbsp;距目標 <b style="color:#f87171">-9%</b>&nbsp;|&nbsp;共識 <b>Hold</b>（18 位）</div><div class="risk-box">⚠️ 最大風險：競爭激烈，用戶增長放緩</div><div class="pe-bar">▪ 本益比：目前 <b>17.4x</b>&nbsp;|&nbsp;52W 10x ~ 42x&nbsp;|&nbsp;前瞻 <b>19.3x</b></div><div class="price-box">▪ 合理股價 <b>$220.6</b>（52W PE中位 × EPS）&nbsp;|&nbsp;預測股價 <b>$134.3</b>（分析師目標）</div><div style="background:rgba(244,114,182,.12);border-radius:4px;padding:5px 10px;font-size:13px;margin:4px 0">🔻 空單 <b>18.7%</b>&nbsp;|&nbsp;Days to Cover 5.5 ⚠️ 高空單</div></div>
+    <div class="footer">
+      本報告為資訊彙整，非投資建議。長期持有請自行評估風險。<br>
+      資料來源：yfinance / CNBC / Yahoo Finance / MarketWatch / Reuters / Finviz / Gemini AI
+    </div>
+  </div>
+  
+  <div class="review-wrap">
+    <div class="review-hdr">
+      <h2>📋 動能延續追蹤</h2>
+      <p>2026/09/22 評為「積極布局 / 值得追蹤」— 3 個交易日後績效</p>
+    </div>
+    <div class="review-body">
+      <table class="review-table">
+        <thead><tr>
+          <th>股票</th><th style="text-align:right">推薦時</th>
+          <th style="text-align:right">今日</th><th style="text-align:right">報酬</th>
+          <th>當時評語</th>
+        </tr></thead>
+        <tbody>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/NRG" style="color:#8ab4f8;text-decoration:none">
+              NRG NRG Energy, Inc.</a></td>
+          <td style="text-align:right;color:#c9d1d9">$103.28</td>
+          <td style="text-align:right;color:#c9d1d9">$97.85</td>
+          <td style="text-align:right;font-weight:bold;color:#f87171">🔴 -5.3%</td>
+          <td style="color:#9198a1;font-size:12px">電力需求增長，天然氣發電優勢。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/CAVA" style="color:#8ab4f8;text-decoration:none">
+              CAVA CAVA Group, Inc.</a></td>
+          <td style="text-align:right;color:#c9d1d9">$52.00</td>
+          <td style="text-align:right;color:#c9d1d9">$53.51</td>
+          <td style="text-align:right;font-weight:bold;color:#4ade80">🟢 +2.9%</td>
+          <td style="color:#9198a1;font-size:12px">地中海飲食趨勢，新興餐飲品牌成長。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/ONON" style="color:#8ab4f8;text-decoration:none">
+              ONON On Holding AG</a></td>
+          <td style="text-align:right;color:#c9d1d9">$27.32</td>
+          <td style="text-align:right;color:#c9d1d9">$30.46</td>
+          <td style="text-align:right;font-weight:bold;color:#4ade80">🟢 +11.5%</td>
+          <td style="color:#9198a1;font-size:12px">虧轉盈，新興運動品牌增長潛力。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/APP" style="color:#8ab4f8;text-decoration:none">
+              APP AppLovin Corporation</a></td>
+          <td style="text-align:right;color:#c9d1d9">$330.17</td>
+          <td style="text-align:right;color:#c9d1d9">$312.47</td>
+          <td style="text-align:right;font-weight:bold;color:#f87171">🔴 -5.4%</td>
+          <td style="color:#9198a1;font-size:12px">行動廣告市場增長，數據分析能力強。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/HWM" style="color:#8ab4f8;text-decoration:none">
+              HWM Howmet Aerospace Inc.</a></td>
+          <td style="text-align:right;color:#c9d1d9">$227.37</td>
+          <td style="text-align:right;color:#c9d1d9">$229.38</td>
+          <td style="text-align:right;font-weight:bold;color:#4ade80">🟢 +0.9%</td>
+          <td style="color:#9198a1;font-size:12px">航空旅行復甦，訂單飽滿，長期更新週期。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/AVGO" style="color:#8ab4f8;text-decoration:none">
+              AVGO Broadcom Inc.</a></td>
+          <td style="text-align:right;color:#c9d1d9">$362.66</td>
+          <td style="text-align:right;color:#c9d1d9">$350.36</td>
+          <td style="text-align:right;font-weight:bold;color:#f87171">🔴 -3.4%</td>
+          <td style="color:#9198a1;font-size:12px">AI晶片與網路基礎設施需求驅動。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/AMAT" style="color:#8ab4f8;text-decoration:none">
+              AMAT Applied Materials, Inc.</a></td>
+          <td style="text-align:right;color:#c9d1d9">$464.24</td>
+          <td style="text-align:right;color:#c9d1d9">$474.25</td>
+          <td style="text-align:right;font-weight:bold;color:#4ade80">🟢 +2.2%</td>
+          <td style="color:#9198a1;font-size:12px">AI晶片需求驅動半導體設備成長。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/TDG" style="color:#8ab4f8;text-decoration:none">
+              TDG TransDigm Group Incorporated</a></td>
+          <td style="text-align:right;color:#c9d1d9">$1,109.65</td>
+          <td style="text-align:right;color:#c9d1d9">$1,105.28</td>
+          <td style="text-align:right;font-weight:bold;color:#f87171">🔴 -0.4%</td>
+          <td style="color:#9198a1;font-size:12px">航空零組件需求復甦，獲利穩定。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/ASML" style="color:#8ab4f8;text-decoration:none">
+              ASML ASML Holding N.V.</a></td>
+          <td style="text-align:right;color:#c9d1d9">$1,711.32</td>
+          <td style="text-align:right;color:#c9d1d9">$1,722.50</td>
+          <td style="text-align:right;font-weight:bold;color:#4ade80">🟢 +0.7%</td>
+          <td style="color:#9198a1;font-size:12px">EUV設備壟斷，AI晶片製造關鍵。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/TSM" style="color:#8ab4f8;text-decoration:none">
+              TSM Taiwan Semiconductor Manufacturing Company Limited</a></td>
+          <td style="text-align:right;color:#c9d1d9">$445.14</td>
+          <td style="text-align:right;color:#c9d1d9">$451.15</td>
+          <td style="text-align:right;font-weight:bold;color:#4ade80">🟢 +1.4%</td>
+          <td style="color:#9198a1;font-size:12px">AI晶片代工龍頭，需求強勁。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/MNDY" style="color:#8ab4f8;text-decoration:none">
+              MNDY monday.com Ltd.</a></td>
+          <td style="text-align:right;color:#c9d1d9">$87.96</td>
+          <td style="text-align:right;color:#c9d1d9">$86.00</td>
+          <td style="text-align:right;font-weight:bold;color:#f87171">🔴 -2.2%</td>
+          <td style="color:#9198a1;font-size:12px">企業協作軟體需求穩健，毛利率高。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/LLY" style="color:#8ab4f8;text-decoration:none">
+              LLY Eli Lilly and Company</a></td>
+          <td style="text-align:right;color:#c9d1d9">$1,164.89</td>
+          <td style="text-align:right;color:#c9d1d9">$1,181.89</td>
+          <td style="text-align:right;font-weight:bold;color:#4ade80">🟢 +1.5%</td>
+          <td style="color:#9198a1;font-size:12px">新藥研發成果豐碩，市場潛力巨大。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/MRVL" style="color:#8ab4f8;text-decoration:none">
+              MRVL Marvell Technology, Inc.</a></td>
+          <td style="text-align:right;color:#c9d1d9">$257.38</td>
+          <td style="text-align:right;color:#c9d1d9">$258.95</td>
+          <td style="text-align:right;font-weight:bold;color:#4ade80">🟢 +0.6%</td>
+          <td style="color:#9198a1;font-size:12px">資料中心與AI晶片需求驅動。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/SMCI" style="color:#8ab4f8;text-decoration:none">
+              SMCI Super Micro Computer, Inc.</a></td>
+          <td style="text-align:right;color:#c9d1d9">$41.20</td>
+          <td style="text-align:right;color:#c9d1d9">$41.51</td>
+          <td style="text-align:right;font-weight:bold;color:#4ade80">🟢 +0.8%</td>
+          <td style="color:#9198a1;font-size:12px">AI伺服器需求爆發，營收高增長，估值低。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/DELL" style="color:#8ab4f8;text-decoration:none">
+              DELL Dell Technologies Inc.</a></td>
+          <td style="text-align:right;color:#c9d1d9">$575.31</td>
+          <td style="text-align:right;color:#c9d1d9">$536.02</td>
+          <td style="text-align:right;font-weight:bold;color:#f87171">🔴 -6.8%</td>
+          <td style="color:#9198a1;font-size:12px">AI伺服器需求增長，營收強勁。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/CRWD" style="color:#8ab4f8;text-decoration:none">
+              CRWD CrowdStrike Holdings, Inc.</a></td>
+          <td style="text-align:right;color:#c9d1d9">$249.35</td>
+          <td style="text-align:right;color:#c9d1d9">$259.67</td>
+          <td style="text-align:right;font-weight:bold;color:#4ade80">🟢 +4.1%</td>
+          <td style="color:#9198a1;font-size:12px">網路安全需求增長、財報表現佳，成長性強。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/MKSI" style="color:#8ab4f8;text-decoration:none">
+              MKSI MKS Inc.</a></td>
+          <td style="text-align:right;color:#c9d1d9">$256.92</td>
+          <td style="text-align:right;color:#c9d1d9">$257.98</td>
+          <td style="text-align:right;font-weight:bold;color:#4ade80">🟢 +0.4%</td>
+          <td style="color:#9198a1;font-size:12px">半導體設備供應商，受惠產業復甦。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/AXON" style="color:#8ab4f8;text-decoration:none">
+              AXON Axon Enterprise, Inc.</a></td>
+          <td style="text-align:right;color:#c9d1d9">$452.06</td>
+          <td style="text-align:right;color:#c9d1d9">$445.00</td>
+          <td style="text-align:right;font-weight:bold;color:#f87171">🔴 -1.6%</td>
+          <td style="color:#9198a1;font-size:12px">警用科技需求增加，獲利能力改善。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/UBER" style="color:#8ab4f8;text-decoration:none">
+              UBER Uber Technologies, Inc.</a></td>
+          <td style="text-align:right;color:#c9d1d9">$70.84</td>
+          <td style="text-align:right;color:#c9d1d9">$69.22</td>
+          <td style="text-align:right;font-weight:bold;color:#f87171">🔴 -2.3%</td>
+          <td style="color:#9198a1;font-size:12px">搭乘與外送業務穩定成長，獲利改善。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/GEV" style="color:#8ab4f8;text-decoration:none">
+              GEV GE Vernova Inc.</a></td>
+          <td style="text-align:right;color:#c9d1d9">$946.22</td>
+          <td style="text-align:right;color:#c9d1d9">$955.04</td>
+          <td style="text-align:right;font-weight:bold;color:#4ade80">🟢 +0.9%</td>
+          <td style="color:#9198a1;font-size:12px">電力基礎設施需求增長，去碳化驅動。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/KLAC" style="color:#8ab4f8;text-decoration:none">
+              KLAC KLA Corporation</a></td>
+          <td style="text-align:right;color:#c9d1d9">$183.97</td>
+          <td style="text-align:right;color:#c9d1d9">$187.11</td>
+          <td style="text-align:right;font-weight:bold;color:#4ade80">🟢 +1.7%</td>
+          <td style="color:#9198a1;font-size:12px">半導體設備需求復甦，獲利穩定。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/SNOW" style="color:#8ab4f8;text-decoration:none">
+              SNOW Snowflake Inc.</a></td>
+          <td style="text-align:right;color:#c9d1d9">$339.39</td>
+          <td style="text-align:right;color:#c9d1d9">$334.00</td>
+          <td style="text-align:right;font-weight:bold;color:#f87171">🔴 -1.6%</td>
+          <td style="color:#9198a1;font-size:12px">雲端數據倉儲需求大，但估值偏高。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/SHOP" style="color:#8ab4f8;text-decoration:none">
+              SHOP Shopify Inc.</a></td>
+          <td style="text-align:right;color:#c9d1d9">$137.92</td>
+          <td style="text-align:right;color:#c9d1d9">$145.16</td>
+          <td style="text-align:right;font-weight:bold;color:#4ade80">🟢 +5.2%</td>
+          <td style="color:#9198a1;font-size:12px">電商回暖，營收成長，獲利穩定。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/NOC" style="color:#8ab4f8;text-decoration:none">
+              NOC Northrop Grumman Corporation</a></td>
+          <td style="text-align:right;color:#c9d1d9">$526.66</td>
+          <td style="text-align:right;color:#c9d1d9">$508.98</td>
+          <td style="text-align:right;font-weight:bold;color:#f87171">🔴 -3.4%</td>
+          <td style="color:#9198a1;font-size:12px">國防支出穩定，地緣政治風險增加。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/ISRG" style="color:#8ab4f8;text-decoration:none">
+              ISRG Intuitive Surgical, Inc.</a></td>
+          <td style="text-align:right;color:#c9d1d9">$401.65</td>
+          <td style="text-align:right;color:#c9d1d9">$399.52</td>
+          <td style="text-align:right;font-weight:bold;color:#f87171">🔴 -0.5%</td>
+          <td style="color:#9198a1;font-size:12px">達文西手術機器人市佔高，醫療需求穩定。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/DDOG" style="color:#8ab4f8;text-decoration:none">
+              DDOG Datadog, Inc.</a></td>
+          <td style="text-align:right;color:#c9d1d9">$245.05</td>
+          <td style="text-align:right;color:#c9d1d9">$256.92</td>
+          <td style="text-align:right;font-weight:bold;color:#4ade80">🟢 +4.8%</td>
+          <td style="color:#9198a1;font-size:12px">雲端監控需求強勁，營收成長。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/HPE" style="color:#8ab4f8;text-decoration:none">
+              HPE Hewlett Packard Enterprise Company</a></td>
+          <td style="text-align:right;color:#c9d1d9">$61.75</td>
+          <td style="text-align:right;color:#c9d1d9">$63.52</td>
+          <td style="text-align:right;font-weight:bold;color:#4ade80">🟢 +2.9%</td>
+          <td style="color:#9198a1;font-size:12px">企業級伺服器與儲存需求穩定。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/PLTR" style="color:#8ab4f8;text-decoration:none">
+              PLTR Palantir Technologies Inc.</a></td>
+          <td style="text-align:right;color:#c9d1d9">$183.09</td>
+          <td style="text-align:right;color:#c9d1d9">$192.59</td>
+          <td style="text-align:right;font-weight:bold;color:#4ade80">🟢 +5.2%</td>
+          <td style="color:#9198a1;font-size:12px">AI數據分析平台需求增長，商業化加速。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/META" style="color:#8ab4f8;text-decoration:none">
+              META Meta Platforms, Inc.</a></td>
+          <td style="text-align:right;color:#c9d1d9">$741.25</td>
+          <td style="text-align:right;color:#c9d1d9">$777.59</td>
+          <td style="text-align:right;font-weight:bold;color:#4ade80">🟢 +4.9%</td>
+          <td style="color:#9198a1;font-size:12px">廣告業務復甦，元宇宙投入長期潛力。</td>
+        </tr></tbody>
+      </table>
+    </div>
+  </div>
+
+    
+    
+    
+    
+    
+    
+    </main>
+  </div>
+</div>
+<script>
+(function() {
+  var saved = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+  document.getElementById('dr-theme-btn').textContent = saved === 'dark' ? '🌙' : '☀️';
+})();
+function drToggleTheme() {
+  var cur = document.documentElement.getAttribute('data-theme');
+  var next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+  document.getElementById('dr-theme-btn').textContent = next === 'dark' ? '🌙' : '☀️';
+}
+</script>
+</body>
+</html>

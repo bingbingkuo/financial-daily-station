@@ -1,0 +1,39 @@
+# ── 機密資料：絕對不能進 git ──
+.env
+*.env
+API_KEYS.md
+x_cookies.json
+
+# ── macOS ──
+.DS_Store
+
+# ── Python ──
+__pycache__/
+*.pyc
+
+# ── 本地日誌 ──
+*.log
+log_*.txt
+logs/
+
+# ── 選股雷達原始快取（淺色信件版，docs/ 裡已經有深色網頁版了，不需要重複進 git）──
+scout_cache_*.html
+us_scout_cache_*.html
+ma_cache_*.html
+
+# ── 本地運作狀態／個人資料（腳本自己讀寫，不需要版本控制）──
+scout_history.json
+us_scout_history.json
+futures_state.json
+youtube_gooaye_state.json
+portfolio.json
+seen_posts.json
+price_radar.db
+podcast_digest/data/
+
+# ── Claude Code 專案設定（本機工具狀態，非網站內容）──
+.claude/
+
+# ── 跟這個站台無關的其他專案 ──
+/nvidia-photonics/
+/podcast/

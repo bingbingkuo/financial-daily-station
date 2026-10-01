@@ -1,0 +1,1681 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>台股族群強弱 · 2026-09-30 · 財經日報站</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --dr-bg:#0d1117; --dr-surface:#161b22; --dr-surface2:#21262d; --dr-border:#30363d;
+  --dr-text:#e6edf3; --dr-muted:#7d8590; --dr-tw:#ef4444; --dr-us:#22c55e; --dr-pod:#a78bfa;
+  --dr-twma:#2dd4bf; --dr-all:#f59e0b; --dr-radius:8px;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --dr-bg:#f6f8fa; --dr-surface:#ffffff; --dr-surface2:#f0f2f5;
+    --dr-border:#d0d7de; --dr-text:#1f2328; --dr-muted:#656d76;
+  }
+}
+:root[data-theme="dark"]  { --dr-bg:#0d1117;--dr-surface:#161b22;--dr-surface2:#21262d;--dr-border:#30363d;--dr-text:#e6edf3;--dr-muted:#7d8590; }
+:root[data-theme="light"] { --dr-bg:#f6f8fa;--dr-surface:#ffffff;--dr-surface2:#f0f2f5;--dr-border:#d0d7de;--dr-text:#1f2328;--dr-muted:#656d76; }
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+[hidden] { display:none !important; }
+/* 注意：下面的殼層樣式全部用 .dr- 前綴 class 跟 --dr- 前綴變數，
+   跟被包進來的報告自己的 CSS（.nav/.header/--bg 這類常見命名、
+   甚至 body{} 全站選取器）完全不共用命名，兩邊不會互相覆蓋。
+   側欄／頂部列因此不管包哪份報告，字體、字級、顏色都固定一致。 */
+.dr-layout {
+  display:flex; min-height:100vh;
+  font-family:'IBM Plex Sans',sans-serif;
+}
+.dr-sidebar {
+  width:220px; flex-shrink:0; background:var(--dr-surface); border-right:1px solid var(--dr-border);
+  display:flex; flex-direction:column; position:fixed; top:0; left:0; bottom:0; z-index:50; overflow-y:auto;
+}
+.dr-brand { padding:20px 18px 16px; border-bottom:1px solid var(--dr-border); text-decoration:none; display:block; }
+.dr-brand-name { font-size:14px; font-weight:700; letter-spacing:.5px; color:var(--dr-text); }
+.dr-brand-sub  { font-size:11px; color:var(--dr-muted); margin-top:2px; }
+.dr-nav { padding:12px 8px; flex:1; }
+.dr-nav-item {
+  display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:6px;
+  font-size:13.5px; font-weight:500; color:var(--dr-muted); text-decoration:none; margin-bottom:2px;
+}
+.dr-nav-item:hover { background:var(--dr-surface2); color:var(--dr-text); }
+.dr-nav-item.active { color:var(--dr-text); background:var(--dr-surface2); }
+.dr-nav-item.soon { opacity:.5; pointer-events:none; }
+.dr-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; background:var(--dr-border); }
+.dr-dot-tw  { background:var(--dr-tw); }
+.dr-dot-us  { background:var(--dr-us); }
+.dr-dot-pod { background:var(--dr-pod); }
+.dr-dot-twma { background:var(--dr-twma); }
+.dr-nav-subitems { margin:0 0 4px 10px; padding-left:10px; border-left:1px solid var(--dr-border); }
+.dr-nav-subitem {
+  display:flex; align-items:center; gap:6px; padding:5px 8px; border-radius:5px;
+  font-size:12px; color:var(--dr-muted); text-decoration:none; font-family:'IBM Plex Mono',monospace;
+}
+.dr-nav-subitem:hover { background:var(--dr-surface2); color:var(--dr-text); }
+.dr-nav-subitem.active { color:var(--dr-text); font-weight:600; }
+.dr-main { margin-left:220px; flex:1; display:flex; flex-direction:column; min-width:0; }
+.dr-topbar {
+  background:var(--dr-surface); border-bottom:1px solid var(--dr-border); padding:12px 24px;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  position:sticky; top:0; z-index:40;
+}
+.dr-topbar-left { display:flex; align-items:center; gap:12px; }
+.dr-page-title { font-size:15px; font-weight:600; color:var(--dr-text); }
+.dr-date-badge {
+  font-size:12px; font-family:'IBM Plex Mono',monospace; background:var(--dr-surface2); color:var(--dr-muted);
+  padding:3px 10px; border-radius:20px; border:1px solid var(--dr-border);
+}
+.dr-theme-btn {
+  background:var(--dr-surface2); border:1px solid var(--dr-border); border-radius:6px;
+  padding:5px 10px; color:var(--dr-muted); font-size:12px; cursor:pointer; font-family:inherit;
+}
+.dr-theme-btn:hover { color:var(--dr-text); }
+.dr-content { padding:24px; flex:1; background:var(--dr-bg); color:var(--dr-text); }
+@media (max-width:767px) {
+  .dr-sidebar { position:static; width:100%; height:auto; border-right:none; border-bottom:1px solid var(--dr-border); }
+  .dr-main { margin-left:0; }
+  .dr-content { padding:16px; }
+}
+</style>
+<style>
+body{font-family:'Helvetica Neue',Arial,sans-serif;background:#0d1117;margin:0;padding:20px}
+.wrap{max-width:900px;margin:0 auto}
+.hdr{padding:18px 24px 14px;border-bottom:1px solid #30363d}
+.hdr h2{margin:0;font-size:20px;color:#8ab4f8}
+.hdr p{margin:4px 0 0;font-size:13px;color:#9198a1}
+.stale-note{background:#161b223e0;color:#fb923c;padding:8px 24px;font-size:12px}
+.bench-row{display:flex;gap:12px;padding:16px;background:#161b22}
+.bench-card{flex:1;border:1px solid #30363d;border-radius:8px;padding:12px 16px}
+.bench-name{font-size:14px;font-weight:bold;color:#8ab4f8}
+.bench-date{font-size:11px;color:#9198a1;margin-bottom:6px}
+.bench-price{font-size:22px;font-weight:bold;margin-bottom:2px}
+.bench-price .sub{font-size:12px;color:#9198a1;font-weight:normal;margin-left:8px}
+.chg{display:block;font-size:12.5px;font-weight:bold;margin-bottom:8px}
+.ladder{display:flex;gap:4px}
+.dot{flex:1;text-align:center;border-radius:6px;padding:4px 2px;font-size:10px}
+.dot.above{background:rgba(248,113,113,.12);color:#f87171;border:1px solid rgba(248,113,113,.35)}
+.dot.below{background:rgba(74,222,128,.12);color:#4ade80;border:1px solid rgba(74,222,128,.35)}
+.dot .lbl{font-size:9px;opacity:.75}
+.dot .val{font-weight:bold;white-space:nowrap}
+.overview-card{background:#161b22;margin:0 0 16px;border-radius:8px;padding:16px 18px;
+              box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.overview-title{font-size:14px;font-weight:bold;color:#8ab4f8;margin-bottom:2px}
+.overview-sub{font-size:11px;color:#7d8590;margin-bottom:12px}
+table.overview-table{table-layout:fixed}
+.overview-table td{padding:7px 4px;border-bottom:1px solid #30363d;white-space:normal}
+.overview-table tr:last-child td{border-bottom:none}
+.overview-rank{font-size:12px;font-weight:bold;color:#9198a1;text-align:center}
+.overview-name{font-size:12.5px;font-weight:600;text-align:left;padding-left:8px !important}
+.overview-name a{color:#e6edf3;text-decoration:none;border-bottom:1px dashed #6e7681}
+.overview-barwrap{background:#21262d;border-radius:6px;height:14px;overflow:hidden}
+.overview-bar{height:100%;border-radius:6px}
+.overview-pct{font-size:12px;font-weight:bold;text-align:right}
+.overview-diverge{font-size:9px;color:#fb923c;background:#161b223e0;padding:2px 7px;
+                  border-radius:20px;white-space:nowrap;display:inline-block}
+.group-card{background:#161b22;margin:0 0 16px;border-radius:8px;overflow:hidden;
+            box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.group-hdr{background:#21262d;padding:10px 16px;font-size:14px;font-weight:bold;color:#c9d1d9}
+table{border-collapse:collapse;width:100%;font-size:11px}
+th{background:#21262d;color:#9198a1;font-size:9.5px;padding:6px 2px;border-bottom:1px solid #30363d;
+   text-align:center;white-space:nowrap}
+th.left{text-align:left;padding-left:10px}
+td{padding:5px 2px;text-align:center;border-bottom:1px solid #30363d;white-space:nowrap}
+td.left{text-align:left;padding-left:10px;font-weight:600}
+td.code{color:#9198a1}
+td.above{background:rgba(248,113,113,.12);color:#f87171;font-weight:bold}
+td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
+.count-badge{font-weight:bold;font-size:11px}
+.summary{padding:10px 16px 14px;background:#21262d;border-top:1px solid #30363d}
+.summary-title{font-size:11px;color:#7d8590;margin-bottom:8px}
+.summary-grid{display:flex;gap:6px;flex-wrap:wrap}
+.summary-cell{flex:1;min-width:70px;background:#161b22;border:1px solid #30363d;border-radius:6px;
+              padding:6px 4px;text-align:center}
+.summary-cell.diverge{background:#161b228e1;border-color:rgba(245,158,11,.4)}
+.summary-cell .period{font-size:9.5px;color:#9198a1}
+.summary-cell .pct{font-size:15px;font-weight:bold;margin:2px 0}
+.summary-cell .flag{font-size:9px;color:#fb923c;min-height:11px}
+.group-trend{padding:14px 18px 16px;border-top:1px solid #30363d}
+.trend-chart{width:100%;height:150px;display:block}
+.trend-empty{font-size:11px;color:#9198a1;text-align:center;padding:20px 0}
+.legend{padding:14px 20px;font-size:11.5px;color:#9198a1;background:#161b22;border-radius:0 0 8px 8px}
+.legend span{margin-right:16px}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:4px}
+.footer{text-align:center;font-size:11px;color:#6e7681;padding:14px}
+</style>
+</head>
+<body>
+<div class="dr-layout">
+  <aside class="dr-sidebar">
+    <a class="dr-brand" href="../index.html">
+      <div class="dr-brand-name">📡 財經日報站</div>
+      <div class="dr-brand-sub">Stock · Market · Podcast</div>
+    </a>
+    <nav class="dr-nav">
+      <a class="dr-nav-item" href="../index.html">
+        <span class="dr-dot" style="background:var(--dr-all)"></span> 總覽
+      </a>
+      <a class="dr-nav-item" href="../podcast/latest.html">
+        <span class="dr-dot dr-dot-pod"></span> Podcast 摘要
+      </a>
+      <a class="dr-nav-item" href="../tw_scout/latest.html">
+        <span class="dr-dot dr-dot-tw"></span> 台股選股雷達
+      </a>
+      <div class="dr-nav-subitems"><a class="dr-nav-subitem" href="../tw_scout/2026-10-01.html">2026-10-01</a><a class="dr-nav-subitem" href="../tw_scout/2026-09-30.html">2026-09-30</a><a class="dr-nav-subitem" href="../tw_scout/2026-09-29.html">2026-09-29</a><a class="dr-nav-subitem" href="../tw_scout/2026-09-28.html">2026-09-28</a><a class="dr-nav-subitem" href="../tw_scout/2026-09-25.html">2026-09-25</a></div>
+      <a class="dr-nav-item" href="../us_scout/latest.html">
+        <span class="dr-dot dr-dot-us"></span> 美股選股雷達
+      </a>
+      <div class="dr-nav-subitems"><a class="dr-nav-subitem" href="../us_scout/2026-09-30.html">2026-09-30</a><a class="dr-nav-subitem" href="../us_scout/2026-09-29.html">2026-09-29</a><a class="dr-nav-subitem" href="../us_scout/2026-09-28.html">2026-09-28</a><a class="dr-nav-subitem" href="../us_scout/2026-09-25.html">2026-09-25</a><a class="dr-nav-subitem" href="../us_scout/2026-09-24.html">2026-09-24</a></div>
+      <a class="dr-nav-item active" href="../tw_ma/latest.html">
+        <span class="dr-dot dr-dot-twma"></span> 台股族群強弱
+      </a>
+      <div class="dr-nav-subitems"><a class="dr-nav-subitem" href="../tw_ma/2026-10-01.html">2026-10-01</a><a class="dr-nav-subitem active" href="../tw_ma/2026-09-30.html">2026-09-30</a><a class="dr-nav-subitem" href="../tw_ma/2026-09-29.html">2026-09-29</a><a class="dr-nav-subitem" href="../tw_ma/2026-09-28.html">2026-09-28</a></div>
+    </nav>
+  </aside>
+
+  <div class="dr-main">
+    <header class="dr-topbar">
+      <div class="dr-topbar-left">
+        <span class="dr-page-title">台股族群強弱</span>
+        <span class="dr-date-badge">2026-09-30</span>
+      </div>
+      <button class="dr-theme-btn" onclick="drToggleTheme()" id="dr-theme-btn">🌙</button>
+    </header>
+    <main class="dr-content">
+      
+      
+  <div class="wrap">
+    <div class="hdr">
+      <h2>📊 族群 x 大盤 均線強弱分析</h2>
+      <p>2026/09/30 收盤　共 96 檔個股 / 21 個族群</p>
+    </div>
+    
+    <div class="bench-row">
+    <div class="bench-card">
+      <div class="bench-name">加權指數 (TAIEX)</div>
+      <div class="bench-date">2026/09/30 收盤　<a href="https://www.wantgoo.com/index/0000">K線圖 ↗</a></div>
+      <div class="bench-price" style="color:#f87171">47,940.13<span class="sub">站上 6/6 條均線</span></div>
+      <span class="chg" style="color:#f87171">▲ +308.17（+0.65%）</span>
+      <div class="ladder"><div class="dot above"><div class="lbl">MA5</div><div class="val">47,910.83</div></div><div class="dot above"><div class="lbl">MA10</div><div class="val">47,210.21</div></div><div class="dot above"><div class="lbl">MA20</div><div class="val">46,911.38</div></div><div class="dot above"><div class="lbl">MA60</div><div class="val">45,356.11</div></div><div class="dot above"><div class="lbl">MA120</div><div class="val">43,774.65</div></div><div class="dot above"><div class="lbl">MA240</div><div class="val">36,929.39</div></div></div>
+    </div>
+    <div class="bench-card">
+      <div class="bench-name">櫃買指數 (TPEx)</div>
+      <div class="bench-date">2026/09/30 收盤　<a href="https://www.wantgoo.com/index/two">K線圖 ↗</a></div>
+      <div class="bench-price" style="color:#f87171">417.07<span class="sub">站上 6/6 條均線</span></div>
+      <span class="chg" style="color:#f87171">▲ +4.82（+1.17%）</span>
+      <div class="ladder"><div class="dot above"><div class="lbl">MA5</div><div class="val">414.25</div></div><div class="dot above"><div class="lbl">MA10</div><div class="val">408.26</div></div><div class="dot above"><div class="lbl">MA20</div><div class="val">405.91</div></div><div class="dot above"><div class="lbl">MA60</div><div class="val">395.40</div></div><div class="dot above"><div class="lbl">MA120</div><div class="val">403.49</div></div><div class="dot above"><div class="lbl">MA240</div><div class="val">343.06</div></div></div>
+    </div></div>
+    <div class="overview-card">
+      <div class="overview-title">🏆 族群總覽 — 依站上均線平均比例排序</div>
+      <div class="overview-sub">數值為該族群在 6 條均線（5/10/20/60/120/240 日）上站上比例的平均值，越高代表族群整體多頭排列越完整</div>
+      <table class="overview-table">
+        <colgroup>
+          <col style="width:26px"><col style="width:26%">
+          <col><col style="width:44px"><col style="width:26%">
+        </colgroup>
+        <tbody><tr>
+          <td class="overview-rank">1</td>
+          <td class="overview-name"><a href="#grp-ABF載板">ABF載板（4 檔）</a></td>
+          <td><div class="overview-barwrap"><div class="overview-bar" style="width:100%;background:#c62828"></div></div></td>
+          <td class="overview-pct" style="color:#f87171">100%</td>
+          <td>–</td>
+        </tr><tr>
+          <td class="overview-rank">2</td>
+          <td class="overview-name"><a href="#grp-矽晶圓">矽晶圓（3 檔）</a></td>
+          <td><div class="overview-barwrap"><div class="overview-bar" style="width:100%;background:#c62828"></div></div></td>
+          <td class="overview-pct" style="color:#f87171">100%</td>
+          <td>–</td>
+        </tr><tr>
+          <td class="overview-rank">3</td>
+          <td class="overview-name"><a href="#grp-TGV設備">TGV設備（4 檔）</a></td>
+          <td><div class="overview-barwrap"><div class="overview-bar" style="width:100%;background:#c62828"></div></div></td>
+          <td class="overview-pct" style="color:#f87171">100%</td>
+          <td>–</td>
+        </tr><tr>
+          <td class="overview-rank">4</td>
+          <td class="overview-name"><a href="#grp-石英元件">石英元件（3 檔）</a></td>
+          <td><div class="overview-barwrap"><div class="overview-bar" style="width:94%;background:#c62828"></div></div></td>
+          <td class="overview-pct" style="color:#f87171">94%</td>
+          <td>–</td>
+        </tr><tr>
+          <td class="overview-rank">5</td>
+          <td class="overview-name"><a href="#grp-晶圓代工(成熟製程)">晶圓代工(成熟製程)（2 檔）</a></td>
+          <td><div class="overview-barwrap"><div class="overview-bar" style="width:92%;background:#c62828"></div></div></td>
+          <td class="overview-pct" style="color:#f87171">92%</td>
+          <td>–</td>
+        </tr><tr>
+          <td class="overview-rank">6</td>
+          <td class="overview-name"><a href="#grp-封測">封測（6 檔）</a></td>
+          <td><div class="overview-barwrap"><div class="overview-bar" style="width:90%;background:#c62828"></div></div></td>
+          <td class="overview-pct" style="color:#f87171">90%</td>
+          <td>–</td>
+        </tr><tr>
+          <td class="overview-rank">7</td>
+          <td class="overview-name"><a href="#grp-散熱">散熱（3 檔）</a></td>
+          <td><div class="overview-barwrap"><div class="overview-bar" style="width:89%;background:#c62828"></div></div></td>
+          <td class="overview-pct" style="color:#f87171">89%</td>
+          <td>–</td>
+        </tr><tr>
+          <td class="overview-rank">8</td>
+          <td class="overview-name"><a href="#grp-功率元件">功率元件（5 檔）</a></td>
+          <td><div class="overview-barwrap"><div class="overview-bar" style="width:80%;background:#c62828"></div></div></td>
+          <td class="overview-pct" style="color:#f87171">80%</td>
+          <td>–</td>
+        </tr><tr>
+          <td class="overview-rank">9</td>
+          <td class="overview-name"><a href="#grp-CCL銅箔基板">CCL銅箔基板（4 檔）</a></td>
+          <td><div class="overview-barwrap"><div class="overview-bar" style="width:79%;background:#c62828"></div></div></td>
+          <td class="overview-pct" style="color:#f87171">79%</td>
+          <td>–</td>
+        </tr><tr>
+          <td class="overview-rank">10</td>
+          <td class="overview-name"><a href="#grp-記憶體">記憶體（6 檔）</a></td>
+          <td><div class="overview-barwrap"><div class="overview-bar" style="width:78%;background:#c62828"></div></div></td>
+          <td class="overview-pct" style="color:#f87171">78%</td>
+          <td>–</td>
+        </tr><tr>
+          <td class="overview-rank">11</td>
+          <td class="overview-name"><a href="#grp-BBU">BBU（3 檔）</a></td>
+          <td><div class="overview-barwrap"><div class="overview-bar" style="width:78%;background:#c62828"></div></div></td>
+          <td class="overview-pct" style="color:#f87171">78%</td>
+          <td>–</td>
+        </tr><tr>
+          <td class="overview-rank">12</td>
+          <td class="overview-name"><a href="#grp-ASIC">ASIC（3 檔）</a></td>
+          <td><div class="overview-barwrap"><div class="overview-bar" style="width:78%;background:#c62828"></div></div></td>
+          <td class="overview-pct" style="color:#f87171">78%</td>
+          <td>–</td>
+        </tr><tr>
+          <td class="overview-rank">13</td>
+          <td class="overview-name"><a href="#grp-半導體設備">半導體設備（9 檔）</a></td>
+          <td><div class="overview-barwrap"><div class="overview-bar" style="width:69%;background:#e65100"></div></div></td>
+          <td class="overview-pct" style="color:#fb923c">69%</td>
+          <td>–</td>
+        </tr><tr>
+          <td class="overview-rank">14</td>
+          <td class="overview-name"><a href="#grp-電源供應">電源供應（2 檔）</a></td>
+          <td><div class="overview-barwrap"><div class="overview-bar" style="width:67%;background:#e65100"></div></div></td>
+          <td class="overview-pct" style="color:#fb923c">67%</td>
+          <td>–</td>
+        </tr><tr>
+          <td class="overview-rank">15</td>
+          <td class="overview-name"><a href="#grp-光學元件">光學元件（7 檔）</a></td>
+          <td><div class="overview-barwrap"><div class="overview-bar" style="width:64%;background:#e65100"></div></div></td>
+          <td class="overview-pct" style="color:#fb923c">64%</td>
+          <td>–</td>
+        </tr><tr>
+          <td class="overview-rank">16</td>
+          <td class="overview-name"><a href="#grp-航運">航運（3 檔）</a></td>
+          <td><div class="overview-barwrap"><div class="overview-bar" style="width:61%;background:#e65100"></div></div></td>
+          <td class="overview-pct" style="color:#fb923c">61%</td>
+          <td>–</td>
+        </tr><tr>
+          <td class="overview-rank">17</td>
+          <td class="overview-name"><a href="#grp-光通訊">光通訊（8 檔）</a></td>
+          <td><div class="overview-barwrap"><div class="overview-bar" style="width:60%;background:#e65100"></div></div></td>
+          <td class="overview-pct" style="color:#fb923c">60%</td>
+          <td>–</td>
+        </tr><tr>
+          <td class="overview-rank">18</td>
+          <td class="overview-name"><a href="#grp-ODM">ODM（6 檔）</a></td>
+          <td><div class="overview-barwrap"><div class="overview-bar" style="width:56%;background:#e65100"></div></div></td>
+          <td class="overview-pct" style="color:#fb923c">56%</td>
+          <td>–</td>
+        </tr><tr>
+          <td class="overview-rank">19</td>
+          <td class="overview-name"><a href="#grp-玻纖布">玻纖布（4 檔）</a></td>
+          <td><div class="overview-barwrap"><div class="overview-bar" style="width:50%;background:#e65100"></div></div></td>
+          <td class="overview-pct" style="color:#fb923c">50%</td>
+          <td>–</td>
+        </tr><tr>
+          <td class="overview-rank">20</td>
+          <td class="overview-name"><a href="#grp-被動元件">被動元件（7 檔）</a></td>
+          <td><div class="overview-barwrap"><div class="overview-bar" style="width:48%;background:#e65100"></div></div></td>
+          <td class="overview-pct" style="color:#fb923c">48%</td>
+          <td>–</td>
+        </tr><tr>
+          <td class="overview-rank">21</td>
+          <td class="overview-name"><a href="#grp-探針卡">探針卡（4 檔）</a></td>
+          <td><div class="overview-barwrap"><div class="overview-bar" style="width:46%;background:#e65100"></div></div></td>
+          <td class="overview-pct" style="color:#fb923c">46%</td>
+          <td>–</td>
+        </tr></tbody>
+      </table>
+    </div>
+    
+        <div class="group-card" id="grp-記憶體">
+          <div class="group-hdr">記憶體（6 檔）</div>
+          <table>
+            <thead><tr>
+              <th class="left">代號</th><th class="left">名稱</th>
+              <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
+            </tr></thead>
+            <tbody><tr>
+      <td class="left code">2408</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/2408/technical-chart">南亞科</a></td>
+      <td>519.00</td>
+      <td>520.00</td>
+      <td>569.00</td>
+      <td>-8.8%</td>
+      <td class="above">508.00</td><td class="above">502.70</td><td class="above">504.43</td><td class="above">471.40</td><td class="above">398.69</td><td class="above">298.02</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr><tr>
+      <td class="left code">2344</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/2344/technical-chart">華邦電</a></td>
+      <td>179.50</td>
+      <td>179.50</td>
+      <td>233.50</td>
+      <td>-23.1%</td>
+      <td class="above">173.70</td><td class="above">172.05</td><td class="above">174.03</td><td class="above">169.33</td><td class="above">155.67</td><td class="above">119.41</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr><tr>
+      <td class="left code">2337</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/2337/technical-chart">旺宏</a></td>
+      <td>122.50</td>
+      <td>123.00</td>
+      <td>192.00</td>
+      <td>-36.2%</td>
+      <td class="above">119.00</td><td class="above">118.60</td><td class="above">120.22</td><td class="below">124.32</td><td class="below">138.83</td><td class="above">102.55</td>
+      <td><span class="count-badge" style="color:#f87171">4/6</span></td>
+    </tr><tr>
+      <td class="left code">3260</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/3260/technical-chart">威剛</a></td>
+      <td>377.50</td>
+      <td>382.50</td>
+      <td>525.00</td>
+      <td>-28.1%</td>
+      <td class="below">379.90</td><td class="below">386.80</td><td class="below">396.80</td><td class="below">398.77</td><td class="below">407.66</td><td class="above">335.25</td>
+      <td><span class="count-badge" style="color:#4ade80">1/6</span></td>
+    </tr><tr>
+      <td class="left code">8299</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/8299/technical-chart">群聯</a></td>
+      <td>2,150.00</td>
+      <td>2,215.00</td>
+      <td>2,880.00</td>
+      <td>-25.3%</td>
+      <td class="below">2,158.00</td><td class="above">2,095.50</td><td class="above">2,070.75</td><td class="above">2,011.75</td><td class="above">2,139.58</td><td class="above">1,800.66</td>
+      <td><span class="count-badge" style="color:#f87171">5/6</span></td>
+    </tr><tr>
+      <td class="left code">3006</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/3006/technical-chart">晶豪科</a></td>
+      <td>286.00</td>
+      <td>290.00</td>
+      <td>319.00</td>
+      <td>-10.3%</td>
+      <td class="above">279.70</td><td class="above">279.80</td><td class="above">284.43</td><td class="above">251.91</td><td class="above">231.05</td><td class="above">177.29</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr></tbody>
+          </table>
+          <div class="summary">
+      <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
+      <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#e6edf3">67%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#f87171">83%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#f87171">83%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#e6edf3">67%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#e6edf3">67%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
+    </div>
+          <div class="group-trend"><svg class="trend-chart" viewBox="0 0 600 160" preserveAspectRatio="none">
+      <line x1="40" y1="134.0" x2="586" y2="134.0" stroke="#eee" stroke-width="1"/><text x="34" y="137.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">0%</text><line x1="40" y1="104.0" x2="586" y2="104.0" stroke="#eee" stroke-width="1"/><text x="34" y="107.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">25%</text><line x1="40" y1="74.0" x2="586" y2="74.0" stroke="#eee" stroke-width="1"/><text x="34" y="77.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">50%</text><line x1="40" y1="44.0" x2="586" y2="44.0" stroke="#eee" stroke-width="1"/><text x="34" y="47.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">75%</text><line x1="40" y1="14.0" x2="586" y2="14.0" stroke="#eee" stroke-width="1"/><text x="34" y="17.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">100%</text>
+      <polyline points="40.0,37.3 131.0,50.7 222.0,77.4 313.0,57.3 404.0,77.4 495.0,57.3 586.0,40.6" fill="none" stroke="#2e7d32" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="40.0" cy="37.3" r="3" fill="#2e7d32"><title>09-18: 80.6%</title></circle><circle cx="131.0" cy="50.7" r="3" fill="#2e7d32"><title>09-21: 69.4%</title></circle><circle cx="222.0" cy="77.4" r="3" fill="#2e7d32"><title>09-22: 47.2%</title></circle><circle cx="313.0" cy="57.3" r="3" fill="#2e7d32"><title>09-23: 63.9%</title></circle><circle cx="404.0" cy="77.4" r="3" fill="#2e7d32"><title>09-24: 47.2%</title></circle><circle cx="495.0" cy="57.3" r="3" fill="#2e7d32"><title>09-29: 63.9%</title></circle><circle cx="586.0" cy="40.6" r="3" fill="#2e7d32"><title>09-30: 77.8%</title></circle>
+      <text x="40.0" y="29.3" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">80.6%</text><text x="131.0" y="42.7" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">69.4%</text><text x="222.0" y="69.4" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">47.2%</text><text x="313.0" y="49.3" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">63.9%</text><text x="404.0" y="69.4" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">47.2%</text><text x="495.0" y="49.3" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">63.9%</text><text x="586.0" y="32.6" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">77.8%</text>
+      <text x="40.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-18</text><text x="131.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-21</text><text x="222.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-22</text><text x="313.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-23</text><text x="404.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-24</text><text x="495.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-29</text><text x="586.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-30</text>
+    </svg></div>
+        </div>
+        <div class="group-card" id="grp-CCL銅箔基板">
+          <div class="group-hdr">CCL銅箔基板（4 檔）</div>
+          <table>
+            <thead><tr>
+              <th class="left">代號</th><th class="left">名稱</th>
+              <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
+            </tr></thead>
+            <tbody><tr>
+      <td class="left code">2383</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/2383/technical-chart">台光電</a></td>
+      <td>4,935.00</td>
+      <td>5,030.00</td>
+      <td>6,470.00</td>
+      <td>-23.7%</td>
+      <td class="below">4,957.00</td><td class="below">4,946.50</td><td class="below">5,177.50</td><td class="below">5,228.92</td><td class="below">5,029.62</td><td class="above">3,415.06</td>
+      <td><span class="count-badge" style="color:#4ade80">1/6</span></td>
+    </tr><tr>
+      <td class="left code">6274</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/6274/technical-chart">台燿</a></td>
+      <td>1,520.00</td>
+      <td>1,550.00</td>
+      <td>1,920.00</td>
+      <td>-20.8%</td>
+      <td class="above">1,480.00</td><td class="above">1,431.00</td><td class="above">1,405.50</td><td class="above">1,410.58</td><td class="above">1,400.90</td><td class="above">931.95</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr><tr>
+      <td class="left code">6213</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/6213/technical-chart">聯茂</a></td>
+      <td>623.00</td>
+      <td>649.00</td>
+      <td>649.00</td>
+      <td>-4.0%</td>
+      <td class="above">584.40</td><td class="above">553.30</td><td class="above">536.85</td><td class="above">445.99</td><td class="above">362.50</td><td class="above">241.19</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr><tr>
+      <td class="left code">1303</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/1303/technical-chart">南亞</a></td>
+      <td>255.50</td>
+      <td>265.00</td>
+      <td>265.00</td>
+      <td>-3.6%</td>
+      <td class="above">239.90</td><td class="above">235.85</td><td class="above">234.57</td><td class="above">204.55</td><td class="above">156.26</td><td class="above">110.21</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr></tbody>
+          </table>
+          <div class="summary">
+      <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
+      <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#f87171">75%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#f87171">75%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#f87171">75%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#f87171">75%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#f87171">75%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
+    </div>
+          <div class="group-trend"><svg class="trend-chart" viewBox="0 0 600 160" preserveAspectRatio="none">
+      <line x1="40" y1="134.0" x2="586" y2="134.0" stroke="#eee" stroke-width="1"/><text x="34" y="137.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">0%</text><line x1="40" y1="104.0" x2="586" y2="104.0" stroke="#eee" stroke-width="1"/><text x="34" y="107.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">25%</text><line x1="40" y1="74.0" x2="586" y2="74.0" stroke="#eee" stroke-width="1"/><text x="34" y="77.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">50%</text><line x1="40" y1="44.0" x2="586" y2="44.0" stroke="#eee" stroke-width="1"/><text x="34" y="47.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">75%</text><line x1="40" y1="14.0" x2="586" y2="14.0" stroke="#eee" stroke-width="1"/><text x="34" y="17.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">100%</text>
+      <polyline points="40.0,74.0 131.0,39.0 222.0,49.0 313.0,44.0 404.0,24.0 495.0,39.0 586.0,39.0" fill="none" stroke="#c62828" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="40.0" cy="74.0" r="3" fill="#c62828"><title>09-18: 50.0%</title></circle><circle cx="131.0" cy="39.0" r="3" fill="#c62828"><title>09-21: 79.2%</title></circle><circle cx="222.0" cy="49.0" r="3" fill="#c62828"><title>09-22: 70.8%</title></circle><circle cx="313.0" cy="44.0" r="3" fill="#c62828"><title>09-23: 75.0%</title></circle><circle cx="404.0" cy="24.0" r="3" fill="#c62828"><title>09-24: 91.7%</title></circle><circle cx="495.0" cy="39.0" r="3" fill="#c62828"><title>09-29: 79.2%</title></circle><circle cx="586.0" cy="39.0" r="3" fill="#c62828"><title>09-30: 79.2%</title></circle>
+      <text x="40.0" y="66.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">50.0%</text><text x="131.0" y="31.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">79.2%</text><text x="222.0" y="41.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">70.8%</text><text x="313.0" y="36.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">75.0%</text><text x="404.0" y="16.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">91.7%</text><text x="495.0" y="31.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">79.2%</text><text x="586.0" y="31.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">79.2%</text>
+      <text x="40.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-18</text><text x="131.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-21</text><text x="222.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-22</text><text x="313.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-23</text><text x="404.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-24</text><text x="495.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-29</text><text x="586.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-30</text>
+    </svg></div>
+        </div>
+        <div class="group-card" id="grp-被動元件">
+          <div class="group-hdr">被動元件（7 檔）</div>
+          <table>
+            <thead><tr>
+              <th class="left">代號</th><th class="left">名稱</th>
+              <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
+            </tr></thead>
+            <tbody><tr>
+      <td class="left code">2327</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/2327/technical-chart">國巨</a></td>
+      <td>548.00</td>
+      <td>564.00</td>
+      <td>1,220.00</td>
+      <td>-55.1%</td>
+      <td class="below">564.00</td><td class="below">552.90</td><td class="below">554.60</td><td class="below">610.61</td><td class="below">626.88</td><td class="above">436.14</td>
+      <td><span class="count-badge" style="color:#4ade80">1/6</span></td>
+    </tr><tr>
+      <td class="left code">2492</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/2492/technical-chart">華新科</a></td>
+      <td>299.50</td>
+      <td>309.00</td>
+      <td>645.00</td>
+      <td>-53.6%</td>
+      <td class="below">306.00</td><td class="below">305.25</td><td class="below">306.50</td><td class="below">305.08</td><td class="below">313.91</td><td class="above">219.21</td>
+      <td><span class="count-badge" style="color:#4ade80">1/6</span></td>
+    </tr><tr>
+      <td class="left code">3026</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/3026/technical-chart">禾伸堂</a></td>
+      <td>791.00</td>
+      <td>822.00</td>
+      <td>1,045.00</td>
+      <td>-24.3%</td>
+      <td class="above">789.00</td><td class="above">779.10</td><td class="above">755.05</td><td class="above">700.69</td><td class="above">607.15</td><td class="above">358.96</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr><tr>
+      <td class="left code">6173</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/6173/technical-chart">信昌電</a></td>
+      <td>288.50</td>
+      <td>303.50</td>
+      <td>362.50</td>
+      <td>-20.4%</td>
+      <td class="below">299.60</td><td class="below">303.30</td><td class="above">288.18</td><td class="above">230.18</td><td class="above">210.21</td><td class="above">137.47</td>
+      <td><span class="count-badge" style="color:#f87171">4/6</span></td>
+    </tr><tr>
+      <td class="left code">2472</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/2472/technical-chart">立隆電</a></td>
+      <td>213.50</td>
+      <td>218.00</td>
+      <td>488.00</td>
+      <td>-56.2%</td>
+      <td class="below">215.80</td><td class="below">213.50</td><td class="below">215.28</td><td class="below">246.32</td><td class="below">266.58</td><td class="above">188.28</td>
+      <td><span class="count-badge" style="color:#4ade80">1/6</span></td>
+    </tr><tr>
+      <td class="left code">3624</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/3624/technical-chart">光頡</a></td>
+      <td>137.50</td>
+      <td>144.00</td>
+      <td>178.00</td>
+      <td>-22.8%</td>
+      <td class="above">134.70</td><td class="above">129.65</td><td class="above">115.63</td><td class="above">99.83</td><td class="above">97.74</td><td class="above">74.58</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr><tr>
+      <td class="left code">6449</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/6449/technical-chart">鈺邦</a></td>
+      <td>209.50</td>
+      <td>216.00</td>
+      <td>483.50</td>
+      <td>-56.7%</td>
+      <td class="above">209.20</td><td class="below">211.65</td><td class="below">218.57</td><td class="below">237.82</td><td class="below">262.26</td><td class="below">217.47</td>
+      <td><span class="count-badge" style="color:#4ade80">1/6</span></td>
+    </tr></tbody>
+          </table>
+          <div class="summary">
+      <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
+      <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#e6edf3">43%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#4ade80">29%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#e6edf3">43%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#e6edf3">43%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#e6edf3">43%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">86%</div><div class="flag"></div></div></div>
+    </div>
+          <div class="group-trend"><svg class="trend-chart" viewBox="0 0 600 160" preserveAspectRatio="none">
+      <line x1="40" y1="134.0" x2="586" y2="134.0" stroke="#eee" stroke-width="1"/><text x="34" y="137.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">0%</text><line x1="40" y1="104.0" x2="586" y2="104.0" stroke="#eee" stroke-width="1"/><text x="34" y="107.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">25%</text><line x1="40" y1="74.0" x2="586" y2="74.0" stroke="#eee" stroke-width="1"/><text x="34" y="77.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">50%</text><line x1="40" y1="44.0" x2="586" y2="44.0" stroke="#eee" stroke-width="1"/><text x="34" y="47.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">75%</text><line x1="40" y1="14.0" x2="586" y2="14.0" stroke="#eee" stroke-width="1"/><text x="34" y="17.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">100%</text>
+      <polyline points="40.0,54.0 131.0,48.3 222.0,54.0 313.0,62.6 404.0,48.3 495.0,79.8 586.0,76.9" fill="none" stroke="#2e7d32" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="40.0" cy="54.0" r="3" fill="#2e7d32"><title>09-18: 66.7%</title></circle><circle cx="131.0" cy="48.3" r="3" fill="#2e7d32"><title>09-21: 71.4%</title></circle><circle cx="222.0" cy="54.0" r="3" fill="#2e7d32"><title>09-22: 66.7%</title></circle><circle cx="313.0" cy="62.6" r="3" fill="#2e7d32"><title>09-23: 59.5%</title></circle><circle cx="404.0" cy="48.3" r="3" fill="#2e7d32"><title>09-24: 71.4%</title></circle><circle cx="495.0" cy="79.8" r="3" fill="#2e7d32"><title>09-29: 45.2%</title></circle><circle cx="586.0" cy="76.9" r="3" fill="#2e7d32"><title>09-30: 47.6%</title></circle>
+      <text x="40.0" y="46.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">66.7%</text><text x="131.0" y="40.3" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">71.4%</text><text x="222.0" y="46.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">66.7%</text><text x="313.0" y="54.6" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">59.5%</text><text x="404.0" y="40.3" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">71.4%</text><text x="495.0" y="71.8" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">45.2%</text><text x="586.0" y="68.9" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">47.6%</text>
+      <text x="40.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-18</text><text x="131.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-21</text><text x="222.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-22</text><text x="313.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-23</text><text x="404.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-24</text><text x="495.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-29</text><text x="586.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-30</text>
+    </svg></div>
+        </div>
+        <div class="group-card" id="grp-ABF載板">
+          <div class="group-hdr">ABF載板（4 檔）</div>
+          <table>
+            <thead><tr>
+              <th class="left">代號</th><th class="left">名稱</th>
+              <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
+            </tr></thead>
+            <tbody><tr>
+      <td class="left code">3037</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/3037/technical-chart">欣興</a></td>
+      <td>1,175.00</td>
+      <td>1,190.00</td>
+      <td>1,230.00</td>
+      <td>-4.5%</td>
+      <td class="above">1,161.00</td><td class="above">1,065.80</td><td class="above">1,013.20</td><td class="above">967.58</td><td class="above">927.33</td><td class="above">610.61</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr><tr>
+      <td class="left code">8046</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/8046/technical-chart">南電</a></td>
+      <td>1,340.00</td>
+      <td>1,340.00</td>
+      <td>1,415.00</td>
+      <td>-5.3%</td>
+      <td class="above">1,245.00</td><td class="above">1,164.00</td><td class="above">1,129.50</td><td class="above">1,146.33</td><td class="above">1,018.55</td><td class="above">684.54</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr><tr>
+      <td class="left code">3189</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/3189/technical-chart">景碩</a></td>
+      <td>970.00</td>
+      <td>972.00</td>
+      <td>996.00</td>
+      <td>-2.6%</td>
+      <td class="above">940.40</td><td class="above">878.10</td><td class="above">848.40</td><td class="above">807.13</td><td class="above">707.58</td><td class="above">456.67</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr><tr>
+      <td class="left code">4958</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/4958/technical-chart">臻鼎-KY</a></td>
+      <td>507.00</td>
+      <td>510.00</td>
+      <td>659.00</td>
+      <td>-23.1%</td>
+      <td class="above">488.60</td><td class="above">483.30</td><td class="above">489.45</td><td class="above">492.20</td><td class="above">479.75</td><td class="above">323.88</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr></tbody>
+          </table>
+          <div class="summary">
+      <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
+      <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
+    </div>
+          <div class="group-trend"><svg class="trend-chart" viewBox="0 0 600 160" preserveAspectRatio="none">
+      <line x1="40" y1="134.0" x2="586" y2="134.0" stroke="#eee" stroke-width="1"/><text x="34" y="137.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">0%</text><line x1="40" y1="104.0" x2="586" y2="104.0" stroke="#eee" stroke-width="1"/><text x="34" y="107.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">25%</text><line x1="40" y1="74.0" x2="586" y2="74.0" stroke="#eee" stroke-width="1"/><text x="34" y="77.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">50%</text><line x1="40" y1="44.0" x2="586" y2="44.0" stroke="#eee" stroke-width="1"/><text x="34" y="47.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">75%</text><line x1="40" y1="14.0" x2="586" y2="14.0" stroke="#eee" stroke-width="1"/><text x="34" y="17.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">100%</text>
+      <polyline points="40.0,49.0 131.0,59.0 222.0,19.0 313.0,39.0 404.0,39.0 495.0,14.0 586.0,14.0" fill="none" stroke="#c62828" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="40.0" cy="49.0" r="3" fill="#c62828"><title>09-18: 70.8%</title></circle><circle cx="131.0" cy="59.0" r="3" fill="#c62828"><title>09-21: 62.5%</title></circle><circle cx="222.0" cy="19.0" r="3" fill="#c62828"><title>09-22: 95.8%</title></circle><circle cx="313.0" cy="39.0" r="3" fill="#c62828"><title>09-23: 79.2%</title></circle><circle cx="404.0" cy="39.0" r="3" fill="#c62828"><title>09-24: 79.2%</title></circle><circle cx="495.0" cy="14.0" r="3" fill="#c62828"><title>09-29: 100.0%</title></circle><circle cx="586.0" cy="14.0" r="3" fill="#c62828"><title>09-30: 100.0%</title></circle>
+      <text x="40.0" y="41.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">70.8%</text><text x="131.0" y="51.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">62.5%</text><text x="222.0" y="11.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">95.8%</text><text x="313.0" y="31.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">79.2%</text><text x="404.0" y="31.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">79.2%</text><text x="495.0" y="6.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">100.0%</text><text x="586.0" y="6.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">100.0%</text>
+      <text x="40.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-18</text><text x="131.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-21</text><text x="222.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-22</text><text x="313.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-23</text><text x="404.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-24</text><text x="495.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-29</text><text x="586.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-30</text>
+    </svg></div>
+        </div>
+        <div class="group-card" id="grp-電源供應">
+          <div class="group-hdr">電源供應（2 檔）</div>
+          <table>
+            <thead><tr>
+              <th class="left">代號</th><th class="left">名稱</th>
+              <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
+            </tr></thead>
+            <tbody><tr>
+      <td class="left code">2308</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/2308/technical-chart">台達電</a></td>
+      <td>1,890.00</td>
+      <td>1,930.00</td>
+      <td>2,585.00</td>
+      <td>-26.9%</td>
+      <td class="above">1,887.00</td><td class="above">1,811.00</td><td class="above">1,782.75</td><td class="above">1,775.25</td><td class="below">1,945.04</td><td class="above">1,535.89</td>
+      <td><span class="count-badge" style="color:#f87171">5/6</span></td>
+    </tr><tr>
+      <td class="left code">2301</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/2301/technical-chart">光寶科</a></td>
+      <td>279.50</td>
+      <td>285.00</td>
+      <td>328.00</td>
+      <td>-14.8%</td>
+      <td class="below">283.10</td><td class="below">281.50</td><td class="below">288.27</td><td class="above">257.39</td><td class="above">230.53</td><td class="above">197.35</td>
+      <td><span class="count-badge" style="color:#fb923c">3/6</span></td>
+    </tr></tbody>
+          </table>
+          <div class="summary">
+      <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
+      <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#e6edf3">50%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#e6edf3">50%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#e6edf3">50%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#e6edf3">50%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
+    </div>
+          <div class="group-trend"><svg class="trend-chart" viewBox="0 0 600 160" preserveAspectRatio="none">
+      <line x1="40" y1="134.0" x2="586" y2="134.0" stroke="#eee" stroke-width="1"/><text x="34" y="137.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">0%</text><line x1="40" y1="104.0" x2="586" y2="104.0" stroke="#eee" stroke-width="1"/><text x="34" y="107.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">25%</text><line x1="40" y1="74.0" x2="586" y2="74.0" stroke="#eee" stroke-width="1"/><text x="34" y="77.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">50%</text><line x1="40" y1="44.0" x2="586" y2="44.0" stroke="#eee" stroke-width="1"/><text x="34" y="47.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">75%</text><line x1="40" y1="14.0" x2="586" y2="14.0" stroke="#eee" stroke-width="1"/><text x="34" y="17.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">100%</text>
+      <polyline points="40.0,64.0 131.0,34.0 222.0,34.0 313.0,34.0 404.0,34.0 495.0,64.0 586.0,54.0" fill="none" stroke="#c62828" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="40.0" cy="64.0" r="3" fill="#c62828"><title>09-18: 58.3%</title></circle><circle cx="131.0" cy="34.0" r="3" fill="#c62828"><title>09-21: 83.3%</title></circle><circle cx="222.0" cy="34.0" r="3" fill="#c62828"><title>09-22: 83.3%</title></circle><circle cx="313.0" cy="34.0" r="3" fill="#c62828"><title>09-23: 83.3%</title></circle><circle cx="404.0" cy="34.0" r="3" fill="#c62828"><title>09-24: 83.3%</title></circle><circle cx="495.0" cy="64.0" r="3" fill="#c62828"><title>09-29: 58.3%</title></circle><circle cx="586.0" cy="54.0" r="3" fill="#c62828"><title>09-30: 66.7%</title></circle>
+      <text x="40.0" y="56.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">58.3%</text><text x="131.0" y="26.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">83.3%</text><text x="222.0" y="26.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">83.3%</text><text x="313.0" y="26.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">83.3%</text><text x="404.0" y="26.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">83.3%</text><text x="495.0" y="56.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">58.3%</text><text x="586.0" y="46.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">66.7%</text>
+      <text x="40.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-18</text><text x="131.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-21</text><text x="222.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-22</text><text x="313.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-23</text><text x="404.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-24</text><text x="495.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-29</text><text x="586.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-30</text>
+    </svg></div>
+        </div>
+        <div class="group-card" id="grp-BBU">
+          <div class="group-hdr">BBU（3 檔）</div>
+          <table>
+            <thead><tr>
+              <th class="left">代號</th><th class="left">名稱</th>
+              <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
+            </tr></thead>
+            <tbody><tr>
+      <td class="left code">3211</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/3211/technical-chart">順達</a></td>
+      <td>398.50</td>
+      <td>406.00</td>
+      <td>495.00</td>
+      <td>-19.5%</td>
+      <td class="above">385.60</td><td class="above">377.50</td><td class="above">377.95</td><td class="above">376.75</td><td class="above">387.65</td><td class="above">346.93</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr><tr>
+      <td class="left code">4931</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/4931/technical-chart">新盛力</a></td>
+      <td>252.00</td>
+      <td>262.00</td>
+      <td>288.00</td>
+      <td>-12.5%</td>
+      <td class="above">243.70</td><td class="above">238.95</td><td class="above">242.07</td><td class="above">235.26</td><td class="above">220.27</td><td class="above">184.44</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr><tr>
+      <td class="left code">6781</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/6781/technical-chart">AES-KY</a></td>
+      <td>1,020.00</td>
+      <td>1,030.00</td>
+      <td>1,555.00</td>
+      <td>-34.4%</td>
+      <td class="above">1,013.00</td><td class="above">1,006.80</td><td class="below">1,037.80</td><td class="below">1,048.87</td><td class="below">1,098.39</td><td class="below">1,146.40</td>
+      <td><span class="count-badge" style="color:#4ade80">2/6</span></td>
+    </tr></tbody>
+          </table>
+          <div class="summary">
+      <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
+      <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#e6edf3">67%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#e6edf3">67%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#e6edf3">67%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#e6edf3">67%</div><div class="flag"></div></div></div>
+    </div>
+          <div class="group-trend"><svg class="trend-chart" viewBox="0 0 600 160" preserveAspectRatio="none">
+      <line x1="40" y1="134.0" x2="586" y2="134.0" stroke="#eee" stroke-width="1"/><text x="34" y="137.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">0%</text><line x1="40" y1="104.0" x2="586" y2="104.0" stroke="#eee" stroke-width="1"/><text x="34" y="107.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">25%</text><line x1="40" y1="74.0" x2="586" y2="74.0" stroke="#eee" stroke-width="1"/><text x="34" y="77.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">50%</text><line x1="40" y1="44.0" x2="586" y2="44.0" stroke="#eee" stroke-width="1"/><text x="34" y="47.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">75%</text><line x1="40" y1="14.0" x2="586" y2="14.0" stroke="#eee" stroke-width="1"/><text x="34" y="17.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">100%</text>
+      <polyline points="40.0,87.3 131.0,54.0 222.0,54.0 313.0,54.0 404.0,67.3 495.0,54.0 586.0,40.6" fill="none" stroke="#c62828" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="40.0" cy="87.3" r="3" fill="#c62828"><title>09-18: 38.9%</title></circle><circle cx="131.0" cy="54.0" r="3" fill="#c62828"><title>09-21: 66.7%</title></circle><circle cx="222.0" cy="54.0" r="3" fill="#c62828"><title>09-22: 66.7%</title></circle><circle cx="313.0" cy="54.0" r="3" fill="#c62828"><title>09-23: 66.7%</title></circle><circle cx="404.0" cy="67.3" r="3" fill="#c62828"><title>09-24: 55.6%</title></circle><circle cx="495.0" cy="54.0" r="3" fill="#c62828"><title>09-29: 66.7%</title></circle><circle cx="586.0" cy="40.6" r="3" fill="#c62828"><title>09-30: 77.8%</title></circle>
+      <text x="40.0" y="79.3" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">38.9%</text><text x="131.0" y="46.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">66.7%</text><text x="222.0" y="46.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">66.7%</text><text x="313.0" y="46.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">66.7%</text><text x="404.0" y="59.3" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">55.6%</text><text x="495.0" y="46.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">66.7%</text><text x="586.0" y="32.6" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">77.8%</text>
+      <text x="40.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-18</text><text x="131.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-21</text><text x="222.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-22</text><text x="313.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-23</text><text x="404.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-24</text><text x="495.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-29</text><text x="586.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-30</text>
+    </svg></div>
+        </div>
+        <div class="group-card" id="grp-ODM">
+          <div class="group-hdr">ODM（6 檔）</div>
+          <table>
+            <thead><tr>
+              <th class="left">代號</th><th class="left">名稱</th>
+              <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
+            </tr></thead>
+            <tbody><tr>
+      <td class="left code">2382</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/2382/technical-chart">廣達</a></td>
+      <td>333.50</td>
+      <td>340.50</td>
+      <td>438.00</td>
+      <td>-23.9%</td>
+      <td class="below">338.40</td><td class="below">339.70</td><td class="below">338.93</td><td class="above">332.98</td><td class="below">338.99</td><td class="above">312.07</td>
+      <td><span class="count-badge" style="color:#4ade80">2/6</span></td>
+    </tr><tr>
+      <td class="left code">3231</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/3231/technical-chart">緯創</a></td>
+      <td>184.50</td>
+      <td>187.50</td>
+      <td>206.00</td>
+      <td>-10.4%</td>
+      <td class="above">183.00</td><td class="above">184.00</td><td class="below">185.90</td><td class="above">176.33</td><td class="above">163.24</td><td class="above">151.13</td>
+      <td><span class="count-badge" style="color:#f87171">5/6</span></td>
+    </tr><tr>
+      <td class="left code">6669</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/6669/technical-chart">緯穎</a></td>
+      <td>2,090.00</td>
+      <td>2,145.00</td>
+      <td>2,875.00</td>
+      <td>-27.3%</td>
+      <td class="below">2,105.00</td><td class="below">2,143.00</td><td class="below">2,288.75</td><td class="above">2,056.22</td><td class="above">1,846.29</td><td class="above">1,598.24</td>
+      <td><span class="count-badge" style="color:#fb923c">3/6</span></td>
+    </tr><tr>
+      <td class="left code">2317</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/2317/technical-chart">鴻海</a></td>
+      <td>251.50</td>
+      <td>254.00</td>
+      <td>314.00</td>
+      <td>-19.9%</td>
+      <td class="below">252.30</td><td class="above">250.70</td><td class="above">251.22</td><td class="above">249.09</td><td class="above">248.65</td><td class="above">236.93</td>
+      <td><span class="count-badge" style="color:#f87171">5/6</span></td>
+    </tr><tr>
+      <td class="left code">2324</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/2324/technical-chart">仁寶</a></td>
+      <td>37.10</td>
+      <td>37.70</td>
+      <td>47.75</td>
+      <td>-22.3%</td>
+      <td class="above">36.70</td><td class="above">37.05</td><td class="below">38.14</td><td class="below">37.76</td><td class="above">35.64</td><td class="above">33.33</td>
+      <td><span class="count-badge" style="color:#f87171">4/6</span></td>
+    </tr><tr>
+      <td class="left code">2356</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/2356/technical-chart">英業達</a></td>
+      <td>59.50</td>
+      <td>60.40</td>
+      <td>88.60</td>
+      <td>-32.8%</td>
+      <td class="below">60.16</td><td class="below">60.80</td><td class="below">62.72</td><td class="below">63.82</td><td class="below">61.21</td><td class="above">52.53</td>
+      <td><span class="count-badge" style="color:#4ade80">1/6</span></td>
+    </tr></tbody>
+          </table>
+          <div class="summary">
+      <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
+      <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#e6edf3">33%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#e6edf3">50%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#4ade80">17%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#e6edf3">67%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#e6edf3">67%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
+    </div>
+          <div class="group-trend"><svg class="trend-chart" viewBox="0 0 600 160" preserveAspectRatio="none">
+      <line x1="40" y1="134.0" x2="586" y2="134.0" stroke="#eee" stroke-width="1"/><text x="34" y="137.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">0%</text><line x1="40" y1="104.0" x2="586" y2="104.0" stroke="#eee" stroke-width="1"/><text x="34" y="107.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">25%</text><line x1="40" y1="74.0" x2="586" y2="74.0" stroke="#eee" stroke-width="1"/><text x="34" y="77.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">50%</text><line x1="40" y1="44.0" x2="586" y2="44.0" stroke="#eee" stroke-width="1"/><text x="34" y="47.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">75%</text><line x1="40" y1="14.0" x2="586" y2="14.0" stroke="#eee" stroke-width="1"/><text x="34" y="17.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">100%</text>
+      <polyline points="40.0,40.6 131.0,47.4 222.0,64.0 313.0,64.0 404.0,77.4 495.0,77.4 586.0,67.3" fill="none" stroke="#2e7d32" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="40.0" cy="40.6" r="3" fill="#2e7d32"><title>09-18: 77.8%</title></circle><circle cx="131.0" cy="47.4" r="3" fill="#2e7d32"><title>09-21: 72.2%</title></circle><circle cx="222.0" cy="64.0" r="3" fill="#2e7d32"><title>09-22: 58.3%</title></circle><circle cx="313.0" cy="64.0" r="3" fill="#2e7d32"><title>09-23: 58.3%</title></circle><circle cx="404.0" cy="77.4" r="3" fill="#2e7d32"><title>09-24: 47.2%</title></circle><circle cx="495.0" cy="77.4" r="3" fill="#2e7d32"><title>09-29: 47.2%</title></circle><circle cx="586.0" cy="67.3" r="3" fill="#2e7d32"><title>09-30: 55.6%</title></circle>
+      <text x="40.0" y="32.6" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">77.8%</text><text x="131.0" y="39.4" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">72.2%</text><text x="222.0" y="56.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">58.3%</text><text x="313.0" y="56.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">58.3%</text><text x="404.0" y="69.4" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">47.2%</text><text x="495.0" y="69.4" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">47.2%</text><text x="586.0" y="59.3" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">55.6%</text>
+      <text x="40.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-18</text><text x="131.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-21</text><text x="222.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-22</text><text x="313.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-23</text><text x="404.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-24</text><text x="495.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-29</text><text x="586.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-30</text>
+    </svg></div>
+        </div>
+        <div class="group-card" id="grp-光通訊">
+          <div class="group-hdr">光通訊（8 檔）</div>
+          <table>
+            <thead><tr>
+              <th class="left">代號</th><th class="left">名稱</th>
+              <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
+            </tr></thead>
+            <tbody><tr>
+      <td class="left code">3081</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/3081/technical-chart">聯亞</a></td>
+      <td>2,695.00</td>
+      <td>2,730.00</td>
+      <td>3,600.00</td>
+      <td>-25.1%</td>
+      <td class="below">2,710.00</td><td class="below">2,750.50</td><td class="below">2,889.25</td><td class="above">2,444.60</td><td class="above">2,367.49</td><td class="above">1,565.96</td>
+      <td><span class="count-badge" style="color:#fb923c">3/6</span></td>
+    </tr><tr>
+      <td class="left code">2455</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/2455/technical-chart">全新</a></td>
+      <td>552.00</td>
+      <td>555.00</td>
+      <td>590.00</td>
+      <td>-6.4%</td>
+      <td class="above">549.60</td><td class="above">544.50</td><td class="above">534.70</td><td class="above">415.27</td><td class="above">390.16</td><td class="above">282.27</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr><tr>
+      <td class="left code">4991</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/4991/technical-chart">環宇-KY</a></td>
+      <td>488.00</td>
+      <td>498.00</td>
+      <td>895.00</td>
+      <td>-45.5%</td>
+      <td class="above">469.30</td><td class="above">459.55</td><td class="above">475.93</td><td class="above">455.70</td><td class="below">548.59</td><td class="above">392.63</td>
+      <td><span class="count-badge" style="color:#f87171">5/6</span></td>
+    </tr><tr>
+      <td class="left code">4979</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/4979/technical-chart">華星光</a></td>
+      <td>569.00</td>
+      <td>576.00</td>
+      <td>762.00</td>
+      <td>-25.3%</td>
+      <td class="below">578.80</td><td class="below">573.50</td><td class="below">580.70</td><td class="above">509.24</td><td class="above">540.66</td><td class="above">413.87</td>
+      <td><span class="count-badge" style="color:#fb923c">3/6</span></td>
+    </tr><tr>
+      <td class="left code">3234</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/3234/technical-chart">光環</a></td>
+      <td>173.00</td>
+      <td>179.00</td>
+      <td>220.00</td>
+      <td>-21.4%</td>
+      <td class="below">173.70</td><td class="below">174.50</td><td class="below">185.47</td><td class="above">145.72</td><td class="above">130.63</td><td class="above">93.21</td>
+      <td><span class="count-badge" style="color:#fb923c">3/6</span></td>
+    </tr><tr>
+      <td class="left code">3363</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/3363/technical-chart">上詮</a></td>
+      <td>649.00</td>
+      <td>671.00</td>
+      <td>1,065.00</td>
+      <td>-39.1%</td>
+      <td class="below">651.20</td><td class="below">658.70</td><td class="below">693.70</td><td class="above">623.13</td><td class="below">701.58</td><td class="above">576.76</td>
+      <td><span class="count-badge" style="color:#4ade80">2/6</span></td>
+    </tr><tr>
+      <td class="left code">3450</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/3450/technical-chart">聯鈞</a></td>
+      <td>523.00</td>
+      <td>540.00</td>
+      <td>653.00</td>
+      <td>-19.9%</td>
+      <td class="above">521.40</td><td class="below">524.85</td><td class="below">539.27</td><td class="above">506.18</td><td class="above">475.06</td><td class="above">368.21</td>
+      <td><span class="count-badge" style="color:#f87171">4/6</span></td>
+    </tr><tr>
+      <td class="left code">6451</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/6451/technical-chart">訊芯-KY</a></td>
+      <td>420.50</td>
+      <td>427.50</td>
+      <td>756.00</td>
+      <td>-44.4%</td>
+      <td class="above">418.00</td><td class="above">420.15</td><td class="below">430.90</td><td class="below">433.88</td><td class="below">481.41</td><td class="above">331.37</td>
+      <td><span class="count-badge" style="color:#fb923c">3/6</span></td>
+    </tr></tbody>
+          </table>
+          <div class="summary">
+      <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
+      <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#e6edf3">50%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#e6edf3">38%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#4ade80">25%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#f87171">88%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#e6edf3">62%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
+    </div>
+          <div class="group-trend"><svg class="trend-chart" viewBox="0 0 600 160" preserveAspectRatio="none">
+      <line x1="40" y1="134.0" x2="586" y2="134.0" stroke="#eee" stroke-width="1"/><text x="34" y="137.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">0%</text><line x1="40" y1="104.0" x2="586" y2="104.0" stroke="#eee" stroke-width="1"/><text x="34" y="107.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">25%</text><line x1="40" y1="74.0" x2="586" y2="74.0" stroke="#eee" stroke-width="1"/><text x="34" y="77.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">50%</text><line x1="40" y1="44.0" x2="586" y2="44.0" stroke="#eee" stroke-width="1"/><text x="34" y="47.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">75%</text><line x1="40" y1="14.0" x2="586" y2="14.0" stroke="#eee" stroke-width="1"/><text x="34" y="17.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">100%</text>
+      <polyline points="40.0,41.5 131.0,44.0 222.0,54.0 313.0,76.5 404.0,71.5 495.0,71.5 586.0,61.5" fill="none" stroke="#2e7d32" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="40.0" cy="41.5" r="3" fill="#2e7d32"><title>09-18: 77.1%</title></circle><circle cx="131.0" cy="44.0" r="3" fill="#2e7d32"><title>09-21: 75.0%</title></circle><circle cx="222.0" cy="54.0" r="3" fill="#2e7d32"><title>09-22: 66.7%</title></circle><circle cx="313.0" cy="76.5" r="3" fill="#2e7d32"><title>09-23: 47.9%</title></circle><circle cx="404.0" cy="71.5" r="3" fill="#2e7d32"><title>09-24: 52.1%</title></circle><circle cx="495.0" cy="71.5" r="3" fill="#2e7d32"><title>09-29: 52.1%</title></circle><circle cx="586.0" cy="61.5" r="3" fill="#2e7d32"><title>09-30: 60.4%</title></circle>
+      <text x="40.0" y="33.5" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">77.1%</text><text x="131.0" y="36.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">75.0%</text><text x="222.0" y="46.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">66.7%</text><text x="313.0" y="68.5" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">47.9%</text><text x="404.0" y="63.5" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">52.1%</text><text x="495.0" y="63.5" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">52.1%</text><text x="586.0" y="53.5" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">60.4%</text>
+      <text x="40.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-18</text><text x="131.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-21</text><text x="222.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-22</text><text x="313.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-23</text><text x="404.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-24</text><text x="495.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-29</text><text x="586.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-30</text>
+    </svg></div>
+        </div>
+        <div class="group-card" id="grp-矽晶圓">
+          <div class="group-hdr">矽晶圓（3 檔）</div>
+          <table>
+            <thead><tr>
+              <th class="left">代號</th><th class="left">名稱</th>
+              <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
+            </tr></thead>
+            <tbody><tr>
+      <td class="left code">6488</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/6488/technical-chart">環球晶</a></td>
+      <td>1,035.00</td>
+      <td>1,035.00</td>
+      <td>1,600.00</td>
+      <td>-35.3%</td>
+      <td class="above">969.80</td><td class="above">948.70</td><td class="above">947.80</td><td class="above">1,024.08</td><td class="above">914.37</td><td class="above">678.49</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr><tr>
+      <td class="left code">3532</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/3532/technical-chart">台勝科</a></td>
+      <td>471.00</td>
+      <td>488.50</td>
+      <td>552.00</td>
+      <td>-14.7%</td>
+      <td class="above">451.40</td><td class="above">443.30</td><td class="above">423.75</td><td class="above">390.38</td><td class="above">332.47</td><td class="above">223.85</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr><tr>
+      <td class="left code">6182</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/6182/technical-chart">合晶</a></td>
+      <td>133.00</td>
+      <td>133.00</td>
+      <td>194.50</td>
+      <td>-31.6%</td>
+      <td class="above">121.80</td><td class="above">116.80</td><td class="above">112.88</td><td class="above">118.86</td><td class="above">97.86</td><td class="above">65.25</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr></tbody>
+          </table>
+          <div class="summary">
+      <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
+      <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
+    </div>
+          <div class="group-trend"><svg class="trend-chart" viewBox="0 0 600 160" preserveAspectRatio="none">
+      <line x1="40" y1="134.0" x2="586" y2="134.0" stroke="#eee" stroke-width="1"/><text x="34" y="137.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">0%</text><line x1="40" y1="104.0" x2="586" y2="104.0" stroke="#eee" stroke-width="1"/><text x="34" y="107.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">25%</text><line x1="40" y1="74.0" x2="586" y2="74.0" stroke="#eee" stroke-width="1"/><text x="34" y="77.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">50%</text><line x1="40" y1="44.0" x2="586" y2="44.0" stroke="#eee" stroke-width="1"/><text x="34" y="47.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">75%</text><line x1="40" y1="14.0" x2="586" y2="14.0" stroke="#eee" stroke-width="1"/><text x="34" y="17.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">100%</text>
+      <polyline points="40.0,34.0 131.0,34.0 222.0,34.0 313.0,27.3 404.0,27.3 495.0,27.3 586.0,14.0" fill="none" stroke="#c62828" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="40.0" cy="34.0" r="3" fill="#c62828"><title>09-18: 83.3%</title></circle><circle cx="131.0" cy="34.0" r="3" fill="#c62828"><title>09-21: 83.3%</title></circle><circle cx="222.0" cy="34.0" r="3" fill="#c62828"><title>09-22: 83.3%</title></circle><circle cx="313.0" cy="27.3" r="3" fill="#c62828"><title>09-23: 88.9%</title></circle><circle cx="404.0" cy="27.3" r="3" fill="#c62828"><title>09-24: 88.9%</title></circle><circle cx="495.0" cy="27.3" r="3" fill="#c62828"><title>09-29: 88.9%</title></circle><circle cx="586.0" cy="14.0" r="3" fill="#c62828"><title>09-30: 100.0%</title></circle>
+      <text x="40.0" y="26.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">83.3%</text><text x="131.0" y="26.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">83.3%</text><text x="222.0" y="26.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">83.3%</text><text x="313.0" y="19.3" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">88.9%</text><text x="404.0" y="19.3" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">88.9%</text><text x="495.0" y="19.3" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">88.9%</text><text x="586.0" y="6.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">100.0%</text>
+      <text x="40.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-18</text><text x="131.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-21</text><text x="222.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-22</text><text x="313.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-23</text><text x="404.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-24</text><text x="495.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-29</text><text x="586.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-30</text>
+    </svg></div>
+        </div>
+        <div class="group-card" id="grp-功率元件">
+          <div class="group-hdr">功率元件（5 檔）</div>
+          <table>
+            <thead><tr>
+              <th class="left">代號</th><th class="left">名稱</th>
+              <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
+            </tr></thead>
+            <tbody><tr>
+      <td class="left code">8261</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/8261/technical-chart">富鼎</a></td>
+      <td>176.00</td>
+      <td>180.00</td>
+      <td>380.50</td>
+      <td>-53.7%</td>
+      <td class="below">177.10</td><td class="above">174.35</td><td class="above">173.72</td><td class="below">202.87</td><td class="below">186.66</td><td class="above">141.06</td>
+      <td><span class="count-badge" style="color:#fb923c">3/6</span></td>
+    </tr><tr>
+      <td class="left code">2481</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/2481/technical-chart">強茂</a></td>
+      <td>172.00</td>
+      <td>178.50</td>
+      <td>232.50</td>
+      <td>-26.0%</td>
+      <td class="below">173.20</td><td class="above">168.75</td><td class="above">161.53</td><td class="above">153.29</td><td class="above">145.40</td><td class="above">116.28</td>
+      <td><span class="count-badge" style="color:#f87171">5/6</span></td>
+    </tr><tr>
+      <td class="left code">5425</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/5425/technical-chart">台半</a></td>
+      <td>96.00</td>
+      <td>97.00</td>
+      <td>144.00</td>
+      <td>-33.3%</td>
+      <td class="above">95.10</td><td class="above">93.82</td><td class="above">92.38</td><td class="above">92.76</td><td class="above">91.28</td><td class="above">74.58</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr><tr>
+      <td class="left code">3675</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/3675/technical-chart">德微</a></td>
+      <td>330.00</td>
+      <td>338.00</td>
+      <td>459.00</td>
+      <td>-28.1%</td>
+      <td class="above">326.60</td><td class="above">307.00</td><td class="above">291.07</td><td class="above">285.61</td><td class="above">292.90</td><td class="above">224.89</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr><tr>
+      <td class="left code">6435</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/6435/technical-chart">大中</a></td>
+      <td>252.00</td>
+      <td>259.00</td>
+      <td>447.50</td>
+      <td>-43.7%</td>
+      <td class="above">250.60</td><td class="above">246.30</td><td class="above">244.85</td><td class="below">266.72</td><td class="below">261.53</td><td class="above">194.17</td>
+      <td><span class="count-badge" style="color:#f87171">4/6</span></td>
+    </tr></tbody>
+          </table>
+          <div class="summary">
+      <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
+      <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#e6edf3">60%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#e6edf3">60%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#e6edf3">60%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
+    </div>
+          <div class="group-trend"><svg class="trend-chart" viewBox="0 0 600 160" preserveAspectRatio="none">
+      <line x1="40" y1="134.0" x2="586" y2="134.0" stroke="#eee" stroke-width="1"/><text x="34" y="137.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">0%</text><line x1="40" y1="104.0" x2="586" y2="104.0" stroke="#eee" stroke-width="1"/><text x="34" y="107.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">25%</text><line x1="40" y1="74.0" x2="586" y2="74.0" stroke="#eee" stroke-width="1"/><text x="34" y="77.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">50%</text><line x1="40" y1="44.0" x2="586" y2="44.0" stroke="#eee" stroke-width="1"/><text x="34" y="47.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">75%</text><line x1="40" y1="14.0" x2="586" y2="14.0" stroke="#eee" stroke-width="1"/><text x="34" y="17.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">100%</text>
+      <polyline points="40.0,38.0 131.0,42.0 222.0,38.0 313.0,30.0 404.0,34.0 495.0,34.0 586.0,38.0" fill="none" stroke="#c62828" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="40.0" cy="38.0" r="3" fill="#c62828"><title>09-18: 80.0%</title></circle><circle cx="131.0" cy="42.0" r="3" fill="#c62828"><title>09-21: 76.7%</title></circle><circle cx="222.0" cy="38.0" r="3" fill="#c62828"><title>09-22: 80.0%</title></circle><circle cx="313.0" cy="30.0" r="3" fill="#c62828"><title>09-23: 86.7%</title></circle><circle cx="404.0" cy="34.0" r="3" fill="#c62828"><title>09-24: 83.3%</title></circle><circle cx="495.0" cy="34.0" r="3" fill="#c62828"><title>09-29: 83.3%</title></circle><circle cx="586.0" cy="38.0" r="3" fill="#c62828"><title>09-30: 80.0%</title></circle>
+      <text x="40.0" y="30.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">80.0%</text><text x="131.0" y="34.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">76.7%</text><text x="222.0" y="30.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">80.0%</text><text x="313.0" y="22.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">86.7%</text><text x="404.0" y="26.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">83.3%</text><text x="495.0" y="26.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">83.3%</text><text x="586.0" y="30.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">80.0%</text>
+      <text x="40.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-18</text><text x="131.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-21</text><text x="222.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-22</text><text x="313.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-23</text><text x="404.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-24</text><text x="495.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-29</text><text x="586.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-30</text>
+    </svg></div>
+        </div>
+        <div class="group-card" id="grp-航運">
+          <div class="group-hdr">航運（3 檔）</div>
+          <table>
+            <thead><tr>
+              <th class="left">代號</th><th class="left">名稱</th>
+              <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
+            </tr></thead>
+            <tbody><tr>
+      <td class="left code">2603</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/2603/technical-chart">長榮</a></td>
+      <td>239.50</td>
+      <td>241.00</td>
+      <td>256.50</td>
+      <td>-6.6%</td>
+      <td class="below">241.20</td><td class="below">240.35</td><td class="above">237.32</td><td class="above">221.24</td><td class="above">213.88</td><td class="above">202.57</td>
+      <td><span class="count-badge" style="color:#f87171">4/6</span></td>
+    </tr><tr>
+      <td class="left code">2609</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/2609/technical-chart">陽明</a></td>
+      <td>59.40</td>
+      <td>59.60</td>
+      <td>69.90</td>
+      <td>-15.0%</td>
+      <td class="below">59.62</td><td class="below">60.12</td><td class="above">59.14</td><td class="above">55.14</td><td class="above">53.12</td><td class="above">53.77</td>
+      <td><span class="count-badge" style="color:#f87171">4/6</span></td>
+    </tr><tr>
+      <td class="left code">2615</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/2615/technical-chart">萬海</a></td>
+      <td>114.00</td>
+      <td>114.00</td>
+      <td>134.50</td>
+      <td>-15.2%</td>
+      <td class="below">114.10</td><td class="below">115.55</td><td class="below">114.53</td><td class="above">99.55</td><td class="above">89.33</td><td class="above">83.92</td>
+      <td><span class="count-badge" style="color:#fb923c">3/6</span></td>
+    </tr></tbody>
+          </table>
+          <div class="summary">
+      <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
+      <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#4ade80">0%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#4ade80">0%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#e6edf3">67%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
+    </div>
+          <div class="group-trend"><svg class="trend-chart" viewBox="0 0 600 160" preserveAspectRatio="none">
+      <line x1="40" y1="134.0" x2="586" y2="134.0" stroke="#eee" stroke-width="1"/><text x="34" y="137.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">0%</text><line x1="40" y1="104.0" x2="586" y2="104.0" stroke="#eee" stroke-width="1"/><text x="34" y="107.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">25%</text><line x1="40" y1="74.0" x2="586" y2="74.0" stroke="#eee" stroke-width="1"/><text x="34" y="77.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">50%</text><line x1="40" y1="44.0" x2="586" y2="44.0" stroke="#eee" stroke-width="1"/><text x="34" y="47.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">75%</text><line x1="40" y1="14.0" x2="586" y2="14.0" stroke="#eee" stroke-width="1"/><text x="34" y="17.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">100%</text>
+      <polyline points="40.0,14.0 131.0,20.7 222.0,27.3 313.0,47.4 404.0,40.6 495.0,67.3 586.0,60.7" fill="none" stroke="#2e7d32" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="40.0" cy="14.0" r="3" fill="#2e7d32"><title>09-18: 100.0%</title></circle><circle cx="131.0" cy="20.7" r="3" fill="#2e7d32"><title>09-21: 94.4%</title></circle><circle cx="222.0" cy="27.3" r="3" fill="#2e7d32"><title>09-22: 88.9%</title></circle><circle cx="313.0" cy="47.4" r="3" fill="#2e7d32"><title>09-23: 72.2%</title></circle><circle cx="404.0" cy="40.6" r="3" fill="#2e7d32"><title>09-24: 77.8%</title></circle><circle cx="495.0" cy="67.3" r="3" fill="#2e7d32"><title>09-29: 55.6%</title></circle><circle cx="586.0" cy="60.7" r="3" fill="#2e7d32"><title>09-30: 61.1%</title></circle>
+      <text x="40.0" y="6.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">100.0%</text><text x="131.0" y="12.7" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">94.4%</text><text x="222.0" y="19.3" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">88.9%</text><text x="313.0" y="39.4" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">72.2%</text><text x="404.0" y="32.6" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">77.8%</text><text x="495.0" y="59.3" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">55.6%</text><text x="586.0" y="52.7" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">61.1%</text>
+      <text x="40.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-18</text><text x="131.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-21</text><text x="222.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-22</text><text x="313.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-23</text><text x="404.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-24</text><text x="495.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-29</text><text x="586.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-30</text>
+    </svg></div>
+        </div>
+        <div class="group-card" id="grp-晶圓代工(成熟製程)">
+          <div class="group-hdr">晶圓代工(成熟製程)（2 檔）</div>
+          <table>
+            <thead><tr>
+              <th class="left">代號</th><th class="left">名稱</th>
+              <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
+            </tr></thead>
+            <tbody><tr>
+      <td class="left code">2303</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/2303/technical-chart">聯電</a></td>
+      <td>154.50</td>
+      <td>158.00</td>
+      <td>185.50</td>
+      <td>-16.7%</td>
+      <td class="below">156.40</td><td class="above">152.30</td><td class="above">144.18</td><td class="above">134.65</td><td class="above">125.57</td><td class="above">89.60</td>
+      <td><span class="count-badge" style="color:#f87171">5/6</span></td>
+    </tr><tr>
+      <td class="left code">5347</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/5347/technical-chart">世界</a></td>
+      <td>181.00</td>
+      <td>185.00</td>
+      <td>223.00</td>
+      <td>-18.8%</td>
+      <td class="above">175.20</td><td class="above">169.65</td><td class="above">162.00</td><td class="above">160.05</td><td class="above">162.54</td><td class="above">136.03</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr></tbody>
+          </table>
+          <div class="summary">
+      <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
+      <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#e6edf3">50%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
+    </div>
+          <div class="group-trend"><svg class="trend-chart" viewBox="0 0 600 160" preserveAspectRatio="none">
+      <line x1="40" y1="134.0" x2="586" y2="134.0" stroke="#eee" stroke-width="1"/><text x="34" y="137.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">0%</text><line x1="40" y1="104.0" x2="586" y2="104.0" stroke="#eee" stroke-width="1"/><text x="34" y="107.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">25%</text><line x1="40" y1="74.0" x2="586" y2="74.0" stroke="#eee" stroke-width="1"/><text x="34" y="77.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">50%</text><line x1="40" y1="44.0" x2="586" y2="44.0" stroke="#eee" stroke-width="1"/><text x="34" y="47.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">75%</text><line x1="40" y1="14.0" x2="586" y2="14.0" stroke="#eee" stroke-width="1"/><text x="34" y="17.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">100%</text>
+      <polyline points="40.0,14.0 131.0,14.0 222.0,14.0 313.0,14.0 404.0,34.0 495.0,24.0 586.0,24.0" fill="none" stroke="#2e7d32" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="40.0" cy="14.0" r="3" fill="#2e7d32"><title>09-18: 100.0%</title></circle><circle cx="131.0" cy="14.0" r="3" fill="#2e7d32"><title>09-21: 100.0%</title></circle><circle cx="222.0" cy="14.0" r="3" fill="#2e7d32"><title>09-22: 100.0%</title></circle><circle cx="313.0" cy="14.0" r="3" fill="#2e7d32"><title>09-23: 100.0%</title></circle><circle cx="404.0" cy="34.0" r="3" fill="#2e7d32"><title>09-24: 83.3%</title></circle><circle cx="495.0" cy="24.0" r="3" fill="#2e7d32"><title>09-29: 91.7%</title></circle><circle cx="586.0" cy="24.0" r="3" fill="#2e7d32"><title>09-30: 91.7%</title></circle>
+      <text x="40.0" y="6.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">100.0%</text><text x="131.0" y="6.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">100.0%</text><text x="222.0" y="6.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">100.0%</text><text x="313.0" y="6.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">100.0%</text><text x="404.0" y="26.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">83.3%</text><text x="495.0" y="16.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">91.7%</text><text x="586.0" y="16.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">91.7%</text>
+      <text x="40.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-18</text><text x="131.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-21</text><text x="222.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-22</text><text x="313.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-23</text><text x="404.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-24</text><text x="495.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-29</text><text x="586.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-30</text>
+    </svg></div>
+        </div>
+        <div class="group-card" id="grp-石英元件">
+          <div class="group-hdr">石英元件（3 檔）</div>
+          <table>
+            <thead><tr>
+              <th class="left">代號</th><th class="left">名稱</th>
+              <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
+            </tr></thead>
+            <tbody><tr>
+      <td class="left code">3042</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/3042/technical-chart">晶技</a></td>
+      <td>210.00</td>
+      <td>218.50</td>
+      <td>250.00</td>
+      <td>-16.0%</td>
+      <td class="above">200.60</td><td class="above">191.60</td><td class="above">184.65</td><td class="above">179.83</td><td class="above">180.45</td><td class="above">133.94</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr><tr>
+      <td class="left code">2484</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/2484/technical-chart">希華</a></td>
+      <td>78.00</td>
+      <td>79.70</td>
+      <td>102.00</td>
+      <td>-23.5%</td>
+      <td class="above">74.04</td><td class="above">72.03</td><td class="above">71.22</td><td class="above">73.59</td><td class="above">63.44</td><td class="above">43.86</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr><tr>
+      <td class="left code">8182</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/8182/technical-chart">加高</a></td>
+      <td>41.40</td>
+      <td>42.40</td>
+      <td>60.70</td>
+      <td>-31.8%</td>
+      <td class="above">40.64</td><td class="above">39.78</td><td class="above">39.28</td><td class="above">40.81</td><td class="below">42.09</td><td class="above">34.38</td>
+      <td><span class="count-badge" style="color:#f87171">5/6</span></td>
+    </tr></tbody>
+          </table>
+          <div class="summary">
+      <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
+      <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#e6edf3">67%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
+    </div>
+          <div class="group-trend"><svg class="trend-chart" viewBox="0 0 600 160" preserveAspectRatio="none">
+      <line x1="40" y1="134.0" x2="586" y2="134.0" stroke="#eee" stroke-width="1"/><text x="34" y="137.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">0%</text><line x1="40" y1="104.0" x2="586" y2="104.0" stroke="#eee" stroke-width="1"/><text x="34" y="107.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">25%</text><line x1="40" y1="74.0" x2="586" y2="74.0" stroke="#eee" stroke-width="1"/><text x="34" y="77.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">50%</text><line x1="40" y1="44.0" x2="586" y2="44.0" stroke="#eee" stroke-width="1"/><text x="34" y="47.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">75%</text><line x1="40" y1="14.0" x2="586" y2="14.0" stroke="#eee" stroke-width="1"/><text x="34" y="17.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">100%</text>
+      <polyline points="40.0,40.6 131.0,47.4 222.0,47.4 313.0,34.0 404.0,34.0 495.0,20.7 586.0,20.7" fill="none" stroke="#c62828" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="40.0" cy="40.6" r="3" fill="#c62828"><title>09-18: 77.8%</title></circle><circle cx="131.0" cy="47.4" r="3" fill="#c62828"><title>09-21: 72.2%</title></circle><circle cx="222.0" cy="47.4" r="3" fill="#c62828"><title>09-22: 72.2%</title></circle><circle cx="313.0" cy="34.0" r="3" fill="#c62828"><title>09-23: 83.3%</title></circle><circle cx="404.0" cy="34.0" r="3" fill="#c62828"><title>09-24: 83.3%</title></circle><circle cx="495.0" cy="20.7" r="3" fill="#c62828"><title>09-29: 94.4%</title></circle><circle cx="586.0" cy="20.7" r="3" fill="#c62828"><title>09-30: 94.4%</title></circle>
+      <text x="40.0" y="32.6" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">77.8%</text><text x="131.0" y="39.4" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">72.2%</text><text x="222.0" y="39.4" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">72.2%</text><text x="313.0" y="26.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">83.3%</text><text x="404.0" y="26.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">83.3%</text><text x="495.0" y="12.7" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">94.4%</text><text x="586.0" y="12.7" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">94.4%</text>
+      <text x="40.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-18</text><text x="131.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-21</text><text x="222.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-22</text><text x="313.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-23</text><text x="404.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-24</text><text x="495.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-29</text><text x="586.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-30</text>
+    </svg></div>
+        </div>
+        <div class="group-card" id="grp-TGV設備">
+          <div class="group-hdr">TGV設備（4 檔）</div>
+          <table>
+            <thead><tr>
+              <th class="left">代號</th><th class="left">名稱</th>
+              <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
+            </tr></thead>
+            <tbody><tr>
+      <td class="left code">6207</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/6207/technical-chart">雷科</a></td>
+      <td>151.00</td>
+      <td>151.00</td>
+      <td>181.50</td>
+      <td>-16.8%</td>
+      <td class="above">128.60</td><td class="above">120.25</td><td class="above">115.55</td><td class="above">114.16</td><td class="above">108.02</td><td class="above">79.81</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr><tr>
+      <td class="left code">8064</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/8064/technical-chart">東捷</a></td>
+      <td>145.50</td>
+      <td>155.00</td>
+      <td>189.50</td>
+      <td>-23.2%</td>
+      <td class="above">138.60</td><td class="above">132.35</td><td class="above">124.65</td><td class="above">113.44</td><td class="above">119.01</td><td class="above">84.12</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr><tr>
+      <td class="left code">8027</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/8027/technical-chart">鈦昇</a></td>
+      <td>222.00</td>
+      <td>222.00</td>
+      <td>297.00</td>
+      <td>-25.3%</td>
+      <td class="above">193.10</td><td class="above">183.60</td><td class="above">180.47</td><td class="above">187.84</td><td class="above">204.22</td><td class="above">153.72</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr><tr>
+      <td class="left code">3055</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/3055/technical-chart">蔚華科</a></td>
+      <td>209.50</td>
+      <td>211.00</td>
+      <td>226.00</td>
+      <td>-7.3%</td>
+      <td class="above">204.40</td><td class="above">186.35</td><td class="above">165.12</td><td class="above">142.13</td><td class="above">118.95</td><td class="above">92.13</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr></tbody>
+          </table>
+          <div class="summary">
+      <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
+      <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
+    </div>
+          <div class="group-trend"><svg class="trend-chart" viewBox="0 0 600 160" preserveAspectRatio="none">
+      <line x1="40" y1="134.0" x2="586" y2="134.0" stroke="#eee" stroke-width="1"/><text x="34" y="137.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">0%</text><line x1="40" y1="104.0" x2="586" y2="104.0" stroke="#eee" stroke-width="1"/><text x="34" y="107.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">25%</text><line x1="40" y1="74.0" x2="586" y2="74.0" stroke="#eee" stroke-width="1"/><text x="34" y="77.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">50%</text><line x1="40" y1="44.0" x2="586" y2="44.0" stroke="#eee" stroke-width="1"/><text x="34" y="47.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">75%</text><line x1="40" y1="14.0" x2="586" y2="14.0" stroke="#eee" stroke-width="1"/><text x="34" y="17.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">100%</text>
+      <polyline points="40.0,29.0 131.0,24.0 222.0,29.0 313.0,49.0 404.0,24.0 495.0,19.0 586.0,14.0" fill="none" stroke="#c62828" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="40.0" cy="29.0" r="3" fill="#c62828"><title>09-18: 87.5%</title></circle><circle cx="131.0" cy="24.0" r="3" fill="#c62828"><title>09-21: 91.7%</title></circle><circle cx="222.0" cy="29.0" r="3" fill="#c62828"><title>09-22: 87.5%</title></circle><circle cx="313.0" cy="49.0" r="3" fill="#c62828"><title>09-23: 70.8%</title></circle><circle cx="404.0" cy="24.0" r="3" fill="#c62828"><title>09-24: 91.7%</title></circle><circle cx="495.0" cy="19.0" r="3" fill="#c62828"><title>09-29: 95.8%</title></circle><circle cx="586.0" cy="14.0" r="3" fill="#c62828"><title>09-30: 100.0%</title></circle>
+      <text x="40.0" y="21.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">87.5%</text><text x="131.0" y="16.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">91.7%</text><text x="222.0" y="21.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">87.5%</text><text x="313.0" y="41.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">70.8%</text><text x="404.0" y="16.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">91.7%</text><text x="495.0" y="11.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">95.8%</text><text x="586.0" y="6.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">100.0%</text>
+      <text x="40.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-18</text><text x="131.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-21</text><text x="222.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-22</text><text x="313.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-23</text><text x="404.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-24</text><text x="495.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-29</text><text x="586.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-30</text>
+    </svg></div>
+        </div>
+        <div class="group-card" id="grp-散熱">
+          <div class="group-hdr">散熱（3 檔）</div>
+          <table>
+            <thead><tr>
+              <th class="left">代號</th><th class="left">名稱</th>
+              <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
+            </tr></thead>
+            <tbody><tr>
+      <td class="left code">3017</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/3017/technical-chart">奇鋐</a></td>
+      <td>3,435.00</td>
+      <td>3,575.00</td>
+      <td>3,600.00</td>
+      <td>-4.6%</td>
+      <td class="below">3,450.00</td><td class="above">3,357.00</td><td class="above">3,369.25</td><td class="above">2,886.50</td><td class="above">2,716.08</td><td class="above">2,119.19</td>
+      <td><span class="count-badge" style="color:#f87171">5/6</span></td>
+    </tr><tr>
+      <td class="left code">3324</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/3324/technical-chart">雙鴻</a></td>
+      <td>1,530.00</td>
+      <td>1,645.00</td>
+      <td>1,750.00</td>
+      <td>-12.6%</td>
+      <td class="below">1,613.00</td><td class="above">1,507.00</td><td class="above">1,449.25</td><td class="above">1,129.20</td><td class="above">1,094.53</td><td class="above">1,035.64</td>
+      <td><span class="count-badge" style="color:#f87171">5/6</span></td>
+    </tr><tr>
+      <td class="left code">3653</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/3653/technical-chart">健策</a></td>
+      <td>6,800.00</td>
+      <td>7,080.00</td>
+      <td>7,160.00</td>
+      <td>-5.0%</td>
+      <td class="above">6,571.00</td><td class="above">6,007.50</td><td class="above">5,878.00</td><td class="above">4,739.25</td><td class="above">4,363.21</td><td class="above">3,599.27</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr></tbody>
+          </table>
+          <div class="summary">
+      <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
+      <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#e6edf3">33%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
+    </div>
+          <div class="group-trend"><svg class="trend-chart" viewBox="0 0 600 160" preserveAspectRatio="none">
+      <line x1="40" y1="134.0" x2="586" y2="134.0" stroke="#eee" stroke-width="1"/><text x="34" y="137.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">0%</text><line x1="40" y1="104.0" x2="586" y2="104.0" stroke="#eee" stroke-width="1"/><text x="34" y="107.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">25%</text><line x1="40" y1="74.0" x2="586" y2="74.0" stroke="#eee" stroke-width="1"/><text x="34" y="77.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">50%</text><line x1="40" y1="44.0" x2="586" y2="44.0" stroke="#eee" stroke-width="1"/><text x="34" y="47.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">75%</text><line x1="40" y1="14.0" x2="586" y2="14.0" stroke="#eee" stroke-width="1"/><text x="34" y="17.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">100%</text>
+      <polyline points="40.0,27.3 131.0,14.0 222.0,14.0 313.0,14.0 404.0,14.0 495.0,20.7 586.0,27.3" fill="none" stroke="#c62828" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="40.0" cy="27.3" r="3" fill="#c62828"><title>09-18: 88.9%</title></circle><circle cx="131.0" cy="14.0" r="3" fill="#c62828"><title>09-21: 100.0%</title></circle><circle cx="222.0" cy="14.0" r="3" fill="#c62828"><title>09-22: 100.0%</title></circle><circle cx="313.0" cy="14.0" r="3" fill="#c62828"><title>09-23: 100.0%</title></circle><circle cx="404.0" cy="14.0" r="3" fill="#c62828"><title>09-24: 100.0%</title></circle><circle cx="495.0" cy="20.7" r="3" fill="#c62828"><title>09-29: 94.4%</title></circle><circle cx="586.0" cy="27.3" r="3" fill="#c62828"><title>09-30: 88.9%</title></circle>
+      <text x="40.0" y="19.3" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">88.9%</text><text x="131.0" y="6.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">100.0%</text><text x="222.0" y="6.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">100.0%</text><text x="313.0" y="6.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">100.0%</text><text x="404.0" y="6.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">100.0%</text><text x="495.0" y="12.7" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">94.4%</text><text x="586.0" y="19.3" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">88.9%</text>
+      <text x="40.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-18</text><text x="131.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-21</text><text x="222.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-22</text><text x="313.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-23</text><text x="404.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-24</text><text x="495.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-29</text><text x="586.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-30</text>
+    </svg></div>
+        </div>
+        <div class="group-card" id="grp-半導體設備">
+          <div class="group-hdr">半導體設備（9 檔）</div>
+          <table>
+            <thead><tr>
+              <th class="left">代號</th><th class="left">名稱</th>
+              <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
+            </tr></thead>
+            <tbody><tr>
+      <td class="left code">2360</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/2360/technical-chart">致茂</a></td>
+      <td>2,135.00</td>
+      <td>2,280.00</td>
+      <td>2,795.00</td>
+      <td>-23.6%</td>
+      <td class="below">2,276.00</td><td class="below">2,230.00</td><td class="below">2,183.00</td><td class="above">2,071.83</td><td class="below">2,153.79</td><td class="above">1,575.51</td>
+      <td><span class="count-badge" style="color:#4ade80">2/6</span></td>
+    </tr><tr>
+      <td class="left code">2404</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/2404/technical-chart">漢唐</a></td>
+      <td>1,290.00</td>
+      <td>1,300.00</td>
+      <td>1,450.00</td>
+      <td>-11.0%</td>
+      <td class="above">1,237.00</td><td class="above">1,154.00</td><td class="above">1,102.50</td><td class="above">1,121.83</td><td class="above">1,123.19</td><td class="above">1,017.69</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr><tr>
+      <td class="left code">2467</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/2467/technical-chart">志聖</a></td>
+      <td>539.00</td>
+      <td>566.00</td>
+      <td>692.00</td>
+      <td>-22.1%</td>
+      <td class="above">532.40</td><td class="above">527.00</td><td class="below">558.75</td><td class="below">549.03</td><td class="below">566.85</td><td class="above">412.75</td>
+      <td><span class="count-badge" style="color:#fb923c">3/6</span></td>
+    </tr><tr>
+      <td class="left code">3131</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/3131/technical-chart">弘塑</a></td>
+      <td>2,525.00</td>
+      <td>2,590.00</td>
+      <td>4,045.00</td>
+      <td>-37.6%</td>
+      <td class="above">2,437.00</td><td class="above">2,413.50</td><td class="above">2,430.50</td><td class="below">2,585.50</td><td class="below">2,894.75</td><td class="above">2,317.15</td>
+      <td><span class="count-badge" style="color:#f87171">4/6</span></td>
+    </tr><tr>
+      <td class="left code">3167</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/3167/technical-chart">大量</a></td>
+      <td>887.00</td>
+      <td>906.00</td>
+      <td>1,015.00</td>
+      <td>-12.6%</td>
+      <td class="below">898.60</td><td class="above">856.60</td><td class="above">844.00</td><td class="above">746.44</td><td class="above">764.25</td><td class="above">505.16</td>
+      <td><span class="count-badge" style="color:#f87171">5/6</span></td>
+    </tr><tr>
+      <td class="left code">5536</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/5536/technical-chart">聖暉*</a></td>
+      <td>919.00</td>
+      <td>935.00</td>
+      <td>1,490.00</td>
+      <td>-38.3%</td>
+      <td class="above">900.80</td><td class="above">875.80</td><td class="above">863.50</td><td class="below">974.72</td><td class="below">1,004.27</td><td class="above">864.63</td>
+      <td><span class="count-badge" style="color:#f87171">4/6</span></td>
+    </tr><tr>
+      <td class="left code">6139</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/6139/technical-chart">亞翔</a></td>
+      <td>756.00</td>
+      <td>762.00</td>
+      <td>987.00</td>
+      <td>-23.4%</td>
+      <td class="above">738.40</td><td class="above">725.90</td><td class="above">729.70</td><td class="below">775.62</td><td class="below">769.01</td><td class="above">643.22</td>
+      <td><span class="count-badge" style="color:#f87171">4/6</span></td>
+    </tr><tr>
+      <td class="left code">6187</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/6187/technical-chart">萬潤</a></td>
+      <td>1,310.00</td>
+      <td>1,420.00</td>
+      <td>1,490.00</td>
+      <td>-12.1%</td>
+      <td class="above">1,247.00</td><td class="above">1,236.50</td><td class="above">1,276.25</td><td class="above">1,165.92</td><td class="above">1,148.97</td><td class="above">801.74</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr><tr>
+      <td class="left code">6640</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/6640/technical-chart">均華</a></td>
+      <td>1,040.00</td>
+      <td>1,090.00</td>
+      <td>1,860.00</td>
+      <td>-44.1%</td>
+      <td class="above">1,035.00</td><td class="below">1,080.00</td><td class="below">1,139.50</td><td class="above">1,022.23</td><td class="below">1,171.58</td><td class="above">966.78</td>
+      <td><span class="count-badge" style="color:#fb923c">3/6</span></td>
+    </tr></tbody>
+          </table>
+          <div class="summary">
+      <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
+      <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#f87171">78%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#f87171">78%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#e6edf3">67%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#e6edf3">56%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#e6edf3">33%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
+    </div>
+          <div class="group-trend"><svg class="trend-chart" viewBox="0 0 600 160" preserveAspectRatio="none">
+      <line x1="40" y1="134.0" x2="586" y2="134.0" stroke="#eee" stroke-width="1"/><text x="34" y="137.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">0%</text><line x1="40" y1="104.0" x2="586" y2="104.0" stroke="#eee" stroke-width="1"/><text x="34" y="107.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">25%</text><line x1="40" y1="74.0" x2="586" y2="74.0" stroke="#eee" stroke-width="1"/><text x="34" y="77.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">50%</text><line x1="40" y1="44.0" x2="586" y2="44.0" stroke="#eee" stroke-width="1"/><text x="34" y="47.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">75%</text><line x1="40" y1="14.0" x2="586" y2="14.0" stroke="#eee" stroke-width="1"/><text x="34" y="17.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">100%</text>
+      <polyline points="40.0,49.5 131.0,60.7 222.0,58.4 313.0,60.7 404.0,58.4 495.0,47.4 586.0,51.8" fill="none" stroke="#2e7d32" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="40.0" cy="49.5" r="3" fill="#2e7d32"><title>09-18: 70.4%</title></circle><circle cx="131.0" cy="60.7" r="3" fill="#2e7d32"><title>09-21: 61.1%</title></circle><circle cx="222.0" cy="58.4" r="3" fill="#2e7d32"><title>09-22: 63.0%</title></circle><circle cx="313.0" cy="60.7" r="3" fill="#2e7d32"><title>09-23: 61.1%</title></circle><circle cx="404.0" cy="58.4" r="3" fill="#2e7d32"><title>09-24: 63.0%</title></circle><circle cx="495.0" cy="47.4" r="3" fill="#2e7d32"><title>09-29: 72.2%</title></circle><circle cx="586.0" cy="51.8" r="3" fill="#2e7d32"><title>09-30: 68.5%</title></circle>
+      <text x="40.0" y="41.5" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">70.4%</text><text x="131.0" y="52.7" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">61.1%</text><text x="222.0" y="50.4" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">63.0%</text><text x="313.0" y="52.7" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">61.1%</text><text x="404.0" y="50.4" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">63.0%</text><text x="495.0" y="39.4" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">72.2%</text><text x="586.0" y="43.8" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">68.5%</text>
+      <text x="40.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-18</text><text x="131.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-21</text><text x="222.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-22</text><text x="313.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-23</text><text x="404.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-24</text><text x="495.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-29</text><text x="586.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-30</text>
+    </svg></div>
+        </div>
+        <div class="group-card" id="grp-封測">
+          <div class="group-hdr">封測（6 檔）</div>
+          <table>
+            <thead><tr>
+              <th class="left">代號</th><th class="left">名稱</th>
+              <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
+            </tr></thead>
+            <tbody><tr>
+      <td class="left code">2449</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/2449/technical-chart">京元電子</a></td>
+      <td>294.50</td>
+      <td>304.00</td>
+      <td>350.00</td>
+      <td>-15.9%</td>
+      <td class="below">304.20</td><td class="above">289.75</td><td class="above">278.88</td><td class="above">263.73</td><td class="above">277.06</td><td class="above">256.41</td>
+      <td><span class="count-badge" style="color:#f87171">5/6</span></td>
+    </tr><tr>
+      <td class="left code">3264</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/3264/technical-chart">欣銓</a></td>
+      <td>243.50</td>
+      <td>247.00</td>
+      <td>289.50</td>
+      <td>-15.9%</td>
+      <td class="below">251.90</td><td class="below">250.05</td><td class="above">240.38</td><td class="above">221.51</td><td class="above">220.11</td><td class="above">169.88</td>
+      <td><span class="count-badge" style="color:#f87171">4/6</span></td>
+    </tr><tr>
+      <td class="left code">3711</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/3711/technical-chart">日月光投控</a></td>
+      <td>–</td>
+      <td>–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="">–</td><td class="">–</td><td class="">–</td><td class="">–</td><td class="">–</td><td class="">–</td>
+      <td><span class="count-badge" style="color:#9198a1">–</span></td>
+    </tr><tr>
+      <td class="left code">6239</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/6239/technical-chart">力成</a></td>
+      <td>289.50</td>
+      <td>295.50</td>
+      <td>387.00</td>
+      <td>-25.2%</td>
+      <td class="above">287.20</td><td class="above">282.95</td><td class="above">280.38</td><td class="above">279.21</td><td class="above">280.37</td><td class="above">237.10</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr><tr>
+      <td class="left code">6257</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/6257/technical-chart">矽格</a></td>
+      <td>254.00</td>
+      <td>260.00</td>
+      <td>279.50</td>
+      <td>-9.1%</td>
+      <td class="above">245.90</td><td class="above">236.45</td><td class="above">224.82</td><td class="above">215.86</td><td class="above">214.00</td><td class="above">164.62</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr><tr>
+      <td class="left code">8150</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/8150/technical-chart">南茂</a></td>
+      <td>114.50</td>
+      <td>114.50</td>
+      <td>125.00</td>
+      <td>-8.4%</td>
+      <td class="above">108.70</td><td class="above">99.87</td><td class="above">94.93</td><td class="above">94.33</td><td class="above">91.05</td><td class="above">70.46</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr></tbody>
+          </table>
+          <div class="summary">
+      <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
+      <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#e6edf3">60%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#f87171">80%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
+    </div>
+          <div class="group-trend"><svg class="trend-chart" viewBox="0 0 600 160" preserveAspectRatio="none">
+      <line x1="40" y1="134.0" x2="586" y2="134.0" stroke="#eee" stroke-width="1"/><text x="34" y="137.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">0%</text><line x1="40" y1="104.0" x2="586" y2="104.0" stroke="#eee" stroke-width="1"/><text x="34" y="107.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">25%</text><line x1="40" y1="74.0" x2="586" y2="74.0" stroke="#eee" stroke-width="1"/><text x="34" y="77.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">50%</text><line x1="40" y1="44.0" x2="586" y2="44.0" stroke="#eee" stroke-width="1"/><text x="34" y="47.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">75%</text><line x1="40" y1="14.0" x2="586" y2="14.0" stroke="#eee" stroke-width="1"/><text x="34" y="17.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">100%</text>
+      <polyline points="40.0,14.0 131.0,14.0 222.0,14.0 313.0,18.0 404.0,30.0 495.0,42.0 586.0,26.0" fill="none" stroke="#2e7d32" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="40.0" cy="14.0" r="3" fill="#2e7d32"><title>09-18: 100.0%</title></circle><circle cx="131.0" cy="14.0" r="3" fill="#2e7d32"><title>09-21: 100.0%</title></circle><circle cx="222.0" cy="14.0" r="3" fill="#2e7d32"><title>09-22: 100.0%</title></circle><circle cx="313.0" cy="18.0" r="3" fill="#2e7d32"><title>09-23: 96.7%</title></circle><circle cx="404.0" cy="30.0" r="3" fill="#2e7d32"><title>09-24: 86.7%</title></circle><circle cx="495.0" cy="42.0" r="3" fill="#2e7d32"><title>09-29: 76.7%</title></circle><circle cx="586.0" cy="26.0" r="3" fill="#2e7d32"><title>09-30: 90.0%</title></circle>
+      <text x="40.0" y="6.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">100.0%</text><text x="131.0" y="6.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">100.0%</text><text x="222.0" y="6.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">100.0%</text><text x="313.0" y="10.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">96.7%</text><text x="404.0" y="22.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">86.7%</text><text x="495.0" y="34.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">76.7%</text><text x="586.0" y="18.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">90.0%</text>
+      <text x="40.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-18</text><text x="131.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-21</text><text x="222.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-22</text><text x="313.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-23</text><text x="404.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-24</text><text x="495.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-29</text><text x="586.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-30</text>
+    </svg></div>
+        </div>
+        <div class="group-card" id="grp-探針卡">
+          <div class="group-hdr">探針卡（4 檔）</div>
+          <table>
+            <thead><tr>
+              <th class="left">代號</th><th class="left">名稱</th>
+              <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
+            </tr></thead>
+            <tbody><tr>
+      <td class="left code">6223</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/6223/technical-chart">旺矽</a></td>
+      <td>5,125.00</td>
+      <td>5,320.00</td>
+      <td>7,700.00</td>
+      <td>-33.4%</td>
+      <td class="below">5,338.00</td><td class="below">5,452.50</td><td class="below">5,458.00</td><td class="below">5,726.33</td><td class="below">5,732.29</td><td class="above">4,115.77</td>
+      <td><span class="count-badge" style="color:#4ade80">1/6</span></td>
+    </tr><tr>
+      <td class="left code">6510</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/6510/technical-chart">精測</a></td>
+      <td>3,065.00</td>
+      <td>3,240.00</td>
+      <td>4,475.00</td>
+      <td>-31.5%</td>
+      <td class="below">3,338.00</td><td class="below">3,338.00</td><td class="below">3,393.25</td><td class="above">2,938.17</td><td class="below">3,229.17</td><td class="above">2,889.04</td>
+      <td><span class="count-badge" style="color:#4ade80">2/6</span></td>
+    </tr><tr>
+      <td class="left code">6515</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/6515/technical-chart">穎崴</a></td>
+      <td>5,930.00</td>
+      <td>5,985.00</td>
+      <td>11,490.00</td>
+      <td>-48.4%</td>
+      <td class="above">5,843.00</td><td class="below">6,008.50</td><td class="below">6,539.25</td><td class="below">6,571.08</td><td class="below">7,981.54</td><td class="above">5,913.00</td>
+      <td><span class="count-badge" style="color:#4ade80">2/6</span></td>
+    </tr><tr>
+      <td class="left code">6683</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/6683/technical-chart">雍智科技</a></td>
+      <td>1,590.00</td>
+      <td>1,605.00</td>
+      <td>2,565.00</td>
+      <td>-38.0%</td>
+      <td class="above">1,546.00</td><td class="above">1,569.50</td><td class="above">1,466.50</td><td class="above">1,320.93</td><td class="above">1,571.80</td><td class="above">1,096.70</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr></tbody>
+          </table>
+          <div class="summary">
+      <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
+      <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#e6edf3">50%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#4ade80">25%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#4ade80">25%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#e6edf3">50%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#4ade80">25%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
+    </div>
+          <div class="group-trend"><svg class="trend-chart" viewBox="0 0 600 160" preserveAspectRatio="none">
+      <line x1="40" y1="134.0" x2="586" y2="134.0" stroke="#eee" stroke-width="1"/><text x="34" y="137.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">0%</text><line x1="40" y1="104.0" x2="586" y2="104.0" stroke="#eee" stroke-width="1"/><text x="34" y="107.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">25%</text><line x1="40" y1="74.0" x2="586" y2="74.0" stroke="#eee" stroke-width="1"/><text x="34" y="77.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">50%</text><line x1="40" y1="44.0" x2="586" y2="44.0" stroke="#eee" stroke-width="1"/><text x="34" y="47.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">75%</text><line x1="40" y1="14.0" x2="586" y2="14.0" stroke="#eee" stroke-width="1"/><text x="34" y="17.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">100%</text>
+      <polyline points="40.0,39.0 131.0,64.0 222.0,74.0 313.0,64.0 404.0,99.0 495.0,104.0 586.0,79.0" fill="none" stroke="#2e7d32" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="40.0" cy="39.0" r="3" fill="#2e7d32"><title>09-18: 79.2%</title></circle><circle cx="131.0" cy="64.0" r="3" fill="#2e7d32"><title>09-21: 58.3%</title></circle><circle cx="222.0" cy="74.0" r="3" fill="#2e7d32"><title>09-22: 50.0%</title></circle><circle cx="313.0" cy="64.0" r="3" fill="#2e7d32"><title>09-23: 58.3%</title></circle><circle cx="404.0" cy="99.0" r="3" fill="#2e7d32"><title>09-24: 29.2%</title></circle><circle cx="495.0" cy="104.0" r="3" fill="#2e7d32"><title>09-29: 25.0%</title></circle><circle cx="586.0" cy="79.0" r="3" fill="#2e7d32"><title>09-30: 45.8%</title></circle>
+      <text x="40.0" y="31.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">79.2%</text><text x="131.0" y="56.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">58.3%</text><text x="222.0" y="66.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">50.0%</text><text x="313.0" y="56.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">58.3%</text><text x="404.0" y="91.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">29.2%</text><text x="495.0" y="96.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">25.0%</text><text x="586.0" y="71.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">45.8%</text>
+      <text x="40.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-18</text><text x="131.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-21</text><text x="222.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-22</text><text x="313.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-23</text><text x="404.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-24</text><text x="495.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-29</text><text x="586.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-30</text>
+    </svg></div>
+        </div>
+        <div class="group-card" id="grp-光學元件">
+          <div class="group-hdr">光學元件（7 檔）</div>
+          <table>
+            <thead><tr>
+              <th class="left">代號</th><th class="left">名稱</th>
+              <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
+            </tr></thead>
+            <tbody><tr>
+      <td class="left code">3008</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/3008/technical-chart">大立光</a></td>
+      <td>5,945.00</td>
+      <td>6,090.00</td>
+      <td>7,995.00</td>
+      <td>-25.6%</td>
+      <td class="below">6,161.00</td><td class="below">6,193.50</td><td class="below">6,564.00</td><td class="above">5,300.33</td><td class="above">4,403.75</td><td class="above">3,347.77</td>
+      <td><span class="count-badge" style="color:#fb923c">3/6</span></td>
+    </tr><tr>
+      <td class="left code">3019</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/3019/technical-chart">亞光</a></td>
+      <td>136.50</td>
+      <td>137.00</td>
+      <td>172.00</td>
+      <td>-20.6%</td>
+      <td class="above">135.40</td><td class="above">135.60</td><td class="below">138.90</td><td class="below">136.98</td><td class="below">141.19</td><td class="below">141.22</td>
+      <td><span class="count-badge" style="color:#4ade80">2/6</span></td>
+    </tr><tr>
+      <td class="left code">3362</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/3362/technical-chart">先進光</a></td>
+      <td>171.00</td>
+      <td>173.50</td>
+      <td>218.00</td>
+      <td>-21.6%</td>
+      <td class="below">171.50</td><td class="below">173.05</td><td class="below">182.30</td><td class="below">177.72</td><td class="above">157.25</td><td class="above">128.16</td>
+      <td><span class="count-badge" style="color:#4ade80">2/6</span></td>
+    </tr><tr>
+      <td class="left code">3406</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/3406/technical-chart">玉晶光</a></td>
+      <td>890.00</td>
+      <td>921.00</td>
+      <td>1,140.00</td>
+      <td>-21.9%</td>
+      <td class="below">900.20</td><td class="below">931.00</td><td class="below">980.10</td><td class="above">726.31</td><td class="above">661.44</td><td class="above">549.65</td>
+      <td><span class="count-badge" style="color:#fb923c">3/6</span></td>
+    </tr><tr>
+      <td class="left code">3441</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/3441/technical-chart">聯一光</a></td>
+      <td>184.50</td>
+      <td>187.00</td>
+      <td>201.00</td>
+      <td>-8.2%</td>
+      <td class="above">181.80</td><td class="above">182.00</td><td class="above">162.47</td><td class="above">111.05</td><td class="above">82.59</td><td class="above">58.51</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr><tr>
+      <td class="left code">3504</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/3504/technical-chart">揚明光</a></td>
+      <td>79.10</td>
+      <td>80.50</td>
+      <td>97.80</td>
+      <td>-19.1%</td>
+      <td class="above">78.62</td><td class="above">78.83</td><td class="below">82.18</td><td class="above">76.91</td><td class="above">75.76</td><td class="above">65.05</td>
+      <td><span class="count-badge" style="color:#f87171">5/6</span></td>
+    </tr><tr>
+      <td class="left code">6209</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/6209/technical-chart">今國光</a></td>
+      <td>81.70</td>
+      <td>82.50</td>
+      <td>104.50</td>
+      <td>-21.8%</td>
+      <td class="above">79.64</td><td class="above">79.13</td><td class="above">79.66</td><td class="above">74.47</td><td class="above">75.06</td><td class="above">65.39</td>
+      <td><span class="count-badge" style="color:#f87171">6/6</span></td>
+    </tr></tbody>
+          </table>
+          <div class="summary">
+      <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
+      <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#e6edf3">57%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#e6edf3">57%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#4ade80">29%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#f87171">71%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#f87171">86%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">86%</div><div class="flag"></div></div></div>
+    </div>
+          <div class="group-trend"><svg class="trend-chart" viewBox="0 0 600 160" preserveAspectRatio="none">
+      <line x1="40" y1="134.0" x2="586" y2="134.0" stroke="#eee" stroke-width="1"/><text x="34" y="137.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">0%</text><line x1="40" y1="104.0" x2="586" y2="104.0" stroke="#eee" stroke-width="1"/><text x="34" y="107.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">25%</text><line x1="40" y1="74.0" x2="586" y2="74.0" stroke="#eee" stroke-width="1"/><text x="34" y="77.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">50%</text><line x1="40" y1="44.0" x2="586" y2="44.0" stroke="#eee" stroke-width="1"/><text x="34" y="47.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">75%</text><line x1="40" y1="14.0" x2="586" y2="14.0" stroke="#eee" stroke-width="1"/><text x="34" y="17.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">100%</text>
+      <polyline points="40.0,48.3 131.0,62.6 222.0,74.0 313.0,79.8 404.0,68.2 495.0,56.8 586.0,56.8" fill="none" stroke="#2e7d32" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="40.0" cy="48.3" r="3" fill="#2e7d32"><title>09-18: 71.4%</title></circle><circle cx="131.0" cy="62.6" r="3" fill="#2e7d32"><title>09-21: 59.5%</title></circle><circle cx="222.0" cy="74.0" r="3" fill="#2e7d32"><title>09-22: 50.0%</title></circle><circle cx="313.0" cy="79.8" r="3" fill="#2e7d32"><title>09-23: 45.2%</title></circle><circle cx="404.0" cy="68.2" r="3" fill="#2e7d32"><title>09-24: 54.8%</title></circle><circle cx="495.0" cy="56.8" r="3" fill="#2e7d32"><title>09-29: 64.3%</title></circle><circle cx="586.0" cy="56.8" r="3" fill="#2e7d32"><title>09-30: 64.3%</title></circle>
+      <text x="40.0" y="40.3" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">71.4%</text><text x="131.0" y="54.6" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">59.5%</text><text x="222.0" y="66.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">50.0%</text><text x="313.0" y="71.8" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">45.2%</text><text x="404.0" y="60.2" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">54.8%</text><text x="495.0" y="48.8" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">64.3%</text><text x="586.0" y="48.8" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">64.3%</text>
+      <text x="40.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-18</text><text x="131.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-21</text><text x="222.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-22</text><text x="313.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-23</text><text x="404.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-24</text><text x="495.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-29</text><text x="586.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-30</text>
+    </svg></div>
+        </div>
+        <div class="group-card" id="grp-ASIC">
+          <div class="group-hdr">ASIC（3 檔）</div>
+          <table>
+            <thead><tr>
+              <th class="left">代號</th><th class="left">名稱</th>
+              <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
+            </tr></thead>
+            <tbody><tr>
+      <td class="left code">2454</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/2454/technical-chart">聯發科</a></td>
+      <td>4,920.00</td>
+      <td>5,100.00</td>
+      <td>5,480.00</td>
+      <td>-10.2%</td>
+      <td class="below">5,096.00</td><td class="above">4,866.00</td><td class="above">4,698.25</td><td class="above">4,101.17</td><td class="above">3,824.21</td><td class="above">2,658.23</td>
+      <td><span class="count-badge" style="color:#f87171">5/6</span></td>
+    </tr><tr>
+      <td class="left code">3443</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/3443/technical-chart">創意</a></td>
+      <td>8,040.00</td>
+      <td>8,110.00</td>
+      <td>8,545.00</td>
+      <td>-5.9%</td>
+      <td class="below">8,250.00</td><td class="above">7,472.00</td><td class="above">6,739.25</td><td class="above">5,368.25</td><td class="above">4,938.62</td><td class="above">3,552.35</td>
+      <td><span class="count-badge" style="color:#f87171">5/6</span></td>
+    </tr><tr>
+      <td class="left code">3661</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/3661/technical-chart">世芯-KY</a></td>
+      <td>3,740.00</td>
+      <td>3,810.00</td>
+      <td>5,640.00</td>
+      <td>-33.7%</td>
+      <td class="above">3,734.00</td><td class="above">3,587.00</td><td class="below">3,794.25</td><td class="above">3,734.92</td><td class="below">4,012.92</td><td class="above">3,645.42</td>
+      <td><span class="count-badge" style="color:#f87171">4/6</span></td>
+    </tr></tbody>
+          </table>
+          <div class="summary">
+      <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
+      <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#e6edf3">33%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#e6edf3">67%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#e6edf3">67%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
+    </div>
+          <div class="group-trend"><svg class="trend-chart" viewBox="0 0 600 160" preserveAspectRatio="none">
+      <line x1="40" y1="134.0" x2="586" y2="134.0" stroke="#eee" stroke-width="1"/><text x="34" y="137.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">0%</text><line x1="40" y1="104.0" x2="586" y2="104.0" stroke="#eee" stroke-width="1"/><text x="34" y="107.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">25%</text><line x1="40" y1="74.0" x2="586" y2="74.0" stroke="#eee" stroke-width="1"/><text x="34" y="77.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">50%</text><line x1="40" y1="44.0" x2="586" y2="44.0" stroke="#eee" stroke-width="1"/><text x="34" y="47.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">75%</text><line x1="40" y1="14.0" x2="586" y2="14.0" stroke="#eee" stroke-width="1"/><text x="34" y="17.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">100%</text>
+      <polyline points="40.0,47.4 131.0,34.0 222.0,34.0 313.0,34.0 404.0,27.3 495.0,54.0 586.0,40.6" fill="none" stroke="#c62828" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="40.0" cy="47.4" r="3" fill="#c62828"><title>09-18: 72.2%</title></circle><circle cx="131.0" cy="34.0" r="3" fill="#c62828"><title>09-21: 83.3%</title></circle><circle cx="222.0" cy="34.0" r="3" fill="#c62828"><title>09-22: 83.3%</title></circle><circle cx="313.0" cy="34.0" r="3" fill="#c62828"><title>09-23: 83.3%</title></circle><circle cx="404.0" cy="27.3" r="3" fill="#c62828"><title>09-24: 88.9%</title></circle><circle cx="495.0" cy="54.0" r="3" fill="#c62828"><title>09-29: 66.7%</title></circle><circle cx="586.0" cy="40.6" r="3" fill="#c62828"><title>09-30: 77.8%</title></circle>
+      <text x="40.0" y="39.4" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">72.2%</text><text x="131.0" y="26.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">83.3%</text><text x="222.0" y="26.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">83.3%</text><text x="313.0" y="26.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">83.3%</text><text x="404.0" y="19.3" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">88.9%</text><text x="495.0" y="46.0" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">66.7%</text><text x="586.0" y="32.6" text-anchor="middle" font-size="9" font-weight="600" fill="#c62828" font-family="'IBM Plex Mono',monospace">77.8%</text>
+      <text x="40.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-18</text><text x="131.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-21</text><text x="222.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-22</text><text x="313.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-23</text><text x="404.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-24</text><text x="495.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-29</text><text x="586.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-30</text>
+    </svg></div>
+        </div>
+        <div class="group-card" id="grp-玻纖布">
+          <div class="group-hdr">玻纖布（4 檔）</div>
+          <table>
+            <thead><tr>
+              <th class="left">代號</th><th class="left">名稱</th>
+              <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
+            </tr></thead>
+            <tbody><tr>
+      <td class="left code">1802</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/1802/technical-chart">台玻</a></td>
+      <td>59.90</td>
+      <td>60.20</td>
+      <td>81.20</td>
+      <td>-26.2%</td>
+      <td class="above">58.46</td><td class="above">58.42</td><td class="above">59.02</td><td class="above">57.30</td><td class="below">62.90</td><td class="above">52.28</td>
+      <td><span class="count-badge" style="color:#f87171">5/6</span></td>
+    </tr><tr>
+      <td class="left code">1815</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/1815/technical-chart">富喬</a></td>
+      <td>116.00</td>
+      <td>117.50</td>
+      <td>135.00</td>
+      <td>-14.1%</td>
+      <td class="below">118.00</td><td class="below">117.55</td><td class="below">120.11</td><td class="above">97.51</td><td class="above">99.20</td><td class="above">92.13</td>
+      <td><span class="count-badge" style="color:#fb923c">3/6</span></td>
+    </tr><tr>
+      <td class="left code">5340</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/5340/technical-chart">建榮</a></td>
+      <td>81.00</td>
+      <td>81.70</td>
+      <td>137.00</td>
+      <td>-40.9%</td>
+      <td class="below">81.60</td><td class="below">82.04</td><td class="below">82.47</td><td class="above">77.32</td><td class="below">90.53</td><td class="below">84.57</td>
+      <td><span class="count-badge" style="color:#4ade80">1/6</span></td>
+    </tr><tr>
+      <td class="left code">5475</td>
+      <td class="left"><a href="https://www.wantgoo.com/stock/5475/technical-chart">德宏</a></td>
+      <td>179.50</td>
+      <td>185.00</td>
+      <td>404.50</td>
+      <td>-55.6%</td>
+      <td class="below">179.80</td><td class="above">178.05</td><td class="below">182.80</td><td class="above">166.72</td><td class="below">231.93</td><td class="above">173.64</td>
+      <td><span class="count-badge" style="color:#fb923c">3/6</span></td>
+    </tr></tbody>
+          </table>
+          <div class="summary">
+      <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
+      <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#4ade80">25%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#e6edf3">50%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#4ade80">25%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#4ade80">25%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">75%</div><div class="flag"></div></div></div>
+    </div>
+          <div class="group-trend"><svg class="trend-chart" viewBox="0 0 600 160" preserveAspectRatio="none">
+      <line x1="40" y1="134.0" x2="586" y2="134.0" stroke="#eee" stroke-width="1"/><text x="34" y="137.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">0%</text><line x1="40" y1="104.0" x2="586" y2="104.0" stroke="#eee" stroke-width="1"/><text x="34" y="107.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">25%</text><line x1="40" y1="74.0" x2="586" y2="74.0" stroke="#eee" stroke-width="1"/><text x="34" y="77.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">50%</text><line x1="40" y1="44.0" x2="586" y2="44.0" stroke="#eee" stroke-width="1"/><text x="34" y="47.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">75%</text><line x1="40" y1="14.0" x2="586" y2="14.0" stroke="#eee" stroke-width="1"/><text x="34" y="17.0" text-anchor="end" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">100%</text>
+      <polyline points="40.0,64.0 131.0,64.0 222.0,54.0 313.0,94.0 404.0,79.0 495.0,84.0 586.0,74.0" fill="none" stroke="#2e7d32" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="40.0" cy="64.0" r="3" fill="#2e7d32"><title>09-18: 58.3%</title></circle><circle cx="131.0" cy="64.0" r="3" fill="#2e7d32"><title>09-21: 58.3%</title></circle><circle cx="222.0" cy="54.0" r="3" fill="#2e7d32"><title>09-22: 66.7%</title></circle><circle cx="313.0" cy="94.0" r="3" fill="#2e7d32"><title>09-23: 33.3%</title></circle><circle cx="404.0" cy="79.0" r="3" fill="#2e7d32"><title>09-24: 45.8%</title></circle><circle cx="495.0" cy="84.0" r="3" fill="#2e7d32"><title>09-29: 41.7%</title></circle><circle cx="586.0" cy="74.0" r="3" fill="#2e7d32"><title>09-30: 50.0%</title></circle>
+      <text x="40.0" y="56.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">58.3%</text><text x="131.0" y="56.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">58.3%</text><text x="222.0" y="46.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">66.7%</text><text x="313.0" y="86.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">33.3%</text><text x="404.0" y="71.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">45.8%</text><text x="495.0" y="76.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">41.7%</text><text x="586.0" y="66.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32" font-family="'IBM Plex Mono',monospace">50.0%</text>
+      <text x="40.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-18</text><text x="131.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-21</text><text x="222.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-22</text><text x="313.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-23</text><text x="404.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-24</text><text x="495.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-29</text><text x="586.0" y="154" text-anchor="middle" font-size="9" fill="#999" font-family="'IBM Plex Mono',monospace">09-30</text>
+    </svg></div>
+        </div>
+    <div class="legend">
+      <span><i style="background:#c62828"></i>站上均線</span>
+      <span><i style="background:#2e7d32"></i>跌破均線</span>
+      <span><i style="background:#e65100"></i>族群多數站上，但大盤已跌破 → 背離訊號</span>
+    </div>
+    <div class="footer">本報告為資訊彙整，非投資建議。資料來源：yfinance / FinMind　產生時間：2026/09/30 14:43</div>
+  </div>
+
+    
+    </main>
+  </div>
+</div>
+<script>
+(function() {
+  var saved = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+  document.getElementById('dr-theme-btn').textContent = saved === 'dark' ? '🌙' : '☀️';
+})();
+function drToggleTheme() {
+  var cur = document.documentElement.getAttribute('data-theme');
+  var next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+  document.getElementById('dr-theme-btn').textContent = next === 'dark' ? '🌙' : '☀️';
+}
+</script>
+</body>
+</html>

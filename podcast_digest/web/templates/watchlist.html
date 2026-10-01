@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>股票追蹤 | 播客財經摘要</title>
+  {% if not static_export %}
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  {% endif %}
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #080808; --surface: #111111; --surface2: #1c1c1c;
+      --border: #2e2e2e; --text: #f0f0f0; --muted: #666666;
+      --accent: #d4d4d4; --bull: #22c55e; --bear: #ef4444;
+    }
+    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang TC', sans-serif; }
+
+    .header {
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 0 24px; height: 60px; display: flex; align-items: center; gap: 20px;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .logo { font-size: 18px; font-weight: 700; color: var(--text); text-decoration: none; }
+    .logo span { color: var(--accent); }
+    .nav a {
+      font-size: 14px; color: var(--muted); text-decoration: none;
+      padding: 6px 12px; border-radius: 6px; transition: background 0.15s;
+    }
+    .nav a:hover { background: var(--surface2); color: var(--text); }
+    .nav a.active { color: var(--text); background: var(--surface2); border: 1px solid var(--border); }
+
+    .page { max-width: 1100px; margin: 0 auto; padding: 28px 16px; }
+    .page-title { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+    .page-sub { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+
+    /* ── Filter tabs ── */
+    .filter-bar { display: flex; gap: 8px; margin-bottom: 20px; }
+    .filter-btn {
+      background: var(--surface); border: 1px solid var(--border); color: var(--muted);
+      padding: 6px 16px; border-radius: 20px; font-size: 13px; cursor: pointer;
+      transition: all 0.15s;
+    }
+    .filter-btn.active, .filter-btn:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    /* ── Grid ── */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
+
+    .stock-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 18px; cursor: pointer;
+      transition: border-color 0.2s, transform 0.15s;
+      position: relative;
+    }
+    .stock-card:hover { border-color: var(--accent); transform: translateY(-1px); }
+    .stock-card.bull { border-left: 3px solid var(--bull); }
+    .stock-card.bear { border-left: 3px solid var(--bear); }
+    .stock-card.neutral { border-left: 3px solid var(--border); }
+
+    .card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 10px; }
+    .symbol { font-size: 20px; font-weight: 700; font-family: monospace; }
+    .market-tag {
+      font-size: 11px; padding: 2px 7px; border-radius: 4px; font-weight: 600;
+      background: var(--surface2); color: var(--muted);
+    }
+    .market-tag.TW { background: rgba(255,255,255,0.06); color: #aaaaaa; border: 1px solid #333; }
+    .market-tag.US { background: rgba(255,255,255,0.06); color: #aaaaaa; border: 1px solid #333; }
+
+    .pct { font-size: 22px; font-weight: 700; margin: 2px 0; }
+    .pct.up { color: var(--bull); }
+    .pct.down { color: var(--bear); }
+    .price-row { font-size: 12px; color: var(--muted); }
+
+    .mini-chart { height: 60px; margin: 10px 0; }
+
+    .first-mention {
+      font-size: 12px; color: var(--muted);
+      border-top: 1px solid var(--border); padding-top: 10px; margin-top: 4px;
+    }
+    .first-mention strong { color: var(--text); }
+    .mention-count {
+      position: absolute; top: 14px; right: 14px;
+      background: var(--surface2); border-radius: 10px;
+      font-size: 11px; padding: 2px 7px; color: var(--muted);
+    }
+
+    /* ── Modal (detail) ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.7); z-index: 200;
+      align-items: center; justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px; width: min(680px, 95vw);
+      max-height: 90vh; overflow-y: auto;
+    }
+    .modal-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .modal-symbol { font-size: 28px; font-weight: 700; font-family: monospace; }
+    .modal-close {
+      margin-left: auto; background: none; border: none; color: var(--muted);
+      font-size: 22px; cursor: pointer; padding: 4px 8px; border-radius: 6px;
+    }
+    .modal-close:hover { background: var(--surface2); color: var(--text); }
+    .big-chart { height: 220px; margin-bottom: 20px; }
+
+    .mention-list { list-style: none; }
+    .mention-list li {
+      padding: 10px 0; border-bottom: 1px solid var(--border);
+      font-size: 13px; display: flex; gap: 12px; align-items: flex-start;
+    }
+    .mention-list li:last-child { border-bottom: none; }
+    .mention-date { color: #aaaaaa; font-weight: 600; white-space: nowrap; min-width: 90px; }
+    .mention-info { color: var(--muted); line-height: 1.5; flex: 1; }
+    .mention-info strong { color: var(--text); }
+    .mention-view { font-size: 13px; color: #999999; margin-top: 5px; line-height: 1.6; }
+    .rating-chip {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      padding: 2px 8px; border-radius: 10px; margin-top: 4px; letter-spacing: 0.03em;
+    }
+    .rating-strong_buy  { background: rgba(34,197,94,0.15);  color: #4ade80; }
+    .rating-buy         { background: rgba(34,197,94,0.08);  color: #86efac; }
+    .rating-neutral     { background: rgba(255,255,255,0.05); color: #777777; border: 1px solid #333; }
+    .rating-sell        { background: rgba(239,68,68,0.08);  color: #fca5a5; }
+    .rating-strong_sell { background: rgba(239,68,68,0.15);  color: #f87171; }
+
+    /* card 上的 rating badge */
+    .card-rating {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      padding: 2px 8px; border-radius: 8px; letter-spacing: 0.03em;
+      margin-bottom: 6px;
+    }
+
+    /* ── Search ── */
+    .search-wrap { position: relative; margin-bottom: 16px; }
+    .search-input {
+      width: 100%; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 11px 16px 11px 40px;
+      font-size: 14px; color: var(--text); outline: none; transition: border-color 0.2s;
+    }
+    .search-input:focus { border-color: #555; }
+    .search-input::placeholder { color: #444; }
+    .search-icon { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: #444; font-size: 15px; pointer-events: none; }
+    .search-count { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-size: 12px; color: var(--muted); }
+
+    .loading-msg { color: var(--muted); font-size: 13px; text-align: center; padding: 20px; }
+    .empty { text-align: center; padding: 80px 20px; color: var(--muted); }
+    .empty .icon { font-size: 48px; margin-bottom: 12px; }
+
+    /* ── Remove button ── */
+    .remove-btn {
+      position: absolute; bottom: 14px; right: 14px;
+      background: none; border: 1px solid #3a3a3a; color: #555;
+      border-radius: 6px; padding: 3px 8px; font-size: 11px;
+      cursor: pointer; transition: all 0.15s; z-index: 2;
+    }
+    .remove-btn:hover { background: rgba(239,68,68,0.12); border-color: #7f1d1d; color: #f87171; }
+    .modal-remove-btn {
+      margin-left: auto; background: none; border: 1px solid #3a3a3a;
+      color: #555; border-radius: 8px; padding: 5px 14px; font-size: 12px;
+      cursor: pointer; transition: all 0.15s;
+    }
+    .modal-remove-btn:hover { background: rgba(239,68,68,0.12); border-color: #7f1d1d; color: #f87171; }
+  </style>
+</head>
+<body>
+
+{% if static_export %}
+<header class="header" style="position:static">
+  <nav class="nav">
+    <a href="latest.html">每日摘要</a>
+    <a href="watchlist.html" class="active">股票追蹤</a>
+    <a href="trends.html">產業趨勢</a>
+  </nav>
+</header>
+{% else %}
+<header class="header">
+  <a class="logo" href="/">🎙️ <span>Podcast</span> 財經摘要</a>
+  <nav class="nav">
+    <a href="/">每日摘要</a>
+    <a href="/watchlist" class="active">股票追蹤</a>
+    <a href="/trends">產業趨勢</a>
+  </nav>
+</header>
+{% endif %}
+
+<div class="page">
+  <div class="page-title">📈 股票追蹤清單</div>
+  <div class="page-sub">自動追蹤 Podcast 中提及的股票，顯示從首次提及至今的價格走勢</div>
+
+  {% if watchlist %}
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" id="searchInput" type="text"
+           placeholder="搜尋股票代號、名稱、Podcast…"
+           oninput="doSearch()">
+    <span class="search-count" id="searchCount"></span>
+  </div>
+
+  <div class="filter-bar" style="flex-wrap:wrap;row-gap:8px">
+    <button class="filter-btn active" data-filter="market" data-val="ALL" onclick="applyFilter('market','ALL',this)">全部 ({{ watchlist|length }})</button>
+    <button class="filter-btn" data-filter="market" data-val="TW" onclick="applyFilter('market','TW',this)">🇹🇼 台股</button>
+    <button class="filter-btn" data-filter="market" data-val="US" onclick="applyFilter('market','US',this)">🇺🇸 美股</button>
+    <span style="width:1px;background:#2e2e2e;height:20px;align-self:center;margin:0 4px"></span>
+    <button class="filter-btn" data-filter="rating" data-val="ALL" onclick="applyFilter('rating','ALL',this)" style="background:var(--surface2);border-color:#555;color:var(--text)">全部評級</button>
+    <button class="filter-btn" data-filter="rating" data-val="strong_buy" onclick="applyFilter('rating','strong_buy',this)">⭐ 強烈看好</button>
+    <button class="filter-btn" data-filter="rating" data-val="buy" onclick="applyFilter('rating','buy',this)">👍 偏多</button>
+    <button class="filter-btn" data-filter="rating" data-val="neutral" onclick="applyFilter('rating','neutral',this)">🤝 觀望</button>
+    <button class="filter-btn" data-filter="rating" data-val="sell" onclick="applyFilter('rating','sell',this)">👎 偏空</button>
+    <button class="filter-btn" data-filter="rating" data-val="strong_sell" onclick="applyFilter('rating','strong_sell',this)">🚨 強烈看空</button>
+  </div>
+
+  <div class="grid" id="grid">
+    {% for key, stock in watchlist.items() %}
+    {% set latest_r = (stock.mentions | sort(attribute='date') | last).get('rating', '') if stock.mentions else '' %}
+    <div class="stock-card neutral" id="card-{{ loop.index }}"
+         data-market="{{ stock.market }}"
+         data-rating="{{ latest_r }}"
+         data-key="{{ key }}"
+         data-search="{{ stock.symbol }} {{ stock.get('name','') }} {{ stock.first_podcast }} {{ stock.first_episode }}"
+         onclick="openModal('{{ key }}', '{{ stock.symbol }}', '{{ stock.market }}', '{{ stock.ticker }}')">
+      {% if not static_export %}
+      <button class="remove-btn" title="取消追蹤"
+        onclick="event.stopPropagation(); removeStock('{{ key }}', this.closest('.stock-card'))">✕ 取消追蹤</button>
+      {% endif %}
+      <span class="mention-count">提及 {{ stock.mentions|length }} 次</span>
+      <div class="card-top">
+        <div>
+          <div class="symbol">{{ stock.symbol }}</div>
+          {% if stock.market == 'TW' and stock.get('name') %}
+          <div data-cn-name="{{ stock.name }}" style="font-size:13px;color:#aaaaaa;margin:2px 0 3px;font-family:sans-serif">{{ stock.name }}</div>
+          {% endif %}
+          {% set latest = stock.mentions | sort(attribute='date') | last if stock.mentions else none %}
+          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:3px">
+            <span class="market-tag {{ stock.market }}">{{ '🇹🇼 台股' if stock.market == 'TW' else '🇺🇸 美股' }}</span>
+            {% if latest and latest.get('rating') %}
+              {% set r = latest.rating %}
+              {% set r_label = {'strong_buy': '⭐ 強烈看好', 'buy': '👍 偏多', 'neutral': '🤝 觀望', 'sell': '👎 偏空', 'strong_sell': '🚨 強烈看空'} %}
+              <span class="card-rating rating-{{ r }}">{{ r_label.get(r, r) }}</span>
+            {% endif %}
+          </div>
+        </div>
+        <div style="text-align:right">
+          <div class="pct" id="pct-{{ loop.index }}">—</div>
+          <div class="price-row" id="price-{{ loop.index }}">載入中...</div>
+        </div>
+      </div>
+      <div class="mini-chart">
+        <canvas id="mini-{{ loop.index }}"></canvas>
+      </div>
+      {% if stock.get('tags') %}
+      <div style="display:flex;flex-wrap:wrap;gap:4px;margin:6px 0 8px">
+        {% for tag in stock.tags %}
+        <span data-tag="{{ tag }}" style="font-size:10px;color:#3a3a3a;letter-spacing:0.02em">#{{ tag }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+      <div class="first-mention">
+        首次提及：<strong>{{ stock.first_date }}</strong><br>
+        {{ stock.first_podcast }} · {{ stock.first_episode[:30] }}{% if stock.first_episode|length > 30 %}…{% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% else %}
+  <div class="empty">
+    <div class="icon">📭</div>
+    <h3>尚無追蹤股票</h3>
+    <p>執行 <code>python main.py</code> 後，Podcast 提及的股票會自動加入追蹤</p>
+  </div>
+  {% endif %}
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOnOverlay(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-symbol" id="modal-symbol">—</div>
+        <div id="modal-sub" style="font-size:13px;color:var(--muted);margin-top:2px"></div>
+        <div id="modal-tags" style="display:flex;flex-wrap:wrap;gap:5px;margin-top:6px"></div>
+      </div>
+      {% if not static_export %}
+      <button class="modal-remove-btn" onclick="removeStockFromModal()">✕ 取消追蹤</button>
+      {% endif %}
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div style="display:flex;gap:20px;margin-bottom:16px;flex-wrap:wrap">
+      <div>
+        <div style="font-size:12px;color:var(--muted)">追蹤起始價</div>
+        <div style="font-size:20px;font-weight:700" id="modal-base">—</div>
+      </div>
+      <div>
+        <div style="font-size:12px;color:var(--muted)">目前價格</div>
+        <div style="font-size:20px;font-weight:700" id="modal-current">—</div>
+      </div>
+      <div>
+        <div style="font-size:12px;color:var(--muted)">追蹤以來報酬</div>
+        <div style="font-size:24px;font-weight:700" id="modal-pct">—</div>
+      </div>
+    </div>
+    <div class="big-chart"><canvas id="big-chart"></canvas></div>
+    <div style="font-size:13px;font-weight:600;color:var(--muted);margin-bottom:8px">提及紀錄</div>
+    <ul class="mention-list" id="modal-mentions"></ul>
+  </div>
+</div>
+
+<script>
+const STATIC_EXPORT = {{ 'true' if static_export else 'false' }};
+const WATCHLIST_DATA = {{ watchlist | tojson if watchlist else '{}' }};
+const cards = document.querySelectorAll('.stock-card');
+let bigChartInstance = null;
+
+// ── 載入所有 mini chart ──
+// 靜態存檔沒有後端可查即時股價，略過 fetch，直接顯示佔位文字。
+cards.forEach((card, i) => {
+  const key = card.dataset.key;
+  const [market, symbol] = key.split(':');
+  const idx = i + 1;
+
+  if (STATIC_EXPORT) {
+    document.getElementById(`price-${idx}`).textContent = '靜態存檔無即時股價';
+    return;
+  }
+
+  fetch(`/api/price/${market}/${symbol}`)
+    .then(r => r.json())
+    .then(data => {
+      if (data.error || !data.closes) return;
+
+      const pct = data.pct_change;
+      const pctEl = document.getElementById(`pct-${idx}`);
+      const priceEl = document.getElementById(`price-${idx}`);
+
+      pctEl.textContent = (pct >= 0 ? '+' : '') + pct + '%';
+      pctEl.className = 'pct ' + (pct > 0 ? 'up' : pct < 0 ? 'down' : '');
+      priceEl.textContent = `${data.base_price} → ${data.current_price}`;
+      card.className = 'stock-card ' + (pct > 0 ? 'bull' : pct < 0 ? 'bear' : 'neutral');
+
+      // Mini sparkline
+      const ctx = document.getElementById(`mini-${idx}`).getContext('2d');
+      const color = pct >= 0 ? '#22c55e' : '#ef4444';
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: data.dates,
+          datasets: [{ data: data.closes, borderColor: color, borderWidth: 1.5,
+            pointRadius: 0, fill: true,
+            backgroundColor: pct >= 0 ? 'rgba(34,197,94,0.08)' : 'rgba(239,68,68,0.08)' }]
+        },
+        options: { responsive: true, maintainAspectRatio: false,
+          plugins: { legend: { display: false }, tooltip: { enabled: false } },
+          scales: { x: { display: false }, y: { display: false } },
+          animation: false }
+      });
+    });
+});
+
+// ── Filter ──
+const activeFilters = { market: 'ALL', rating: 'ALL' };
+
+function applyFilter(type, val, btn) {
+  activeFilters[type] = val;
+  // 同類按鈕互斥高亮
+  document.querySelectorAll(`.filter-btn[data-filter="${type}"]`).forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  runFilter();
+}
+
+function runFilter() {
+  const { market, rating } = activeFilters;
+  const q = (document.getElementById('searchInput')?.value || '').trim().toLowerCase();
+  let visible = 0;
+  cards.forEach(c => {
+    const mMatch = market === 'ALL' || c.dataset.market === market;
+    const rMatch = rating === 'ALL' || c.dataset.rating === rating;
+    const sMatch = !q || (c.dataset.search || '').toLowerCase().includes(q);
+    const show = mMatch && rMatch && sMatch;
+    c.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  const countEl = document.getElementById('searchCount');
+  if (countEl) countEl.textContent = q ? `${visible} 筆` : '';
+}
+
+function doSearch() { runFilter(); }
+
+// ── Modal ──
+let currentKey = null;
+function openModal(key, symbol, market, ticker) {
+  currentKey = key;
+  document.getElementById('modal-symbol').textContent = symbol;
+  // 從頁面資料取中文名稱
+  const cardEl = document.querySelector(`.stock-card[data-key="${key}"]`);
+  const nameEl = cardEl ? cardEl.querySelector('[data-cn-name]') : null;
+  const cnName = nameEl ? nameEl.dataset.cnName : '';
+  document.getElementById('modal-sub').textContent =
+    (market === 'TW' ? '🇹🇼 台股' : '🇺🇸 美股') +
+    (cnName ? '  ·  ' + cnName : '') +
+    '  ·  ' + ticker;
+  document.getElementById('modal-base').textContent = STATIC_EXPORT ? '靜態存檔無即時股價' : '載入中...';
+  document.getElementById('modal-current').textContent = '';
+  document.getElementById('modal-pct').textContent = '';
+  document.getElementById('modal-pct').className = '';
+  document.getElementById('modal-mentions').innerHTML = '<li class="loading-msg">載入中...</li>';
+
+  // hashtags（從卡片讀取）
+  const tagsEl = document.getElementById('modal-tags');
+  tagsEl.innerHTML = '';
+  if (cardEl) {
+    cardEl.querySelectorAll('[data-tag]').forEach(t => {
+      const span = document.createElement('span');
+      span.textContent = '#' + t.dataset.tag;
+      span.style.cssText = 'font-size:11px;color:#555;background:rgba(255,255,255,0.04);border:1px solid #2a2a2a;border-radius:10px;padding:2px 9px';
+      tagsEl.appendChild(span);
+    });
+  }
+
+  document.getElementById('modal-overlay').classList.add('open');
+
+  if (bigChartInstance) { bigChartInstance.destroy(); bigChartInstance = null; }
+
+  const [mkt, sym] = key.split(':');
+  if (!STATIC_EXPORT)
+  fetch(`/api/price/${mkt}/${sym}`)
+    .then(r => r.json())
+    .then(data => {
+      if (data.error || !data.closes) return;
+      const pct = data.pct_change;
+      document.getElementById('modal-base').textContent = data.base_price;
+      document.getElementById('modal-current').textContent = data.current_price;
+      const pctEl = document.getElementById('modal-pct');
+      pctEl.textContent = (pct >= 0 ? '+' : '') + pct + '%';
+      pctEl.style.color = pct > 0 ? 'var(--bull)' : pct < 0 ? 'var(--bear)' : 'var(--muted)';
+
+      const color = pct >= 0 ? '#22c55e' : '#ef4444';
+      const ctx = document.getElementById('big-chart').getContext('2d');
+      bigChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: data.dates,
+          datasets: [{
+            data: data.closes, borderColor: color, borderWidth: 2,
+            pointRadius: 0, pointHoverRadius: 4, fill: true,
+            backgroundColor: pct >= 0 ? 'rgba(34,197,94,0.1)' : 'rgba(239,68,68,0.1)'
+          }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          plugins: { legend: { display: false },
+            tooltip: { callbacks: { title: ctx => ctx[0].label, label: ctx => ' ' + ctx.parsed.y } }
+          },
+          scales: {
+            x: { ticks: { color: '#64748b', maxTicksLimit: 6, font: { size: 11 } }, grid: { color: '#1e293b' } },
+            y: { ticks: { color: '#64748b', font: { size: 11 } }, grid: { color: '#334155' } }
+          }
+        }
+      });
+    });
+
+  // 載入提及紀錄（靜態存檔用頁面內嵌資料，不用 fetch）
+  const renderMentions = (wl) => {
+    const stock = wl[key];
+    if (!stock) return;
+    const ul = document.getElementById('modal-mentions');
+    ul.innerHTML = '';
+    const sorted = [...stock.mentions].sort((a, b) => b.date.localeCompare(a.date));
+    sorted.forEach(m => {
+      const li = document.createElement('li');
+      const sentMap = { bullish: '📈', bearish: '📉', neutral: '📊' };
+      const ratingLabel = {
+        strong_buy: '⭐ 強烈看好', buy: '👍 偏多',
+        neutral: '🤝 觀望', sell: '👎 偏空', strong_sell: '🚨 強烈看空'
+      };
+      const ratingHtml = m.rating
+        ? `<span class="rating-chip rating-${m.rating}">${ratingLabel[m.rating] || m.rating}</span>`
+        : '';
+      const viewHtml = m.view
+        ? `<div class="mention-view">${m.view}</div>`
+        : '';
+      li.innerHTML = `
+        <span class="mention-date">${m.date}</span>
+        <span class="mention-info">
+          ${sentMap[m.sentiment] || '📊'}
+          <strong>${m.podcast}</strong> · ${m.episode}
+          ${ratingHtml}
+          ${viewHtml}
+        </span>`;
+      ul.appendChild(li);
+    });
+  };
+  if (STATIC_EXPORT) {
+    renderMentions(WATCHLIST_DATA);
+  } else {
+    fetch('/api/watchlist').then(r => r.json()).then(renderMentions);
+  }
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+function closeModalOnOverlay(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// 頁面載入時若有 hash（如 #TW:2330），自動開啟對應 modal
+window.addEventListener('DOMContentLoaded', () => {
+  const hash = decodeURIComponent(location.hash.slice(1));
+  if (!hash) return;
+  const card = document.querySelector(`.stock-card[data-key="${hash}"]`);
+  if (card) {
+    setTimeout(() => card.click(), 300);
+  }
+});
+
+// ── 取消追蹤 ──
+function removeStock(key, cardEl) {
+  if (STATIC_EXPORT) return; // 靜態存檔沒有後端可寫入
+  if (!confirm(`確定取消追蹤 ${key.split(':')[1]}？`)) return;
+  fetch('/api/watchlist/remove', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ key })
+  })
+  .then(r => r.json())
+  .then(d => {
+    if (d.ok) {
+      cardEl.style.transition = 'opacity 0.3s, transform 0.3s';
+      cardEl.style.opacity = '0';
+      cardEl.style.transform = 'scale(0.95)';
+      setTimeout(() => cardEl.remove(), 300);
+      // 更新全部計數
+      const remaining = document.querySelectorAll('.stock-card').length - 1;
+      const allBtn = document.querySelector('.filter-btn.active');
+      if (allBtn && allBtn.textContent.startsWith('全部')) {
+        allBtn.textContent = `全部 (${remaining})`;
+      }
+    }
+  });
+}
+
+function removeStockFromModal() {
+  if (!currentKey) return;
+  const cardEl = document.querySelector(`.stock-card[data-key="${currentKey}"]`);
+  closeModal();
+  removeStock(currentKey, cardEl);
+}
+</script>
+</body>
+</html>

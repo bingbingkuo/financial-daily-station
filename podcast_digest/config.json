@@ -1,0 +1,16 @@
+{
+  "podcasts": [
+    {
+      "name": "Gooaye 股癌",
+      "rss": "https://feeds.soundon.fm/podcasts/954689a5-3096-43a4-a80b-7810b219cef3.xml",
+      "host": "謝孟恭",
+      "language": "zh-TW"
+    }
+  ],
+  "fetch_episodes": 1,
+  "web_port": 5002,
+  "schedule": {
+    "hour": 9,
+    "minute": 30
+  }
+}
