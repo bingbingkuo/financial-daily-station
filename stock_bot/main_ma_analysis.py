@@ -20,6 +20,7 @@ from modules.ma_analysis import run_analysis, render_html
 from modules.notifier import send_email
 from modules.dark_theme import apply_dark_theme, MA_EXTRA_DARK_COLOR_MAP
 from modules.site_shell import render_report_page
+from modules.git_publish import publish_docs
 from config import MA_ANALYSIS_RECIPIENTS
 
 _CACHE_DIR  = os.path.dirname(os.path.abspath(__file__))
@@ -116,6 +117,7 @@ def main():
 
         _cleanup_old_caches()
         _publish_to_docs(today, report_html)
+        publish_docs(f"台股族群強弱 {today}")
 
         today_display = datetime.now().strftime("%Y/%m/%d")
         subject = f"🇹🇼 台股族群強弱均線分析 {today_display}"

@@ -17,6 +17,7 @@ from tracker import update_watchlist
 # 側欄外殼跟 stock_bot 共用（docs/ 是兩個專案共用的靜態網站）。
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "stock_bot"))
 from modules.site_shell import render_report_page
+from modules.git_publish import publish_docs
 
 DATA_DIR = Path(__file__).parent / "data"
 DATA_DIR.mkdir(exist_ok=True)
@@ -214,7 +215,9 @@ def run(send_email: bool = False):
         audio_analyzed = [e for e in analyzed if e.get("analysis_source") == "audio"]
         if audio_analyzed:
             update_watchlist(audio_analyzed)
-            _publish_to_docs(datetime.now().strftime("%Y%m%d"))
+            today = datetime.now().strftime("%Y%m%d")
+            _publish_to_docs(today)
+            publish_docs(f"Podcast 摘要 {today}")
 
         if send_email and audio_analyzed:
             print("\n[寄信] 發送 Email...")

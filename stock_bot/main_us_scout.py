@@ -39,6 +39,7 @@ from modules.us_scout import run_us_scout, _fetch_us_market_overview
 from modules.notifier import send_email
 from modules.dark_theme import apply_dark_theme, US_EXTRA_DARK_COLOR_MAP
 from modules.site_shell import render_report_page
+from modules.git_publish import publish_docs
 
 _CACHE_DIR  = os.path.dirname(os.path.abspath(__file__))
 _CACHE_DAYS = 3
@@ -144,6 +145,7 @@ def main():
 
     _cleanup_old_caches()
     _publish_to_docs(today, report)
+    publish_docs(f"美股選股雷達 {today}")
 
     today_display = datetime.now().strftime("%Y/%m/%d")
     subject = f"🔭 美股選股雷達 {today_display}"
