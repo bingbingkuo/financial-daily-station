@@ -81,10 +81,19 @@ _PAGE_CSS = """
 }
 .dr-theme-btn:hover { color:var(--dr-text); }
 .dr-content { padding:24px; flex:1; background:var(--dr-bg); color:var(--dr-text); }
+/* 手機底部固定分頁列——跟 docs/index.html 的 .bottom-tabs 同樣樣式語彙，
+   讓報告頁面在手機上也能快速切換分類（側欄在手機上會整個隱藏，見下方）。 */
+.dr-bottom-tabs { display:none; position:fixed; bottom:0; left:0; right:0; background:var(--dr-surface); border-top:1px solid var(--dr-border); z-index:100; }
+.dr-tab-bar { display:flex; list-style:none; }
+.dr-tab-item { flex:1; display:flex; flex-direction:column; align-items:center; padding:10px 4px 12px; text-decoration:none; font-size:10px; color:var(--dr-muted); gap:4px; }
+.dr-tab-item.active { color:var(--dr-text); }
+.dr-tab-icon { font-size:18px; line-height:1; }
 @media (max-width:767px) {
-  .dr-sidebar { position:static; width:100%; height:auto; border-right:none; border-bottom:1px solid var(--dr-border); }
+  .dr-sidebar { display:none; }
   .dr-main { margin-left:0; }
-  .dr-content { padding:16px; }
+  .dr-content { padding:16px 16px 80px; }
+  .dr-topbar { padding:10px 16px; }
+  .dr-bottom-tabs { display:block; }
 }
 """
 
@@ -182,6 +191,18 @@ def render_report_page(
         <span class="dr-dot {dot_cls}"></span> {label}
       </a>{subnav_html}"""
 
+    # 手機底部分頁列——側欄在手機上整個隱藏，靠這排固定在底部的捷徑切換分類。
+    bottom_tabs = ""
+    for k, icon, label, href in (
+        ("", "🏠", "總覽", "../index.html"),
+        ("pod", "🎙", "Podcast", "../podcast/latest.html"),
+        ("tw", "📡", "台股", "../tw_scout/latest.html"),
+        ("us", "🔭", "美股", "../us_scout/latest.html"),
+        ("twma", "📊", "族群", "../tw_ma/latest.html"),
+    ):
+        active_cls = " active" if kind == k else ""
+        bottom_tabs += f'<li><a class="dr-tab-item{active_cls}" href="{href}"><span class="dr-tab-icon">{icon}</span><span>{label}</span></a></li>'
+
     return f"""<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -220,6 +241,10 @@ def render_report_page(
       {report_body}
     </main>
   </div>
+
+  <nav class="dr-bottom-tabs">
+    <ul class="dr-tab-bar">{bottom_tabs}</ul>
+  </nav>
 </div>
 <script>
 (function() {{

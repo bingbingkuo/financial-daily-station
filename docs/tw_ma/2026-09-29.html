@@ -75,10 +75,19 @@
 }
 .dr-theme-btn:hover { color:var(--dr-text); }
 .dr-content { padding:24px; flex:1; background:var(--dr-bg); color:var(--dr-text); }
+/* 手機底部固定分頁列——跟 docs/index.html 的 .bottom-tabs 同樣樣式語彙，
+   讓報告頁面在手機上也能快速切換分類（側欄在手機上會整個隱藏，見下方）。 */
+.dr-bottom-tabs { display:none; position:fixed; bottom:0; left:0; right:0; background:var(--dr-surface); border-top:1px solid var(--dr-border); z-index:100; }
+.dr-tab-bar { display:flex; list-style:none; }
+.dr-tab-item { flex:1; display:flex; flex-direction:column; align-items:center; padding:10px 4px 12px; text-decoration:none; font-size:10px; color:var(--dr-muted); gap:4px; }
+.dr-tab-item.active { color:var(--dr-text); }
+.dr-tab-icon { font-size:18px; line-height:1; }
 @media (max-width:767px) {
-  .dr-sidebar { position:static; width:100%; height:auto; border-right:none; border-bottom:1px solid var(--dr-border); }
+  .dr-sidebar { display:none; }
   .dr-main { margin-left:0; }
-  .dr-content { padding:16px; }
+  .dr-content { padding:16px 16px 80px; }
+  .dr-topbar { padding:10px 16px; }
+  .dr-bottom-tabs { display:block; }
 }
 </style>
 <style>
@@ -145,7 +154,8 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
 .legend span{margin-right:16px}
 .legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:4px}
 .footer{text-align:center;font-size:11px;color:#6e7681;padding:14px}
-</style>
+.table-scroll{overflow-x:auto}@media (max-width:600px) {.ladder{flex-wrap:wrap}.dot{flex:0 0 31%}}</style>
+
 </head>
 <body>
 <div class="dr-layout">
@@ -168,7 +178,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
       <a class="dr-nav-item" href="../us_scout/latest.html">
         <span class="dr-dot dr-dot-us"></span> 美股選股雷達
       </a>
-      <div class="dr-nav-subitems"><a class="dr-nav-subitem" href="../us_scout/2026-09-30.html">2026-09-30</a><a class="dr-nav-subitem" href="../us_scout/2026-09-29.html">2026-09-29</a><a class="dr-nav-subitem" href="../us_scout/2026-09-28.html">2026-09-28</a><a class="dr-nav-subitem" href="../us_scout/2026-09-25.html">2026-09-25</a><a class="dr-nav-subitem" href="../us_scout/2026-09-24.html">2026-09-24</a></div>
+      <div class="dr-nav-subitems"><a class="dr-nav-subitem" href="../us_scout/2026-10-01.html">2026-10-01</a><a class="dr-nav-subitem" href="../us_scout/2026-09-30.html">2026-09-30</a><a class="dr-nav-subitem" href="../us_scout/2026-09-29.html">2026-09-29</a><a class="dr-nav-subitem" href="../us_scout/2026-09-28.html">2026-09-28</a><a class="dr-nav-subitem" href="../us_scout/2026-09-25.html">2026-09-25</a></div>
       <a class="dr-nav-item active" href="../tw_ma/latest.html">
         <span class="dr-dot dr-dot-twma"></span> 台股族群強弱
       </a>
@@ -185,6 +195,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
       <button class="dr-theme-btn" onclick="drToggleTheme()" id="dr-theme-btn">🌙</button>
     </header>
     <main class="dr-content">
+      
       
       
   <div class="wrap">
@@ -348,7 +359,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
     
         <div class="group-card" id="grp-記憶體">
           <div class="group-hdr">記憶體（6 檔）</div>
-          <table>
+          <div class="table-scroll"><table>
             <thead><tr>
               <th class="left">代號</th><th class="left">名稱</th>
               <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
@@ -408,7 +419,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
       <td class="above">279.50</td><td class="above">278.25</td><td class="above">284.75</td><td class="above">250.79</td><td class="above">229.96</td><td class="above">176.41</td>
       <td><span class="count-badge" style="color:#f87171">6/6</span></td>
     </tr></tbody>
-          </table>
+          </table></div>
           <div class="summary">
       <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
       <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#e6edf3">33%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#f87171">83%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#e6edf3">50%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#e6edf3">67%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#e6edf3">50%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
@@ -423,7 +434,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
         </div>
         <div class="group-card" id="grp-CCL銅箔基板">
           <div class="group-hdr">CCL銅箔基板（4 檔）</div>
-          <table>
+          <div class="table-scroll"><table>
             <thead><tr>
               <th class="left">代號</th><th class="left">名稱</th>
               <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
@@ -465,7 +476,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
       <td class="above">236.70</td><td class="above">233.70</td><td class="above">233.93</td><td class="above">203.38</td><td class="above">154.84</td><td class="above">109.30</td>
       <td><span class="count-badge" style="color:#f87171">6/6</span></td>
     </tr></tbody>
-          </table>
+          </table></div>
           <div class="summary">
       <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
       <div class="summary-grid"><div class="summary-cell diverge"><div class="period">MA5</div><div class="pct" style="color:#fb923c">75%</div><div class="flag">強於 加權指數/櫃買指數</div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#f87171">75%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#f87171">75%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#f87171">75%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#f87171">75%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
@@ -480,7 +491,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
         </div>
         <div class="group-card" id="grp-被動元件">
           <div class="group-hdr">被動元件（7 檔）</div>
-          <table>
+          <div class="table-scroll"><table>
             <thead><tr>
               <th class="left">代號</th><th class="left">名稱</th>
               <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
@@ -549,7 +560,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
       <td class="below">210.40</td><td class="below">212.15</td><td class="below">219.70</td><td class="below">239.81</td><td class="below">261.85</td><td class="below">217.44</td>
       <td><span class="count-badge" style="color:#4ade80">0/6</span></td>
     </tr></tbody>
-          </table>
+          </table></div>
           <div class="summary">
       <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
       <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#4ade80">29%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#4ade80">29%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#e6edf3">43%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#e6edf3">43%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#e6edf3">43%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">86%</div><div class="flag"></div></div></div>
@@ -564,7 +575,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
         </div>
         <div class="group-card" id="grp-ABF載板">
           <div class="group-hdr">ABF載板（4 檔）</div>
-          <table>
+          <div class="table-scroll"><table>
             <thead><tr>
               <th class="left">代號</th><th class="left">名稱</th>
               <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
@@ -606,7 +617,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
       <td class="above">481.20</td><td class="above">481.55</td><td class="above">489.10</td><td class="above">493.40</td><td class="above">477.72</td><td class="above">322.44</td>
       <td><span class="count-badge" style="color:#f87171">6/6</span></td>
     </tr></tbody>
-          </table>
+          </table></div>
           <div class="summary">
       <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
       <div class="summary-grid"><div class="summary-cell diverge"><div class="period">MA5</div><div class="pct" style="color:#fb923c">100%</div><div class="flag">強於 加權指數/櫃買指數</div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
@@ -621,7 +632,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
         </div>
         <div class="group-card" id="grp-電源供應">
           <div class="group-hdr">電源供應（2 檔）</div>
-          <table>
+          <div class="table-scroll"><table>
             <thead><tr>
               <th class="left">代號</th><th class="left">名稱</th>
               <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
@@ -645,7 +656,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
       <td class="below">284.90</td><td class="below">281.30</td><td class="below">289.55</td><td class="above">256.47</td><td class="above">229.50</td><td class="above">196.89</td>
       <td><span class="count-badge" style="color:#fb923c">3/6</span></td>
     </tr></tbody>
-          </table>
+          </table></div>
           <div class="summary">
       <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
       <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#4ade80">0%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#e6edf3">50%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#e6edf3">50%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#e6edf3">50%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
@@ -660,7 +671,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
         </div>
         <div class="group-card" id="grp-BBU">
           <div class="group-hdr">BBU（3 檔）</div>
-          <table>
+          <div class="table-scroll"><table>
             <thead><tr>
               <th class="left">代號</th><th class="left">名稱</th>
               <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
@@ -693,7 +704,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
       <td class="below">1,011.00</td><td class="above">1,004.60</td><td class="below">1,043.05</td><td class="below">1,052.70</td><td class="below">1,098.05</td><td class="below">1,147.05</td>
       <td><span class="count-badge" style="color:#4ade80">1/6</span></td>
     </tr></tbody>
-          </table>
+          </table></div>
           <div class="summary">
       <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
       <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#e6edf3">67%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#e6edf3">67%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#e6edf3">67%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#e6edf3">33%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#e6edf3">67%</div><div class="flag"></div></div></div>
@@ -708,7 +719,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
         </div>
         <div class="group-card" id="grp-ODM">
           <div class="group-hdr">ODM（6 檔）</div>
-          <table>
+          <div class="table-scroll"><table>
             <thead><tr>
               <th class="left">代號</th><th class="left">名稱</th>
               <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
@@ -768,7 +779,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
       <td class="below">60.62</td><td class="below">61.02</td><td class="below">63.08</td><td class="below">63.95</td><td class="below">61.08</td><td class="above">52.47</td>
       <td><span class="count-badge" style="color:#4ade80">1/6</span></td>
     </tr></tbody>
-          </table>
+          </table></div>
           <div class="summary">
       <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
       <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#4ade80">17%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#e6edf3">33%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#4ade80">0%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#e6edf3">67%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#e6edf3">67%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
@@ -783,7 +794,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
         </div>
         <div class="group-card" id="grp-光通訊">
           <div class="group-hdr">光通訊（8 檔）</div>
-          <table>
+          <div class="table-scroll"><table>
             <thead><tr>
               <th class="left">代號</th><th class="left">名稱</th>
               <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
@@ -861,7 +872,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
       <td class="below">420.70</td><td class="below">419.85</td><td class="below">432.68</td><td class="below">435.56</td><td class="below">481.18</td><td class="above">330.25</td>
       <td><span class="count-badge" style="color:#4ade80">1/6</span></td>
     </tr></tbody>
-          </table>
+          </table></div>
           <div class="summary">
       <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
       <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#4ade80">12%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#e6edf3">38%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#4ade80">12%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#f87171">88%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#e6edf3">62%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
@@ -876,7 +887,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
         </div>
         <div class="group-card" id="grp-矽晶圓">
           <div class="group-hdr">矽晶圓（3 檔）</div>
-          <table>
+          <div class="table-scroll"><table>
             <thead><tr>
               <th class="left">代號</th><th class="left">名稱</th>
               <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
@@ -909,7 +920,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
       <td class="above">118.20</td><td class="above">113.85</td><td class="above">111.50</td><td class="above">119.25</td><td class="above">97.03</td><td class="above">64.82</td>
       <td><span class="count-badge" style="color:#f87171">6/6</span></td>
     </tr></tbody>
-          </table>
+          </table></div>
           <div class="summary">
       <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
       <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#e6edf3">67%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#e6edf3">67%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
@@ -924,7 +935,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
         </div>
         <div class="group-card" id="grp-功率元件">
           <div class="group-hdr">功率元件（5 檔）</div>
-          <table>
+          <div class="table-scroll"><table>
             <thead><tr>
               <th class="left">代號</th><th class="left">名稱</th>
               <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
@@ -975,7 +986,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
       <td class="above">249.10</td><td class="above">245.20</td><td class="above">244.45</td><td class="below">269.52</td><td class="below">260.76</td><td class="above">193.56</td>
       <td><span class="count-badge" style="color:#f87171">4/6</span></td>
     </tr></tbody>
-          </table>
+          </table></div>
           <div class="summary">
       <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
       <div class="summary-grid"><div class="summary-cell diverge"><div class="period">MA5</div><div class="pct" style="color:#fb923c">80%</div><div class="flag">強於 加權指數/櫃買指數</div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#e6edf3">60%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#e6edf3">60%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
@@ -990,7 +1001,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
         </div>
         <div class="group-card" id="grp-航運">
           <div class="group-hdr">航運（3 檔）</div>
-          <table>
+          <div class="table-scroll"><table>
             <thead><tr>
               <th class="left">代號</th><th class="left">名稱</th>
               <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
@@ -1023,7 +1034,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
       <td class="below">114.70</td><td class="below">115.45</td><td class="below">114.53</td><td class="above">98.98</td><td class="above">89.03</td><td class="above">83.75</td>
       <td><span class="count-badge" style="color:#fb923c">3/6</span></td>
     </tr></tbody>
-          </table>
+          </table></div>
           <div class="summary">
       <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
       <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#4ade80">0%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#4ade80">0%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#e6edf3">33%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
@@ -1038,7 +1049,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
         </div>
         <div class="group-card" id="grp-晶圓代工(成熟製程)">
           <div class="group-hdr">晶圓代工(成熟製程)（2 檔）</div>
-          <table>
+          <div class="table-scroll"><table>
             <thead><tr>
               <th class="left">代號</th><th class="left">名稱</th>
               <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
@@ -1062,7 +1073,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
       <td class="above">173.40</td><td class="above">167.50</td><td class="above">160.53</td><td class="above">160.12</td><td class="above">162.12</td><td class="above">135.70</td>
       <td><span class="count-badge" style="color:#f87171">6/6</span></td>
     </tr></tbody>
-          </table>
+          </table></div>
           <div class="summary">
       <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
       <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#e6edf3">50%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
@@ -1077,7 +1088,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
         </div>
         <div class="group-card" id="grp-石英元件">
           <div class="group-hdr">石英元件（3 檔）</div>
-          <table>
+          <div class="table-scroll"><table>
             <thead><tr>
               <th class="left">代號</th><th class="left">名稱</th>
               <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
@@ -1110,7 +1121,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
       <td class="above">40.27</td><td class="above">39.38</td><td class="above">39.22</td><td class="above">41.04</td><td class="below">41.99</td><td class="above">34.31</td>
       <td><span class="count-badge" style="color:#f87171">5/6</span></td>
     </tr></tbody>
-          </table>
+          </table></div>
           <div class="summary">
       <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
       <div class="summary-grid"><div class="summary-cell diverge"><div class="period">MA5</div><div class="pct" style="color:#fb923c">100%</div><div class="flag">強於 加權指數/櫃買指數</div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#e6edf3">67%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
@@ -1125,7 +1136,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
         </div>
         <div class="group-card" id="grp-TGV設備">
           <div class="group-hdr">TGV設備（4 檔）</div>
-          <table>
+          <div class="table-scroll"><table>
             <thead><tr>
               <th class="left">代號</th><th class="left">名稱</th>
               <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
@@ -1167,7 +1178,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
       <td class="above">200.10</td><td class="above">181.35</td><td class="above">160.68</td><td class="above">141.31</td><td class="above">117.70</td><td class="above">91.50</td>
       <td><span class="count-badge" style="color:#f87171">6/6</span></td>
     </tr></tbody>
-          </table>
+          </table></div>
           <div class="summary">
       <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
       <div class="summary-grid"><div class="summary-cell diverge"><div class="period">MA5</div><div class="pct" style="color:#fb923c">100%</div><div class="flag">強於 加權指數/櫃買指數</div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#f87171">75%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
@@ -1182,7 +1193,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
         </div>
         <div class="group-card" id="grp-散熱">
           <div class="group-hdr">散熱（3 檔）</div>
-          <table>
+          <div class="table-scroll"><table>
             <thead><tr>
               <th class="left">代號</th><th class="left">名稱</th>
               <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
@@ -1215,7 +1226,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
       <td class="above">6,369.00</td><td class="above">5,909.50</td><td class="above">5,837.50</td><td class="above">4,681.25</td><td class="above">4,341.88</td><td class="above">3,581.23</td>
       <td><span class="count-badge" style="color:#f87171">6/6</span></td>
     </tr></tbody>
-          </table>
+          </table></div>
           <div class="summary">
       <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
       <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#e6edf3">67%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
@@ -1230,7 +1241,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
         </div>
         <div class="group-card" id="grp-半導體設備">
           <div class="group-hdr">半導體設備（9 檔）</div>
-          <table>
+          <div class="table-scroll"><table>
             <thead><tr>
               <th class="left">代號</th><th class="left">名稱</th>
               <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
@@ -1317,7 +1328,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
       <td class="below">1,049.00</td><td class="below">1,089.00</td><td class="below">1,144.50</td><td class="above">1,023.57</td><td class="below">1,175.62</td><td class="above">965.40</td>
       <td><span class="count-badge" style="color:#4ade80">2/6</span></td>
     </tr></tbody>
-          </table>
+          </table></div>
           <div class="summary">
       <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
       <div class="summary-grid"><div class="summary-cell diverge"><div class="period">MA5</div><div class="pct" style="color:#fb923c">78%</div><div class="flag">強於 加權指數/櫃買指數</div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#f87171">78%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#f87171">78%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#e6edf3">56%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#e6edf3">44%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
@@ -1332,7 +1343,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
         </div>
         <div class="group-card" id="grp-封測">
           <div class="group-hdr">封測（6 檔）</div>
-          <table>
+          <div class="table-scroll"><table>
             <thead><tr>
               <th class="left">代號</th><th class="left">名稱</th>
               <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
@@ -1392,7 +1403,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
       <td class="below">106.40</td><td class="above">97.08</td><td class="above">93.66</td><td class="above">94.35</td><td class="above">90.60</td><td class="above">70.12</td>
       <td><span class="count-badge" style="color:#f87171">5/6</span></td>
     </tr></tbody>
-          </table>
+          </table></div>
           <div class="summary">
       <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
       <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#4ade80">0%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#e6edf3">60%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
@@ -1407,7 +1418,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
         </div>
         <div class="group-card" id="grp-探針卡">
           <div class="group-hdr">探針卡（4 檔）</div>
-          <table>
+          <div class="table-scroll"><table>
             <thead><tr>
               <th class="left">代號</th><th class="left">名稱</th>
               <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
@@ -1449,7 +1460,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
       <td class="below">1,563.00</td><td class="below">1,544.00</td><td class="above">1,447.50</td><td class="above">1,324.10</td><td class="below">1,571.84</td><td class="above">1,091.65</td>
       <td><span class="count-badge" style="color:#fb923c">3/6</span></td>
     </tr></tbody>
-          </table>
+          </table></div>
           <div class="summary">
       <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
       <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#4ade80">0%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#4ade80">0%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#4ade80">25%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#e6edf3">50%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#4ade80">0%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">75%</div><div class="flag"></div></div></div>
@@ -1464,7 +1475,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
         </div>
         <div class="group-card" id="grp-光學元件">
           <div class="group-hdr">光學元件（7 檔）</div>
-          <table>
+          <div class="table-scroll"><table>
             <thead><tr>
               <th class="left">代號</th><th class="left">名稱</th>
               <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
@@ -1533,7 +1544,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
       <td class="above">79.12</td><td class="above">78.61</td><td class="above">79.55</td><td class="above">74.46</td><td class="above">74.84</td><td class="above">65.22</td>
       <td><span class="count-badge" style="color:#f87171">6/6</span></td>
     </tr></tbody>
-          </table>
+          </table></div>
           <div class="summary">
       <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
       <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#e6edf3">57%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#e6edf3">57%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#4ade80">29%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#f87171">71%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#f87171">86%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">86%</div><div class="flag"></div></div></div>
@@ -1548,7 +1559,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
         </div>
         <div class="group-card" id="grp-ASIC">
           <div class="group-hdr">ASIC（3 檔）</div>
-          <table>
+          <div class="table-scroll"><table>
             <thead><tr>
               <th class="left">代號</th><th class="left">名稱</th>
               <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
@@ -1581,7 +1592,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
       <td class="below">3,719.00</td><td class="above">3,572.00</td><td class="below">3,811.00</td><td class="below">3,742.83</td><td class="below">4,005.88</td><td class="above">3,643.52</td>
       <td><span class="count-badge" style="color:#4ade80">2/6</span></td>
     </tr></tbody>
-          </table>
+          </table></div>
           <div class="summary">
       <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
       <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#4ade80">0%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#e6edf3">67%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#e6edf3">67%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#e6edf3">67%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div></div>
@@ -1596,7 +1607,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
         </div>
         <div class="group-card" id="grp-玻纖布">
           <div class="group-hdr">玻纖布（4 檔）</div>
-          <table>
+          <div class="table-scroll"><table>
             <thead><tr>
               <th class="left">代號</th><th class="left">名稱</th>
               <th>收盤</th><th>當日最高</th><th>52週最高</th><th>離高點%</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA240</th><th>站上均線</th>
@@ -1638,7 +1649,7 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
       <td class="above">179.70</td><td class="above">177.70</td><td class="below">184.05</td><td class="above">167.51</td><td class="below">232.75</td><td class="above">173.18</td>
       <td><span class="count-badge" style="color:#f87171">4/6</span></td>
     </tr></tbody>
-          </table>
+          </table></div>
           <div class="summary">
       <div class="summary-title">族群站上各均線比例（%）— 與大盤同期均線位置比對</div>
       <div class="summary-grid"><div class="summary-cell "><div class="period">MA5</div><div class="pct" style="color:#4ade80">25%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA10</div><div class="pct" style="color:#4ade80">25%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA20</div><div class="pct" style="color:#4ade80">0%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA60</div><div class="pct" style="color:#f87171">100%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA120</div><div class="pct" style="color:#4ade80">25%</div><div class="flag"></div></div><div class="summary-cell "><div class="period">MA240</div><div class="pct" style="color:#f87171">75%</div><div class="flag"></div></div></div>
@@ -1660,8 +1671,13 @@ td.below{background:rgba(74,222,128,.12);color:#4ade80;font-weight:bold}
   </div>
 
     
+    
     </main>
   </div>
+
+  <nav class="dr-bottom-tabs">
+    <ul class="dr-tab-bar"><li><a class="dr-tab-item" href="../index.html"><span class="dr-tab-icon">🏠</span><span>總覽</span></a></li><li><a class="dr-tab-item" href="../podcast/latest.html"><span class="dr-tab-icon">🎙</span><span>Podcast</span></a></li><li><a class="dr-tab-item" href="../tw_scout/latest.html"><span class="dr-tab-icon">📡</span><span>台股</span></a></li><li><a class="dr-tab-item" href="../us_scout/latest.html"><span class="dr-tab-icon">🔭</span><span>美股</span></a></li><li><a class="dr-tab-item active" href="../tw_ma/latest.html"><span class="dr-tab-icon">📊</span><span>族群</span></a></li></ul>
+  </nav>
 </div>
 <script>
 (function() {

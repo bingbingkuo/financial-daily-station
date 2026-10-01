@@ -75,10 +75,19 @@
 }
 .dr-theme-btn:hover { color:var(--dr-text); }
 .dr-content { padding:24px; flex:1; background:var(--dr-bg); color:var(--dr-text); }
+/* 手機底部固定分頁列——跟 docs/index.html 的 .bottom-tabs 同樣樣式語彙，
+   讓報告頁面在手機上也能快速切換分類（側欄在手機上會整個隱藏，見下方）。 */
+.dr-bottom-tabs { display:none; position:fixed; bottom:0; left:0; right:0; background:var(--dr-surface); border-top:1px solid var(--dr-border); z-index:100; }
+.dr-tab-bar { display:flex; list-style:none; }
+.dr-tab-item { flex:1; display:flex; flex-direction:column; align-items:center; padding:10px 4px 12px; text-decoration:none; font-size:10px; color:var(--dr-muted); gap:4px; }
+.dr-tab-item.active { color:var(--dr-text); }
+.dr-tab-icon { font-size:18px; line-height:1; }
 @media (max-width:767px) {
-  .dr-sidebar { position:static; width:100%; height:auto; border-right:none; border-bottom:1px solid var(--dr-border); }
+  .dr-sidebar { display:none; }
   .dr-main { margin-left:0; }
-  .dr-content { padding:16px; }
+  .dr-content { padding:16px 16px 80px; }
+  .dr-topbar { padding:10px 16px; }
+  .dr-bottom-tabs { display:block; }
 }
 </style>
 <style>
@@ -167,6 +176,7 @@
     .small-cap-warn{background:#161b229c4;border-radius:4px;padding:2px 7px;
                     font-size:11px;color:#fbbf24;margin-left:5px}
     </style>
+
 </head>
 <body>
 <div class="dr-layout">
@@ -206,6 +216,7 @@
       <button class="dr-theme-btn" onclick="drToggleTheme()" id="dr-theme-btn">🌙</button>
     </header>
     <main class="dr-content">
+      
       
   
   <div class="top-wrap">
@@ -316,8 +327,13 @@
   </div>
   
 
+    
     </main>
   </div>
+
+  <nav class="dr-bottom-tabs">
+    <ul class="dr-tab-bar"><li><a class="dr-tab-item" href="../index.html"><span class="dr-tab-icon">🏠</span><span>總覽</span></a></li><li><a class="dr-tab-item" href="../podcast/latest.html"><span class="dr-tab-icon">🎙</span><span>Podcast</span></a></li><li><a class="dr-tab-item" href="../tw_scout/latest.html"><span class="dr-tab-icon">📡</span><span>台股</span></a></li><li><a class="dr-tab-item active" href="../us_scout/latest.html"><span class="dr-tab-icon">🔭</span><span>美股</span></a></li><li><a class="dr-tab-item" href="../tw_ma/latest.html"><span class="dr-tab-icon">📊</span><span>族群</span></a></li></ul>
+  </nav>
 </div>
 <script>
 (function() {

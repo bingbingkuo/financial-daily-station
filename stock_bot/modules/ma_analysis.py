@@ -339,6 +339,11 @@ td.below{background:#e8f5e9;color:#2e7d32;font-weight:bold}
 .legend span{margin-right:16px}
 .legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:4px}
 .footer{text-align:center;font-size:11px;color:#aaa;padding:14px}
+.table-scroll{overflow-x:auto}
+@media (max-width:600px) {
+  .ladder{flex-wrap:wrap}
+  .dot{flex:0 0 31%}
+}
 """
 
 
@@ -588,6 +593,7 @@ def render_html(result: dict) -> str:
         group_blocks.append(f"""
         <div class="group-card" id="grp-{g['name']}">
           <div class="group-hdr">{g['name']}（{len(g['stocks'])} 檔）</div>
+          <div class="table-scroll">
           <table>
             <thead><tr>
               <th class="left">代號</th><th class="left">名稱</th>
@@ -595,6 +601,7 @@ def render_html(result: dict) -> str:
             </tr></thead>
             <tbody>{rows}</tbody>
           </table>
+          </div>
           {_group_summary_html(g, benchmarks)}
           <div class="group-trend">{_group_trend_svg(_group_trend_history(g))}</div>
         </div>""")
