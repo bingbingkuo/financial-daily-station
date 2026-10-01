@@ -4,9 +4,11 @@ import json
 import os
 import shutil
 import sys
-from datetime import datetime
+import time
+from datetime import datetime, timedelta
 from pathlib import Path
 
+import yfinance as yf
 from jinja2 import Environment, FileSystemLoader
 
 from fetcher import fetch_all_podcasts
@@ -82,6 +84,50 @@ def _publish_to_docs(date_str: str) -> None:
         print(f"⚠️  docs 發布失敗：{e}")
 
 
+def _fetch_price_history(ticker: str, start_date: str) -> dict:
+    """比照 web/app.py 的 fetch_price_history：抓從 start_date 至今的股價走勢。
+    用 dropna() 去掉最新一筆可能還沒收盤、值是 NaN 的列，避免 current_price
+    算出 null（NaN 序列化後會變成 JSON 的 null）。"""
+    try:
+        start = datetime.strptime(start_date, "%Y-%m-%d") - timedelta(days=1)
+        hist = yf.Ticker(ticker).history(start=start.strftime("%Y-%m-%d"))
+        close_series = hist["Close"].dropna()
+        if close_series.empty:
+            return {}
+        closes = close_series.round(2).tolist()
+        dates = [d.strftime("%Y-%m-%d") for d in close_series.index]
+        base = closes[0]
+        pct_change = round((closes[-1] - base) / base * 100, 2) if base else 0
+        return {
+            "dates": dates, "closes": closes,
+            "base_price": round(base, 2), "current_price": round(closes[-1], 2),
+            "pct_change": pct_change,
+        }
+    except Exception:
+        return {}
+
+
+def _fetch_watchlist_prices(watchlist: dict) -> dict:
+    """發布時先把追蹤清單每檔股票的股價走勢抓好、嵌進靜態頁面，
+    取代原本需要 /api/price 後端的即時查詢（GitHub Pages 沒有後端）。"""
+    prices: dict[str, dict] = {}
+    total = len(watchlist)
+    for i, (key, entry) in enumerate(watchlist.items(), 1):
+        ticker = entry.get("ticker", "")
+        first_date = entry.get("first_date", "")
+        if not ticker or not first_date:
+            continue
+        data = _fetch_price_history(ticker, first_date)
+        if not data and entry.get("market") == "TW":
+            symbol = entry.get("symbol", "")
+            data = _fetch_price_history(f"{symbol}.TWO", first_date)
+        if data:
+            prices[key] = data
+        print(f"  📈 股價走勢 {i}/{total}：{key}{'' if data else '（抓取失敗）'}")
+        time.sleep(0.15)  # 避免對 yfinance 打太快
+    return prices
+
+
 def _publish_watchlist_and_trends(formatted_date: str) -> None:
     """發布「股票追蹤」「產業趨勢」——跟每日摘要同一份固定導覽列可以互相連結，
     不進歷史存檔（沒有日期分頁概念，永遠是最新狀態）。"""
@@ -92,8 +138,12 @@ def _publish_watchlist_and_trends(formatted_date: str) -> None:
     if watchlist_path.exists():
         with open(watchlist_path, encoding="utf-8") as f:
             watchlist = json.load(f)
+
+    print(f"  📊 發布前先抓 {len(watchlist)} 檔追蹤股票的股價走勢...")
+    price_data = _fetch_watchlist_prices(watchlist)
+
     wl_template = _jinja_env.get_template("watchlist.html")
-    wl_html = wl_template.render(watchlist=watchlist, static_export=True)
+    wl_html = wl_template.render(watchlist=watchlist, static_export=True, price_data=price_data)
     wl_page = render_report_page(
         docs_root=_DOCS_ROOT, kind="pod", date=formatted_date,
         active_file="watchlist.html", report_html=wl_html,

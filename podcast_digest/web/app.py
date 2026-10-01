@@ -41,11 +41,12 @@ def fetch_price_history(ticker: str, start_date: str) -> dict:
     try:
         start = datetime.strptime(start_date, "%Y-%m-%d") - timedelta(days=1)
         hist = yf.Ticker(ticker).history(start=start.strftime("%Y-%m-%d"))
-        if hist.empty:
+        close_series = hist["Close"].dropna()
+        if close_series.empty:
             return {}
 
-        closes = hist["Close"].round(2).tolist()
-        dates = [d.strftime("%Y-%m-%d") for d in hist.index]
+        closes = close_series.round(2).tolist()
+        dates = [d.strftime("%Y-%m-%d") for d in close_series.index]
         base = closes[0]
         pct_change = round((closes[-1] - base) / base * 100, 2) if base else 0
         current_price = closes[-1]

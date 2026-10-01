@@ -10,6 +10,7 @@ site_shell.py — 把選股雷達報告包上跟 docs/index.html 一致的側欄
 
 import json
 import os
+import re
 
 _PAGE_CSS = """
 :root {
@@ -125,6 +126,18 @@ def _extract_body(html: str) -> str:
     return html[i + 1:j]
 
 
+def _extract_head_scripts(html: str) -> str:
+    """抽出 <head> 裡的外部 <script src="..."> 標籤（例如 Chart.js CDN）。
+    包外殼時只會重組 <style> + <body>，原本 <head> 裡其他東西（含這些外部
+    script）會被丟掉，報告如果依賴它們（畫圖表之類）就會整個壞掉，所以要
+    另外保留、接到新外殼的 <head> 裡。"""
+    head_end = html.find("<body")
+    if head_end == -1:
+        head_end = len(html)
+    head = html[:head_end]
+    return "".join(re.findall(r'<script[^>]*\bsrc=[^>]*></script>', head))
+
+
 def _subnav_html(manifest: list[dict], kind: str, active_file: str | None) -> str:
     rows = []
     for entry in manifest[:5]:
@@ -145,8 +158,9 @@ def render_report_page(
     <style> 區塊就當作空字串處理），這裡把它的 CSS／內文抽出來，放進跟
     docs/index.html 同樣視覺語彙的外殼裡。
     """
-    report_css  = _extract(report_html, "<style>", "</style>")
-    report_body = _extract_body(report_html)
+    report_css     = _extract(report_html, "<style>", "</style>")
+    report_body    = _extract_body(report_html)
+    report_scripts = _extract_head_scripts(report_html)
 
     title = _KIND_TITLE[kind]
     nav_items = ""
@@ -178,6 +192,7 @@ def render_report_page(
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>{_PAGE_CSS}</style>
 <style>{report_css}</style>
+{report_scripts}
 </head>
 <body>
 <div class="dr-layout">
