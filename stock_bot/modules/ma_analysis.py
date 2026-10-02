@@ -344,6 +344,16 @@ td.below{background:#e8f5e9;color:#2e7d32;font-weight:bold}
   .ladder{flex-wrap:wrap}
   .dot{flex:0 0 31%}
 }
+@media (max-width:480px) {
+  .hdr{padding-left:10px;padding-right:10px}
+  .bench-row{padding-left:6px;padding-right:6px;gap:8px}
+  .bench-card{padding-left:10px;padding-right:10px}
+  .overview-card{padding-left:10px;padding-right:10px}
+  .group-hdr{padding-left:10px;padding-right:10px}
+  .summary{padding-left:10px;padding-right:10px}
+  .group-trend{padding-left:10px;padding-right:10px}
+  .legend{padding-left:10px;padding-right:10px}
+}
 """
 
 

@@ -1610,6 +1610,14 @@ def _format_report_html(
                      text-align:left;font-weight:600;white-space:nowrap}
     .review-table td{padding:7px 10px;border-bottom:1px solid #f0f0f0;vertical-align:top}
     .review-table tr:last-child td{border-bottom:none}
+    @media (max-width:480px) {
+      .card{margin:10px 6px;padding:10px 10px}
+      .top-hdr,.mkt-hdr,.hot-hdr,.review-hdr{padding-left:10px;padding-right:10px}
+      .top-item{padding-left:8px;padding-right:8px}
+      .mkt-item{padding-left:10px;padding-right:10px}
+      .topic-item{padding-left:10px;padding-right:10px}
+      .review-body{padding-left:8px;padding-right:8px}
+    }
     """
 
     blocks = []

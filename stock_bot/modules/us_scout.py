@@ -978,6 +978,14 @@ def _format_longterm_report_html(
     .review-table tr:last-child td{border-bottom:none}
     .small-cap-warn{background:#fff9c4;border-radius:4px;padding:2px 7px;
                     font-size:11px;color:#f57f17;margin-left:5px}
+    @media (max-width:480px) {
+      .card{margin:10px 6px;padding:10px 10px}
+      .top-hdr,.mkt-hdr,.theme-hdr,.review-hdr{padding-left:10px;padding-right:10px}
+      .top-item{padding-left:8px;padding-right:8px}
+      .mkt-item{padding-left:10px;padding-right:10px}
+      .theme-card{padding-left:10px;padding-right:10px}
+      .review-body{padding-left:8px;padding-right:8px}
+    }
     """
 
     # ── 大盤概況 ─────────────────────────────────────────────

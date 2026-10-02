@@ -86,7 +86,7 @@
 @media (max-width:767px) {
   .dr-sidebar { display:none; }
   .dr-main { margin-left:0; }
-  .dr-content { padding:16px 16px 80px; }
+  .dr-content { padding:10px 6px 80px; }
   .dr-topbar { padding:10px 16px; }
   .dr-bottom-tabs { display:block; }
 }
@@ -107,12 +107,7 @@
       --neutral: #666666;
     }
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang TC', sans-serif;
-      min-height: 100vh;
-    }
+    
 
     /* ── Header ── */
     .header {
@@ -337,7 +332,7 @@
     .quote-category { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; }
     .quote-cat-label { font-size: 11px; font-weight: 700; color: #555; letter-spacing: 0.06em; margin-bottom: 8px; }
     .quote-text { font-size: 13px; color: #888; font-style: italic; margin: 6px 0; line-height: 1.8; padding-left: 10px; border-left: 2px solid #333; }
-  </style>
+  /*mobile-pad-v2*/@media (max-width: 480px) {.page { padding-left: 8px; padding-right: 8px; }.card-top { padding-left: 10px; padding-right: 10px; }}</style>
 
 </head>
 <body>
@@ -357,7 +352,7 @@
       <a class="dr-nav-item" href="../tw_scout/latest.html">
         <span class="dr-dot dr-dot-tw"></span> 台股選股雷達
       </a>
-      <div class="dr-nav-subitems"><a class="dr-nav-subitem" href="../tw_scout/2026-10-01.html">2026-10-01</a><a class="dr-nav-subitem" href="../tw_scout/2026-09-30.html">2026-09-30</a><a class="dr-nav-subitem" href="../tw_scout/2026-09-29.html">2026-09-29</a><a class="dr-nav-subitem" href="../tw_scout/2026-09-28.html">2026-09-28</a><a class="dr-nav-subitem" href="../tw_scout/2026-09-25.html">2026-09-25</a></div>
+      <div class="dr-nav-subitems"><a class="dr-nav-subitem" href="../tw_scout/2026-10-02.html">2026-10-02</a><a class="dr-nav-subitem" href="../tw_scout/2026-10-01.html">2026-10-01</a><a class="dr-nav-subitem" href="../tw_scout/2026-09-30.html">2026-09-30</a><a class="dr-nav-subitem" href="../tw_scout/2026-09-29.html">2026-09-29</a><a class="dr-nav-subitem" href="../tw_scout/2026-09-28.html">2026-09-28</a></div>
       <a class="dr-nav-item" href="../us_scout/latest.html">
         <span class="dr-dot dr-dot-us"></span> 美股選股雷達
       </a>
@@ -365,7 +360,7 @@
       <a class="dr-nav-item" href="../tw_ma/latest.html">
         <span class="dr-dot dr-dot-twma"></span> 台股族群強弱
       </a>
-      <div class="dr-nav-subitems"><a class="dr-nav-subitem" href="../tw_ma/2026-10-01.html">2026-10-01</a><a class="dr-nav-subitem" href="../tw_ma/2026-09-30.html">2026-09-30</a><a class="dr-nav-subitem" href="../tw_ma/2026-09-29.html">2026-09-29</a><a class="dr-nav-subitem" href="../tw_ma/2026-09-28.html">2026-09-28</a></div>
+      <div class="dr-nav-subitems"><a class="dr-nav-subitem" href="../tw_ma/2026-10-02.html">2026-10-02</a><a class="dr-nav-subitem" href="../tw_ma/2026-10-01.html">2026-10-01</a><a class="dr-nav-subitem" href="../tw_ma/2026-09-30.html">2026-09-30</a><a class="dr-nav-subitem" href="../tw_ma/2026-09-29.html">2026-09-29</a><a class="dr-nav-subitem" href="../tw_ma/2026-09-28.html">2026-09-28</a></div>
     </nav>
   </aside>
 
@@ -378,6 +373,7 @@
       <button class="dr-theme-btn" onclick="drToggleTheme()" id="dr-theme-btn">🌙</button>
     </header>
     <main class="dr-content">
+      
       
       
       
@@ -2202,6 +2198,7 @@ function closeStockPopup(e) {
 }
 </script>
 
+    
     
     
     

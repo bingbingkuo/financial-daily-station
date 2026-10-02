@@ -92,7 +92,7 @@ _PAGE_CSS = """
 @media (max-width:767px) {
   .dr-sidebar { display:none; }
   .dr-main { margin-left:0; }
-  .dr-content { padding:16px 16px 80px; }
+  .dr-content { padding:10px 6px 80px; }
   .dr-topbar { padding:10px 16px; }
   .dr-bottom-tabs { display:block; }
 }
@@ -171,6 +171,12 @@ def render_report_page(
     report_css     = _extract(report_html, "<style>", "</style>")
     report_body    = _extract_body(report_html)
     report_scripts = _extract_head_scripts(report_html)
+
+    # 報告自己的 CSS 裡常有一段 body{...padding:20px...}（給 email 版型用的
+    # 外距），直接整段塞進外殼會對整個 <body>（側欄／頂部列／內容）多出一圈
+    # 留白，在手機上尤其明顯。外殼本身已經有 .dr-content 負責內距，這裡把報
+    # 告自己的 body 規則拿掉，只留給 email 用（不影響 scout.py 等寄信內容）。
+    report_css = re.sub(r"(?<![\w-])body\s*\{[^}]*\}", "", report_css)
 
     title = _KIND_TITLE[kind]
     nav_items = ""
