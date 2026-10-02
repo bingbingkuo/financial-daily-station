@@ -79,6 +79,7 @@
    讓報告頁面在手機上也能快速切換分類（側欄在手機上會整個隱藏，見下方）。 */
 .dr-bottom-tabs { display:none; position:fixed; bottom:0; left:0; right:0; background:var(--dr-surface); border-top:1px solid var(--dr-border); z-index:100; }
 .dr-tab-bar { display:flex; list-style:none; }
+.dr-tab-bar li { flex:1; display:flex; }
 .dr-tab-item { flex:1; display:flex; flex-direction:column; align-items:center; padding:10px 4px 12px; text-decoration:none; font-size:10px; color:var(--dr-muted); gap:4px; }
 .dr-tab-item.active { color:var(--dr-text); }
 .dr-tab-icon { font-size:18px; line-height:1; }
@@ -218,6 +219,7 @@
     <main class="dr-content">
       
       
+      
   
   <div class="top-wrap">
     <div class="top-hdr">
@@ -327,6 +329,7 @@
   </div>
   
 
+    
     
     </main>
   </div>
