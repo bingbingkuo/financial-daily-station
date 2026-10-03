@@ -1,5 +1,9 @@
 window.PODCAST_MANIFEST = [
   {
+    "date": "2026-10-03",
+    "file": "2026-10-03.html"
+  },
+  {
     "date": "2026-09-30",
     "file": "2026-09-30.html"
   },
