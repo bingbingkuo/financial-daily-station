@@ -1,5 +1,9 @@
 window.TW_SCOUT_MANIFEST = [
   {
+    "date": "2026-10-06",
+    "file": "2026-10-06.html"
+  },
+  {
     "date": "2026-10-05",
     "file": "2026-10-05.html"
   },
