@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>美股選股雷達 · 2026-10-23 · 財經日報站</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --dr-bg:#0d1117; --dr-surface:#161b22; --dr-surface2:#21262d; --dr-border:#30363d;
+  --dr-text:#e6edf3; --dr-muted:#7d8590; --dr-tw:#ef4444; --dr-us:#22c55e; --dr-pod:#a78bfa;
+  --dr-twma:#2dd4bf; --dr-all:#f59e0b; --dr-radius:8px;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --dr-bg:#f6f8fa; --dr-surface:#ffffff; --dr-surface2:#f0f2f5;
+    --dr-border:#d0d7de; --dr-text:#1f2328; --dr-muted:#656d76;
+  }
+}
+:root[data-theme="dark"]  { --dr-bg:#0d1117;--dr-surface:#161b22;--dr-surface2:#21262d;--dr-border:#30363d;--dr-text:#e6edf3;--dr-muted:#7d8590; }
+:root[data-theme="light"] { --dr-bg:#f6f8fa;--dr-surface:#ffffff;--dr-surface2:#f0f2f5;--dr-border:#d0d7de;--dr-text:#1f2328;--dr-muted:#656d76; }
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+[hidden] { display:none !important; }
+/* 注意：下面的殼層樣式全部用 .dr- 前綴 class 跟 --dr- 前綴變數，
+   跟被包進來的報告自己的 CSS（.nav/.header/--bg 這類常見命名、
+   甚至 body{} 全站選取器）完全不共用命名，兩邊不會互相覆蓋。
+   側欄／頂部列因此不管包哪份報告，字體、字級、顏色都固定一致。 */
+.dr-layout {
+  display:flex; min-height:100vh;
+  font-family:'IBM Plex Sans',sans-serif;
+}
+.dr-sidebar {
+  width:220px; flex-shrink:0; background:var(--dr-surface); border-right:1px solid var(--dr-border);
+  display:flex; flex-direction:column; position:fixed; top:0; left:0; bottom:0; z-index:50; overflow-y:auto;
+}
+.dr-brand { padding:20px 18px 16px; border-bottom:1px solid var(--dr-border); text-decoration:none; display:block; }
+.dr-brand-name { font-size:14px; font-weight:700; letter-spacing:.5px; color:var(--dr-text); }
+.dr-brand-sub  { font-size:11px; color:var(--dr-muted); margin-top:2px; }
+.dr-nav { padding:12px 8px; flex:1; }
+.dr-nav-item {
+  display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:6px;
+  font-size:13.5px; font-weight:500; color:var(--dr-muted); text-decoration:none; margin-bottom:2px;
+}
+.dr-nav-item:hover { background:var(--dr-surface2); color:var(--dr-text); }
+.dr-nav-item.active { color:var(--dr-text); background:var(--dr-surface2); }
+.dr-nav-item.soon { opacity:.5; pointer-events:none; }
+.dr-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; background:var(--dr-border); }
+.dr-dot-tw  { background:var(--dr-tw); }
+.dr-dot-us  { background:var(--dr-us); }
+.dr-dot-pod { background:var(--dr-pod); }
+.dr-dot-twma { background:var(--dr-twma); }
+.dr-nav-subitems { margin:0 0 4px 10px; padding-left:10px; border-left:1px solid var(--dr-border); }
+.dr-nav-subitem {
+  display:flex; align-items:center; gap:6px; padding:5px 8px; border-radius:5px;
+  font-size:12px; color:var(--dr-muted); text-decoration:none; font-family:'IBM Plex Mono',monospace;
+}
+.dr-nav-subitem:hover { background:var(--dr-surface2); color:var(--dr-text); }
+.dr-nav-subitem.active { color:var(--dr-text); font-weight:600; }
+.dr-main { margin-left:220px; flex:1; display:flex; flex-direction:column; min-width:0; }
+.dr-topbar {
+  background:var(--dr-surface); border-bottom:1px solid var(--dr-border); padding:12px 24px;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  position:sticky; top:0; z-index:40;
+}
+.dr-topbar-left { display:flex; align-items:center; gap:12px; }
+.dr-page-title { font-size:15px; font-weight:600; color:var(--dr-text); }
+.dr-date-badge {
+  font-size:12px; font-family:'IBM Plex Mono',monospace; background:var(--dr-surface2); color:var(--dr-muted);
+  padding:3px 10px; border-radius:20px; border:1px solid var(--dr-border);
+}
+.dr-theme-btn {
+  background:var(--dr-surface2); border:1px solid var(--dr-border); border-radius:6px;
+  padding:5px 10px; color:var(--dr-muted); font-size:12px; cursor:pointer; font-family:inherit;
+}
+.dr-theme-btn:hover { color:var(--dr-text); }
+.dr-content { padding:24px; flex:1; background:var(--dr-bg); color:var(--dr-text); }
+/* 手機底部固定分頁列——跟 docs/index.html 的 .bottom-tabs 同樣樣式語彙，
+   讓報告頁面在手機上也能快速切換分類（側欄在手機上會整個隱藏，見下方）。 */
+.dr-bottom-tabs { display:none; position:fixed; bottom:0; left:0; right:0; background:var(--dr-surface); border-top:1px solid var(--dr-border); z-index:100; }
+.dr-tab-bar { display:flex; list-style:none; }
+.dr-tab-bar li { flex:1; display:flex; }
+.dr-tab-item { flex:1; display:flex; flex-direction:column; align-items:center; padding:10px 4px 12px; text-decoration:none; font-size:10px; color:var(--dr-muted); gap:4px; }
+.dr-tab-item.active { color:var(--dr-text); }
+.dr-tab-icon { font-size:18px; line-height:1; }
+@media (max-width:767px) {
+  .dr-sidebar { display:none; }
+  .dr-main { margin-left:0; }
+  .dr-content { padding:10px 6px 80px; }
+  .dr-topbar { padding:10px 16px; }
+  .dr-bottom-tabs { display:block; }
+}
+</style>
+<style>
+    
+    .wrap{max-width:720px;margin:0 auto;background:#161b22;border-radius:8px;
+          box-shadow:0 2px 8px rgba(0,0,0,.1);overflow:hidden}
+    .hdr{padding:18px 24px 14px;border-bottom:1px solid #30363d}
+    .hdr h2{margin:0;font-size:20px;color:#8ab4f8}
+    .hdr p{margin:4px 0 0;font-size:13px;color:#9198a1}
+    .card{border-left:4px solid #6674e0;margin:16px;padding:12px 16px;
+          background:#21262d;border-radius:4px}
+    .card h3{margin:0 0 6px;font-size:16px;color:#8ab4f8}
+    .row{font-size:13px;margin:3px 0;color:#e6edf3}
+    table.fin{border-collapse:collapse;font-size:13px;margin:6px 0;width:100%}
+    table.fin td{padding:3px 12px 3px 0;color:#d0d7de;vertical-align:top}
+    table.fin td:first-child{color:#9198a1;white-space:nowrap;font-weight:500;width:110px}
+    .growth-box{background:rgba(74,222,128,.12);border-radius:4px;padding:8px 12px;font-size:14px;
+                font-weight:bold;margin:6px 0;color:#4ade80;line-height:1.6}
+    .gm-box{background:rgba(74,222,128,.12);border-radius:4px;padding:6px 10px;font-size:13px;margin:4px 0}
+    .pe-bar{background:rgba(96,165,250,.12);border-radius:4px;padding:6px 10px;font-size:13px;margin:4px 0}
+    .price-box{background:#161b223e0;border-radius:4px;padding:6px 10px;font-size:13px;margin:4px 0}
+    .analyst-box{background:rgba(192,132,252,.12);border-radius:4px;padding:6px 10px;font-size:13px;margin:4px 0}
+    .risk-box{background:#161b228e1;border-radius:4px;padding:6px 10px;font-size:13px;
+              margin:4px 0;color:#fb923c}
+    .verdict-box{border-radius:6px;padding:8px 12px;font-size:14px;font-weight:bold;margin:8px 0}
+    .v-aggressive{background:#1b5e20;color:#fff}
+    .v-watch{background:#1565c0;color:#fff}
+    .v-dip{background:#e65100;color:#fff}
+    .v-wait{background:#37474f;color:#fff}
+    .footer{text-align:center;font-size:11px;color:#6e7681;padding:14px;border-top:1px solid #30363d}
+    /* Top picks */
+    .top-wrap{max-width:720px;margin:0 auto 16px;background:#161b22;border-radius:8px;
+              box-shadow:0 2px 8px rgba(0,0,0,.1);overflow:hidden}
+    .top-hdr{padding:14px 20px 12px;border-bottom:1px solid #30363d}
+    .top-hdr h2{margin:0;font-size:18px;color:#c4b5fd}
+    .top-hdr p{margin:3px 0 0;font-size:12px;color:#9198a1}
+    .top-body{display:flex;flex-wrap:wrap}
+    .top-item{flex:1 1 20%;padding:14px 16px;border-right:1px solid #30363d;
+              min-width:120px;box-sizing:border-box;text-align:center}
+    .top-item:last-child{border-right:none}
+    .top-rank{font-size:11px;color:#7d8590;font-weight:bold;margin-bottom:4px}
+    .top-code{font-size:14px;font-weight:bold;color:#8ab4f8}
+    .top-name{font-size:11px;color:#9198a1;margin:2px 0 6px;white-space:nowrap;
+              overflow:hidden;text-overflow:ellipsis}
+    .top-count{font-size:20px;font-weight:bold;color:#f87171}
+    .top-count .unit{font-size:11px;color:#7d8590;font-weight:normal;margin-left:2px}
+    /* Market */
+    .mkt-wrap{max-width:720px;margin:0 auto 16px;background:#161b22;border-radius:8px;
+              box-shadow:0 2px 8px rgba(0,0,0,.1);overflow:hidden}
+    .mkt-hdr{padding:14px 20px 12px;border-bottom:1px solid #30363d}
+    .mkt-hdr h2{margin:0;font-size:18px;color:#c9d1d9}
+    .mkt-hdr p{margin:3px 0 0;font-size:12px;color:#9198a1}
+    .mkt-body{display:flex;flex-wrap:wrap;padding:0}
+    .mkt-item{flex:1 1 20%;padding:12px 16px;border-right:1px solid #30363d;
+              border-bottom:1px solid #30363d;min-width:130px;box-sizing:border-box}
+    .mkt-item-label{font-size:10px;color:#7d8590;text-transform:uppercase;
+                    letter-spacing:.5px;margin-bottom:4px}
+    .mkt-item-val{font-size:19px;font-weight:bold;margin-bottom:2px}
+    .mkt-item-sub{font-size:12px;color:#9198a1}
+    .mkt-up{color:#4ade80} .mkt-dn{color:#f87171} .mkt-neu{color:#c9d1d9}
+    /* Themes */
+    .theme-wrap{max-width:720px;margin:0 auto 16px;background:#161b22;border-radius:8px;
+                box-shadow:0 2px 8px rgba(0,0,0,.1);overflow:hidden}
+    .theme-hdr{padding:14px 20px 12px;border-bottom:1px solid #30363d}
+    .theme-hdr h2{margin:0;font-size:18px;color:#c4b5fd}
+    .theme-hdr p{margin:3px 0 0;font-size:12px;color:#9198a1}
+    .theme-card{padding:14px 20px;border-bottom:1px solid #30363d;background:#1f1b2e}
+    .theme-card:last-child{border-bottom:none}
+    .theme-name{font-size:15px;font-weight:bold;color:#c4b5fd;margin-bottom:5px}
+    .theme-catalyst{font-size:13px;color:#e6edf3;line-height:1.65;margin-bottom:4px}
+    .theme-meta{font-size:12px;color:#7d8590;margin-bottom:6px}
+    .theme-risk{background:#161b228e1;border-radius:4px;padding:2px 8px;font-size:12px;
+                color:#fb923c;display:inline-block}
+    /* Review */
+    .review-wrap{max-width:720px;margin:16px auto 0;background:#161b22;border-radius:8px;
+                 box-shadow:0 2px 8px rgba(0,0,0,.1);overflow:hidden}
+    .review-hdr{padding:14px 20px 12px;border-bottom:1px solid #30363d}
+    .review-hdr h2{margin:0;font-size:18px;color:#4ade80}
+    .review-hdr p{margin:3px 0 0;font-size:12px;color:#9198a1}
+    .review-body{padding:12px 16px}
+    .review-table{width:100%;border-collapse:collapse;font-size:13px}
+    .review-table th{background:#21262d;color:#c9d1d9;padding:7px 10px;
+                     text-align:left;font-weight:600;white-space:nowrap}
+    .review-table td{padding:7px 10px;border-bottom:1px solid #30363d;vertical-align:top}
+    .review-table tr:last-child td{border-bottom:none}
+    .small-cap-warn{background:#161b229c4;border-radius:4px;padding:2px 7px;
+                    font-size:11px;color:#fbbf24;margin-left:5px}
+    @media (max-width:480px) {
+      .card{margin:10px 6px;padding:10px 10px}
+      .top-hdr,.mkt-hdr,.theme-hdr,.review-hdr{padding-left:10px;padding-right:10px}
+      .top-item{padding-left:8px;padding-right:8px}
+      .mkt-item{padding-left:10px;padding-right:10px}
+      .theme-card{padding-left:10px;padding-right:10px}
+      .review-body{padding-left:8px;padding-right:8px}
+    }
+    </style>
+
+</head>
+<body>
+<div class="dr-layout">
+  <aside class="dr-sidebar">
+    <a class="dr-brand" href="../index.html">
+      <div class="dr-brand-name">📡 財經日報站</div>
+      <div class="dr-brand-sub">Stock · Market · Podcast</div>
+    </a>
+    <nav class="dr-nav">
+      <a class="dr-nav-item" href="../index.html">
+        <span class="dr-dot" style="background:var(--dr-all)"></span> 總覽
+      </a>
+      <a class="dr-nav-item" href="../podcast/latest.html">
+        <span class="dr-dot dr-dot-pod"></span> Podcast 摘要
+      </a>
+      <a class="dr-nav-item" href="../tw_scout/latest.html">
+        <span class="dr-dot dr-dot-tw"></span> 台股選股雷達
+      </a>
+      <div class="dr-nav-subitems"><a class="dr-nav-subitem" href="../tw_scout/2026-10-22.html">2026-10-22</a><a class="dr-nav-subitem" href="../tw_scout/2026-10-21.html">2026-10-21</a><a class="dr-nav-subitem" href="../tw_scout/2026-10-14.html">2026-10-14</a><a class="dr-nav-subitem" href="../tw_scout/2026-10-13.html">2026-10-13</a><a class="dr-nav-subitem" href="../tw_scout/2026-10-12.html">2026-10-12</a></div>
+      <a class="dr-nav-item active" href="../us_scout/latest.html">
+        <span class="dr-dot dr-dot-us"></span> 美股選股雷達
+      </a>
+      <div class="dr-nav-subitems"><a class="dr-nav-subitem active" href="../us_scout/2026-10-23.html">2026-10-23</a><a class="dr-nav-subitem" href="../us_scout/2026-10-22.html">2026-10-22</a><a class="dr-nav-subitem" href="../us_scout/2026-10-21.html">2026-10-21</a><a class="dr-nav-subitem" href="../us_scout/2026-10-20.html">2026-10-20</a><a class="dr-nav-subitem" href="../us_scout/2026-10-19.html">2026-10-19</a></div>
+      <a class="dr-nav-item" href="../tw_ma/latest.html">
+        <span class="dr-dot dr-dot-twma"></span> 台股族群強弱
+      </a>
+      <div class="dr-nav-subitems"><a class="dr-nav-subitem" href="../tw_ma/2026-10-22.html">2026-10-22</a><a class="dr-nav-subitem" href="../tw_ma/2026-10-21.html">2026-10-21</a><a class="dr-nav-subitem" href="../tw_ma/2026-10-20.html">2026-10-20</a><a class="dr-nav-subitem" href="../tw_ma/2026-10-19.html">2026-10-19</a><a class="dr-nav-subitem" href="../tw_ma/2026-10-16.html">2026-10-16</a></div>
+    </nav>
+  </aside>
+
+  <div class="dr-main">
+    <header class="dr-topbar">
+      <div class="dr-topbar-left">
+        <span class="dr-page-title">美股選股雷達</span>
+        <span class="dr-date-badge">2026-10-23</span>
+      </div>
+      <button class="dr-theme-btn" onclick="drToggleTheme()" id="dr-theme-btn">🌙</button>
+    </header>
+    <main class="dr-content">
+      
+  
+  <div class="top-wrap">
+    <div class="top-hdr">
+      <h2>🏆 近期熱門股</h2>
+      <p>近 22 個交易日通過選股雷達次數最多的前 5 檔個股</p>
+    </div>
+    <div class="top-body">
+        <div class="top-item">
+          <div class="top-rank">#1</div>
+          <div class="top-code">MDB</div>
+          <div class="top-name">MongoDB, Inc.</div>
+          <div class="top-count">10<span class="unit"> 次</span></div>
+        </div>
+        <div class="top-item">
+          <div class="top-rank">#2</div>
+          <div class="top-code">META</div>
+          <div class="top-name">Meta Platforms, Inc.</div>
+          <div class="top-count">10<span class="unit"> 次</span></div>
+        </div>
+        <div class="top-item">
+          <div class="top-rank">#3</div>
+          <div class="top-code">MU</div>
+          <div class="top-name">Micron Technology, Inc.</div>
+          <div class="top-count">9<span class="unit"> 次</span></div>
+        </div>
+        <div class="top-item">
+          <div class="top-rank">#4</div>
+          <div class="top-code">DDOG</div>
+          <div class="top-name">Datadog, Inc.</div>
+          <div class="top-count">9<span class="unit"> 次</span></div>
+        </div>
+        <div class="top-item">
+          <div class="top-rank">#5</div>
+          <div class="top-code">ASML</div>
+          <div class="top-name">ASML Holding N.V.</div>
+          <div class="top-count">9<span class="unit"> 次</span></div>
+        </div></div>
+  </div>
+  
+  <div class="mkt-wrap">
+    <div class="mkt-hdr">
+      <h2>📊 今日大盤概況</h2>
+      <p>2026/10/23　資料來源：yfinance（^SOX / ^IXIC / ^DJI / ^VIX / ^TNX / ^TYX）</p>
+    </div>
+    <div class="mkt-body">
+      <div class="mkt-item"><div class="mkt-item-label">費城半導體 ^SOX</div><div class="mkt-item-val mkt-dn">10,732</div><div class="mkt-item-sub mkt-dn">▼ -6.72%</div><div class="mkt-item-sub mkt-up">YTD +45.7%</div></div>
+      <div class="mkt-item"><div class="mkt-item-label">納斯達克 ^IXIC</div><div class="mkt-item-val mkt-dn">26,009</div><div class="mkt-item-sub mkt-dn">▼ -2.60%</div><div class="mkt-item-sub mkt-up">YTD +11.9%</div></div>
+      <div class="mkt-item"><div class="mkt-item-label">道瓊工業 ^DJI</div><div class="mkt-item-val mkt-neu">—</div></div>
+      <div class="mkt-item"><div class="mkt-item-label">VIX 恐慌指數</div><div class="mkt-item-val mkt-neu">20.0</div><div class="mkt-item-sub mkt-neu">▲ +5.31%</div></div><div class="mkt-item"><div class="mkt-item-label">10Y 美債殖利率</div><div class="mkt-item-val mkt-dn">4.97%</div><div class="mkt-item-sub">⚠️ 利率偏高</div></div><div class="mkt-item"><div class="mkt-item-label">30Y 美債殖利率</div><div class="mkt-item-val mkt-dn">5.29%</div><div class="mkt-item-sub">⚠️ 利率偏高</div></div>
+    </div>
+  </div>
+  
+  <div class="theme-wrap">
+    <div class="theme-hdr">
+      <h2>🔍 今日熱門投資主題</h2>
+      <p>2026/10/23　資料來源：CNBC / Yahoo Finance / MarketWatch / Reuters / Finviz → Gemini AI 識別</p>
+    </div>
+    
+    <div class="theme-card">
+      <div class="theme-name">📌 人工智慧基礎設施</div>
+      <div class="theme-catalyst">Meta、IBM等巨頭持續投入AI基礎建設，特別是「超級智能」與模型貨幣化，創造對高性能運算需求。</div>
+      <div class="theme-meta">預計持續：24-36個月</div>
+      <div><a href="https://finance.yahoo.com/quote/NVDA" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">NVDA</a> <a href="https://finance.yahoo.com/quote/AMD" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">AMD</a> <a href="https://finance.yahoo.com/quote/SMCI" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">SMCI</a> <a href="https://finance.yahoo.com/quote/TSM" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">TSM</a> <a href="https://finance.yahoo.com/quote/AVGO" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">AVGO</a> <a href="https://finance.yahoo.com/quote/MRVL" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">MRVL</a> <a href="https://finance.yahoo.com/quote/ASML" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">ASML</a> <a href="https://finance.yahoo.com/quote/SNPS" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">SNPS</a> <a href="https://finance.yahoo.com/quote/CDNS" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">CDNS</a></div>
+      <div style="margin-top:6px"><span class="theme-risk">⚠️ 風險：資本支出過高影響自由現金流，技術迭代快速。</span></div>
+    </div>
+    <div class="theme-card">
+      <div class="theme-name">📌 國防軍工</div>
+      <div class="theme-catalyst">烏克蘭戰爭導致全球地緣政治緊張，多國增加國防預算，Saab訂單三倍成長顯示需求強勁。</div>
+      <div class="theme-meta">預計持續：36-60個月</div>
+      <div><a href="https://finance.yahoo.com/quote/LMT" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">LMT</a> <a href="https://finance.yahoo.com/quote/RTX" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">RTX</a> <a href="https://finance.yahoo.com/quote/GD" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">GD</a> <a href="https://finance.yahoo.com/quote/BA" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">BA</a> <a href="https://finance.yahoo.com/quote/NOC" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">NOC</a> <a href="https://finance.yahoo.com/quote/HII" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">HII</a> <a href="https://finance.yahoo.com/quote/TDG" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">TDG</a> <a href="https://finance.yahoo.com/quote/ERJ" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">ERJ</a></div>
+      <div style="margin-top:6px"><span class="theme-risk">⚠️ 風險：地緣政治變化，政府預算不確定性。</span></div>
+    </div>
+    <div class="theme-card">
+      <div class="theme-name">📌 太空衛星通訊</div>
+      <div class="theme-catalyst">SpaceX等新興業者移動衛星通訊野心，對傳統電信產業造成衝擊，但為相關技術與服務帶來新機遇。</div>
+      <div class="theme-meta">預計持續：24-48個月</div>
+      <div><a href="https://finance.yahoo.com/quote/MSFT" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">MSFT</a> <a href="https://finance.yahoo.com/quote/GOOG" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">GOOG</a> <a href="https://finance.yahoo.com/quote/VZ" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">VZ</a> <a href="https://finance.yahoo.com/quote/T" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">T</a> <a href="https://finance.yahoo.com/quote/ASTS" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">ASTS</a> <a href="https://finance.yahoo.com/quote/RKLB" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">RKLB</a> <a href="https://finance.yahoo.com/quote/SPCE" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">SPCE</a></div>
+      <div style="margin-top:6px"><span class="theme-risk">⚠️ 風險：法規限制，技術成熟度，發射失敗風險。</span></div>
+    </div>
+    <div class="theme-card">
+      <div class="theme-name">📌 消費者必需品</div>
+      <div class="theme-catalyst">P&G等公司在洗衣和家居產品等必需品領域銷售持續成長，顯示其在通膨環境下的定價權與韌性。</div>
+      <div class="theme-meta">預計持續：12-24個月</div>
+      <div><a href="https://finance.yahoo.com/quote/PG" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">PG</a> <a href="https://finance.yahoo.com/quote/CL" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">CL</a> <a href="https://finance.yahoo.com/quote/KO" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">KO</a> <a href="https://finance.yahoo.com/quote/PEP" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">PEP</a> <a href="https://finance.yahoo.com/quote/WMT" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">WMT</a> <a href="https://finance.yahoo.com/quote/COST" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">COST</a> <a href="https://finance.yahoo.com/quote/KMB" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">KMB</a> <a href="https://finance.yahoo.com/quote/UL" target="_blank" style="display:inline-block;background:rgba(167,139,250,.12);color:#c4b5fd;border-radius:10px;padding:1px 8px;font-size:12px;margin:2px;text-decoration:none">UL</a></div>
+      <div style="margin-top:6px"><span class="theme-risk">⚠️ 風險：消費者支出能力下降，原物料成本上升。</span></div>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="hdr">
+      <h2>🔭 主題基本面選股雷達</h2>
+      <p>2026/10/23　共 2 支通過篩選（最多 30 支）
+        &nbsp;|&nbsp; 條件：營收YoY>10% + EPS正/加速，或虧轉盈，或分析師看漲>20%
+      </p>
+    </div>
+    <div class="card"><h3>▶ KLAC <a href="https://finance.yahoo.com/quote/KLAC" style="color:#8ab4f8;text-decoration:none">KLA Corporation</a>&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">昨收 $147.83</span>&nbsp;<span style="background:rgba(74,222,128,.12);color:#4ade80;padding:1px 8px;border-radius:10px;font-size:12px;font-weight:bold">盤前 ▲ +0.44%&nbsp;<span style="font-weight:normal">$148.48</span></span>&nbsp;<span style="font-weight:normal;font-size:11px;color:#6e7681">Technology · $192.9B</span></h3><div class="verdict-box v-dip">⏳ 等待回調&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">AI基礎設施需求推動半導體檢測設備成長，毛利率佳但股價已高，待回調再進場。</span></div><div class="row" style="margin:5px 0"><span style="background:rgba(167,139,250,.12);color:#c4b5fd;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">🔖 人工智慧基礎設施</span><span style="background:rgba(167,139,250,.12);color:#c4b5fd;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">🔖 半導體</span><span style="background:rgba(96,165,250,.12);color:#60a5fa;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">Technology</span></div><div class="growth-box">📈 營收 YoY <span style="color:#4ade80">+15%</span><span style="font-size:12px;color:#9198a1">↓減速</span>　　EPS YoY <span style="color:#4ade80">+14%</span><span style="font-size:12px;color:#9198a1"></span><div style="font-size:11px;font-weight:normal;color:#4ade80;margin-top:3px">篩選依據：A: 營收 YoY +15% + EPS 正  |  C: 分析師看漲 57%</div></div><table class="fin"><tr><td>營收（年）</td><td><b>$13.58B</b><span style="color:#6e7681;font-size:11px"> (2026)</span></td><td><b>$12.16B</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b>$9.81B</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td></tr><tr><td>EPS（年）</td><td><b style="color:#4ade80">+$3.68</b><span style="color:#6e7681;font-size:11px"> (2026)</span></td><td><b style="color:#4ade80">+$3.05</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b style="color:#4ade80">+$2.04</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td></tr><tr style="background:#161b22de7"><td style="color:#fbbf24;font-weight:bold">最新季 (2026Q2)</td><td colspan="3">營收 <b>$3.66B</b>&nbsp;｜&nbsp;EPS <b style="color:#4ade80">+$1.04</b></td></tr></table><div class="gm-box">▪ 毛利率 <b>61.4%</b>（去年同期 62.0%）<b style="color:#4ade80"> ↑ 擴張 -0.6%</b></div><div class="analyst-box">🎯 目標 <b>$232.38</b>&nbsp;|&nbsp;距目標 <b style="color:#4ade80">+57%</b>&nbsp;|&nbsp;共識 <b>Buy</b>（26 位）</div><div class="risk-box">⚠️ 最大風險：半導體景氣下行，訂單減少</div><div class="pe-bar">▪ 本益比：目前 <b>40.4x</b>&nbsp;|&nbsp;52W 29x ~ 84x&nbsp;|&nbsp;前瞻 <b>21.9x</b></div><div class="price-box">▪ 合理股價 <b>$207.3</b>（52W PE中位 × EPS）&nbsp;|&nbsp;預測股價 <b>$232.4</b>（分析師目標）</div><div style="background:rgba(244,114,182,.12);border-radius:4px;padding:5px 10px;font-size:13px;margin:4px 0">🔻 空單 <b>1.9%</b>&nbsp;|&nbsp;Days to Cover 2.6</div></div><div class="card"><h3>▶ MSTR <a href="https://finance.yahoo.com/quote/MSTR" style="color:#8ab4f8;text-decoration:none">Strategy Inc</a>&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">昨收 $145.80</span>&nbsp;<span style="background:rgba(248,113,113,.12);color:#f87171;padding:1px 8px;border-radius:10px;font-size:12px;font-weight:bold">盤前 ▼ -0.14%&nbsp;<span style="font-weight:normal">$145.60</span></span>&nbsp;<span style="font-weight:normal;font-size:11px;color:#6e7681">Technology · $61.7B</span></h3><div class="verdict-box v-wait">👁 暫時觀望&nbsp;&nbsp;<span style="font-weight:normal;font-size:13px">比特幣波動大，MicroStrategy業績受影響。雖然積極布局比特幣，但企業軟體業務下滑。</span></div><div class="row" style="margin:5px 0"><span style="background:rgba(167,139,250,.12);color:#c4b5fd;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">🔖 加密貨幣</span><span style="background:rgba(167,139,250,.12);color:#c4b5fd;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">🔖 人工智慧</span><span style="background:rgba(96,165,250,.12);color:#60a5fa;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">Technology</span></div><div class="growth-box">📈 營收 YoY <span style="color:#4ade80">+7%</span><span style="font-size:12px;color:#9198a1">↓減速</span>　　EPS YoY <span style="color:#f87171">-168%</span><span style="font-size:12px;color:#9198a1"></span><div style="font-size:11px;font-weight:normal;color:#4ade80;margin-top:3px">篩選依據：C: 分析師看漲 64%</div></div><table class="fin"><tr><td>營收（年）</td><td><b>$0.48B</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b>$0.46B</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td><td><b>$0.50B</b><span style="color:#6e7681;font-size:11px"> (2023)</span></td></tr><tr><td>EPS（年）</td><td><b style="color:#f87171">$-15.23</b><span style="color:#6e7681;font-size:11px"> (2025)</span></td><td><b style="color:#f87171">$-6.06</b><span style="color:#6e7681;font-size:11px"> (2024)</span></td><td><b style="color:#4ade80">+$3.14</b><span style="color:#6e7681;font-size:11px"> (2023)</span></td></tr><tr style="background:#161b22de7"><td style="color:#fbbf24;font-weight:bold">最新季 (2026Q2)</td><td colspan="3">營收 <b>$0.12B</b>&nbsp;｜&nbsp;EPS <b style="color:#f87171">$-24.45</b></td></tr></table><div class="gm-box">▪ 毛利率 <b>66.6%</b>（去年同期 68.8%）<b style="color:#f87171"> ↓ 收縮 -2.2%</b></div><div class="analyst-box">🎯 目標 <b>$239.27</b>&nbsp;|&nbsp;距目標 <b style="color:#4ade80">+64%</b>&nbsp;|&nbsp;共識 <b>Strong Buy</b>（15 位）</div><div class="risk-box">⚠️ 最大風險：比特幣價格劇烈波動</div><div class="pe-bar">▪ 本益比：前瞻 <b>2.9x</b></div><div class="price-box">▪ 預測股價 <b>$239.3</b>（分析師目標）</div><div style="background:rgba(244,114,182,.12);border-radius:4px;padding:5px 10px;font-size:13px;margin:4px 0">🔻 空單 <b>7.3%</b>&nbsp;|&nbsp;Days to Cover 1.2</div></div>
+    <div class="footer">
+      本報告為資訊彙整，非投資建議。長期持有請自行評估風險。<br>
+      資料來源：yfinance / CNBC / Yahoo Finance / MarketWatch / Reuters / Finviz / Gemini AI
+    </div>
+  </div>
+  
+  <div class="review-wrap">
+    <div class="review-hdr">
+      <h2>📋 動能延續追蹤</h2>
+      <p>2026/10/20 評為「積極布局 / 值得追蹤」— 3 個交易日後績效</p>
+    </div>
+    <div class="review-body">
+      <table class="review-table">
+        <thead><tr>
+          <th>股票</th><th style="text-align:right">推薦時</th>
+          <th style="text-align:right">今日</th><th style="text-align:right">報酬</th>
+          <th>當時評語</th>
+        </tr></thead>
+        <tbody>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/SOUN" style="color:#8ab4f8;text-decoration:none">
+              SOUN SoundHound AI, Inc.</a></td>
+          <td style="text-align:right;color:#c9d1d9">$4.65</td>
+          <td style="text-align:right;color:#c9d1d9">$4.50</td>
+          <td style="text-align:right;font-weight:bold;color:#f87171">🔴 -3.2%</td>
+          <td style="color:#9198a1;font-size:12px">AI語音市場潛力大，營收成長亮眼，目標價高。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/MU" style="color:#8ab4f8;text-decoration:none">
+              MU Micron Technology, Inc.</a></td>
+          <td style="text-align:right;color:#c9d1d9">$904.90</td>
+          <td style="text-align:right;color:#c9d1d9">$856.49</td>
+          <td style="text-align:right;font-weight:bold;color:#f87171">🔴 -5.3%</td>
+          <td style="color:#9198a1;font-size:12px">AI帶動記憶體需求，營收EPS大幅成長，目標價高。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/AVGO" style="color:#8ab4f8;text-decoration:none">
+              AVGO Broadcom Inc.</a></td>
+          <td style="text-align:right;color:#c9d1d9">$334.59</td>
+          <td style="text-align:right;color:#c9d1d9">$323.24</td>
+          <td style="text-align:right;font-weight:bold;color:#f87171">🔴 -3.4%</td>
+          <td style="color:#9198a1;font-size:12px">AI基礎設施需求強勁，營收EPS高成長，目標價高。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/AMAT" style="color:#8ab4f8;text-decoration:none">
+              AMAT Applied Materials, Inc.</a></td>
+          <td style="text-align:right;color:#c9d1d9">$413.11</td>
+          <td style="text-align:right;color:#c9d1d9">$375.58</td>
+          <td style="text-align:right;font-weight:bold;color:#f87171">🔴 -9.1%</td>
+          <td style="color:#9198a1;font-size:12px">AI基礎設施投資，半導體設備需求旺盛，目標價高。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/MCHP" style="color:#8ab4f8;text-decoration:none">
+              MCHP Microchip Technology Incorporated</a></td>
+          <td style="text-align:right;color:#c9d1d9">$74.43</td>
+          <td style="text-align:right;color:#c9d1d9">N/A</td>
+          <td style="text-align:right;font-weight:bold;color:#7d8590">⚪ N/A</td>
+          <td style="color:#9198a1;font-size:12px">AI應用推升需求，營收EPS由虧轉盈，目標價高。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/MRVL" style="color:#8ab4f8;text-decoration:none">
+              MRVL Marvell Technology, Inc.</a></td>
+          <td style="text-align:right;color:#c9d1d9">$237.09</td>
+          <td style="text-align:right;color:#c9d1d9">N/A</td>
+          <td style="text-align:right;font-weight:bold;color:#7d8590">⚪ N/A</td>
+          <td style="color:#9198a1;font-size:12px">AI/資料中心需求增長，成長潛力大，關注估值。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/KLAC" style="color:#8ab4f8;text-decoration:none">
+              KLAC KLA Corporation</a></td>
+          <td style="text-align:right;color:#c9d1d9">$166.40</td>
+          <td style="text-align:right;color:#c9d1d9">$147.83</td>
+          <td style="text-align:right;font-weight:bold;color:#f87171">🔴 -11.2%</td>
+          <td style="color:#9198a1;font-size:12px">半導體設備需求穩健，AI催化長期成長，關注估值。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/ARM" style="color:#8ab4f8;text-decoration:none">
+              ARM Arm Holdings plc</a></td>
+          <td style="text-align:right;color:#c9d1d9">$228.05</td>
+          <td style="text-align:right;color:#c9d1d9">$210.10</td>
+          <td style="text-align:right;font-weight:bold;color:#f87171">🔴 -7.9%</td>
+          <td style="color:#9198a1;font-size:12px">AI晶片設計核心地位，成長動能強，但估值偏高。</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.yahoo.com/quote/AMD" style="color:#8ab4f8;text-decoration:none">
+              AMD Advanced Micro Devices, Inc.</a></td>
+          <td style="text-align:right;color:#c9d1d9">$538.05</td>
+          <td style="text-align:right;color:#c9d1d9">$507.93</td>
+          <td style="text-align:right;font-weight:bold;color:#f87171">🔴 -5.6%</td>
+          <td style="color:#9198a1;font-size:12px">AI晶片需求推動增長，但估值偏高，關注後續發展。</td>
+        </tr></tbody>
+      </table>
+    </div>
+  </div>
+
+    </main>
+  </div>
+
+  <nav class="dr-bottom-tabs">
+    <ul class="dr-tab-bar"><li><a class="dr-tab-item" href="../index.html"><span class="dr-tab-icon">🏠</span><span>總覽</span></a></li><li><a class="dr-tab-item" href="../podcast/latest.html"><span class="dr-tab-icon">🎙</span><span>Podcast</span></a></li><li><a class="dr-tab-item" href="../tw_scout/latest.html"><span class="dr-tab-icon">📡</span><span>台股</span></a></li><li><a class="dr-tab-item active" href="../us_scout/latest.html"><span class="dr-tab-icon">🔭</span><span>美股</span></a></li><li><a class="dr-tab-item" href="../tw_ma/latest.html"><span class="dr-tab-icon">📊</span><span>族群</span></a></li></ul>
+  </nav>
+</div>
+<script>
+(function() {
+  var saved = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+  document.getElementById('dr-theme-btn').textContent = saved === 'dark' ? '🌙' : '☀️';
+})();
+function drToggleTheme() {
+  var cur = document.documentElement.getAttribute('data-theme');
+  var next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+  document.getElementById('dr-theme-btn').textContent = next === 'dark' ? '🌙' : '☀️';
+}
+</script>
+</body>
+</html>
