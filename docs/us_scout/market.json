@@ -1,28 +1,28 @@
 {
   "sox": {
-    "close": null,
-    "chg_pct": null,
-    "ytd": null
+    "close": 11518.2001953125,
+    "chg_pct": -1.4190329055760014,
+    "ytd": 56.338605510830405
   },
   "ndx": {
-    "close": null,
-    "chg_pct": null,
-    "ytd": null
+    "close": 26184.720703125,
+    "chg_pct": -1.3752579077550389,
+    "ytd": 12.692101460891111
   },
   "dji": {
-    "close": null,
-    "chg_pct": null,
-    "ytd": null
+    "close": 52342.55859375,
+    "chg_pct": -0.2525825864141223,
+    "ytd": 8.18514322585729
   },
   "vix": {
-    "close": null,
-    "chg_pct": null
+    "close": 18.690000534057617,
+    "chg_pct": 8.662788982711216
   },
   "tnx": {
-    "close": null
+    "close": 4.945000171661377
   },
   "tyx": {
-    "close": null
+    "close": 5.309000015258789
   },
-  "spy_ytd": 13.930982831469931
+  "spy_ytd": 13.495797748829066
 }
