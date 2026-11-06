@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>台股選股雷達 · 2026-11-06 · 財經日報站</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --dr-bg:#0d1117; --dr-surface:#161b22; --dr-surface2:#21262d; --dr-border:#30363d;
+  --dr-text:#e6edf3; --dr-muted:#7d8590; --dr-tw:#ef4444; --dr-us:#22c55e; --dr-pod:#a78bfa;
+  --dr-twma:#2dd4bf; --dr-all:#f59e0b; --dr-radius:8px;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --dr-bg:#f6f8fa; --dr-surface:#ffffff; --dr-surface2:#f0f2f5;
+    --dr-border:#d0d7de; --dr-text:#1f2328; --dr-muted:#656d76;
+  }
+}
+:root[data-theme="dark"]  { --dr-bg:#0d1117;--dr-surface:#161b22;--dr-surface2:#21262d;--dr-border:#30363d;--dr-text:#e6edf3;--dr-muted:#7d8590; }
+:root[data-theme="light"] { --dr-bg:#f6f8fa;--dr-surface:#ffffff;--dr-surface2:#f0f2f5;--dr-border:#d0d7de;--dr-text:#1f2328;--dr-muted:#656d76; }
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+[hidden] { display:none !important; }
+/* 注意：下面的殼層樣式全部用 .dr- 前綴 class 跟 --dr- 前綴變數，
+   跟被包進來的報告自己的 CSS（.nav/.header/--bg 這類常見命名、
+   甚至 body{} 全站選取器）完全不共用命名，兩邊不會互相覆蓋。
+   側欄／頂部列因此不管包哪份報告，字體、字級、顏色都固定一致。 */
+.dr-layout {
+  display:flex; min-height:100vh;
+  font-family:'IBM Plex Sans',sans-serif;
+}
+.dr-sidebar {
+  width:220px; flex-shrink:0; background:var(--dr-surface); border-right:1px solid var(--dr-border);
+  display:flex; flex-direction:column; position:fixed; top:0; left:0; bottom:0; z-index:50; overflow-y:auto;
+}
+.dr-brand { padding:20px 18px 16px; border-bottom:1px solid var(--dr-border); text-decoration:none; display:block; }
+.dr-brand-name { font-size:14px; font-weight:700; letter-spacing:.5px; color:var(--dr-text); }
+.dr-brand-sub  { font-size:11px; color:var(--dr-muted); margin-top:2px; }
+.dr-nav { padding:12px 8px; flex:1; }
+.dr-nav-item {
+  display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:6px;
+  font-size:13.5px; font-weight:500; color:var(--dr-muted); text-decoration:none; margin-bottom:2px;
+}
+.dr-nav-item:hover { background:var(--dr-surface2); color:var(--dr-text); }
+.dr-nav-item.active { color:var(--dr-text); background:var(--dr-surface2); }
+.dr-nav-item.soon { opacity:.5; pointer-events:none; }
+.dr-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; background:var(--dr-border); }
+.dr-dot-tw  { background:var(--dr-tw); }
+.dr-dot-us  { background:var(--dr-us); }
+.dr-dot-pod { background:var(--dr-pod); }
+.dr-dot-twma { background:var(--dr-twma); }
+.dr-nav-subitems { margin:0 0 4px 10px; padding-left:10px; border-left:1px solid var(--dr-border); }
+.dr-nav-subitem {
+  display:flex; align-items:center; gap:6px; padding:5px 8px; border-radius:5px;
+  font-size:12px; color:var(--dr-muted); text-decoration:none; font-family:'IBM Plex Mono',monospace;
+}
+.dr-nav-subitem:hover { background:var(--dr-surface2); color:var(--dr-text); }
+.dr-nav-subitem.active { color:var(--dr-text); font-weight:600; }
+.dr-main { margin-left:220px; flex:1; display:flex; flex-direction:column; min-width:0; }
+.dr-topbar {
+  background:var(--dr-surface); border-bottom:1px solid var(--dr-border); padding:12px 24px;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  position:sticky; top:0; z-index:40;
+}
+.dr-topbar-left { display:flex; align-items:center; gap:12px; }
+.dr-page-title { font-size:15px; font-weight:600; color:var(--dr-text); }
+.dr-date-badge {
+  font-size:12px; font-family:'IBM Plex Mono',monospace; background:var(--dr-surface2); color:var(--dr-muted);
+  padding:3px 10px; border-radius:20px; border:1px solid var(--dr-border);
+}
+.dr-theme-btn {
+  background:var(--dr-surface2); border:1px solid var(--dr-border); border-radius:6px;
+  padding:5px 10px; color:var(--dr-muted); font-size:12px; cursor:pointer; font-family:inherit;
+}
+.dr-theme-btn:hover { color:var(--dr-text); }
+.dr-content { padding:24px; flex:1; background:var(--dr-bg); color:var(--dr-text); }
+/* 手機底部固定分頁列——跟 docs/index.html 的 .bottom-tabs 同樣樣式語彙，
+   讓報告頁面在手機上也能快速切換分類（側欄在手機上會整個隱藏，見下方）。 */
+.dr-bottom-tabs { display:none; position:fixed; bottom:0; left:0; right:0; background:var(--dr-surface); border-top:1px solid var(--dr-border); z-index:100; }
+.dr-tab-bar { display:flex; list-style:none; }
+.dr-tab-bar li { flex:1; display:flex; }
+.dr-tab-item { flex:1; display:flex; flex-direction:column; align-items:center; padding:10px 4px 12px; text-decoration:none; font-size:10px; color:var(--dr-muted); gap:4px; }
+.dr-tab-item.active { color:var(--dr-text); }
+.dr-tab-icon { font-size:18px; line-height:1; }
+@media (max-width:767px) {
+  .dr-sidebar { display:none; }
+  .dr-main { margin-left:0; }
+  .dr-content { padding:10px 6px 80px; }
+  .dr-topbar { padding:10px 16px; }
+  .dr-bottom-tabs { display:block; }
+}
+</style>
+<style>
+    
+    .wrap{max-width:720px;margin:0 auto;background:#161b22;border-radius:8px;
+          box-shadow:0 2px 8px rgba(0,0,0,.1);overflow:hidden}
+    .hdr{padding:18px 24px 14px;border-bottom:1px solid #30363d}
+    .hdr h2{margin:0;font-size:20px;color:#8ab4f8}
+    .hdr p{margin:4px 0 0;font-size:13px;color:#9198a1}
+    .card{border-left:4px solid #5b6eea;margin:16px;padding:12px 16px;
+          background:#21262d;border-radius:4px}
+    .card h3{margin:0 0 6px;font-size:16px;color:#8ab4f8}
+    .badge{display:inline-block;padding:1px 7px;border-radius:10px;font-size:12px;
+           font-weight:bold;margin-right:4px}
+    .up{background:rgba(74,222,128,.12);color:#4ade80}
+    .dn{background:rgba(248,113,113,.12);color:#f87171}
+    .row{font-size:13px;margin:3px 0;color:#e6edf3}
+    .label{color:#9198a1;margin-right:4px}
+    table.fin{border-collapse:collapse;font-size:13px;margin:6px 0}
+    table.fin td{padding:2px 14px 2px 0;color:#d0d7de}
+    table.fin td:first-child{color:#9198a1;white-space:nowrap}
+    .pe-bar{background:rgba(96,165,250,.12);border-radius:4px;padding:6px 10px;
+            font-size:13px;margin:4px 0}
+    .price-box{background:#161b223e0;border-radius:4px;padding:6px 10px;
+               font-size:13px;margin:4px 0}
+    .verdict{font-size:13px;margin:4px 0}
+    .news-section{margin-top:8px;padding-top:6px;border-top:1px solid #30363d}
+    .inst-box{background:rgba(192,132,252,.12);border-radius:4px;padding:6px 10px;font-size:13px;margin:4px 0}
+    .margin-box{background:rgba(244,114,182,.12);border-radius:4px;padding:6px 10px;font-size:13px;margin:4px 0}
+    .gm-box{background:rgba(74,222,128,.12);border-radius:4px;padding:6px 10px;font-size:13px;margin:4px 0}
+    .verdict-box{border-radius:6px;padding:8px 12px;font-size:14px;font-weight:bold;margin:8px 0}
+    .v-strong-buy{background:#1b5e20;color:#fff}
+    .v-buy{background:#2e7d32;color:#fff}
+    .v-hold{background:#e65100;color:#fff}
+    .v-reduce{background:#b71c1c;color:#fff}
+    .v-avoid{background:#37474f;color:#fff}
+    .footer{text-align:center;font-size:11px;color:#6e7681;padding:14px;
+            border-top:1px solid #30363d}
+    .top-wrap{max-width:720px;margin:0 auto 16px;background:#161b22;
+              border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.1);overflow:hidden}
+    .top-hdr{padding:14px 20px 12px;border-bottom:1px solid #30363d}
+    .top-hdr h2{margin:0;font-size:18px;color:#c4b5fd}
+    .top-hdr p{margin:3px 0 0;font-size:12px;color:#9198a1}
+    .top-body{display:flex;flex-wrap:wrap}
+    .top-item{flex:1 1 20%;padding:14px 16px;border-right:1px solid #30363d;
+              min-width:120px;box-sizing:border-box;text-align:center}
+    .top-item:last-child{border-right:none}
+    .top-rank{font-size:11px;color:#7d8590;font-weight:bold;margin-bottom:4px}
+    .top-code{font-size:14px;font-weight:bold;color:#8ab4f8;margin-bottom:6px}
+    .top-count{font-size:20px;font-weight:bold;color:#f87171}
+    .top-count .unit{font-size:11px;color:#7d8590;font-weight:normal;margin-left:2px}
+    .mkt-wrap{max-width:720px;margin:0 auto 16px;background:#161b22;
+              border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.1);overflow:hidden}
+    .mkt-hdr{padding:14px 20px 12px;border-bottom:1px solid #30363d}
+    .mkt-hdr h2{margin:0;font-size:18px;color:#c9d1d9}
+    .mkt-hdr p{margin:3px 0 0;font-size:12px;color:#9198a1}
+    .mkt-body{display:flex;flex-wrap:wrap;gap:0;padding:0}
+    .mkt-item{flex:1 1 33%;padding:14px 20px;border-right:1px solid #30363d;
+              border-bottom:1px solid #30363d;min-width:180px;box-sizing:border-box}
+    .mkt-item:last-child{border-right:none}
+    .mkt-item-label{font-size:11px;color:#7d8590;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+    .mkt-item-val{font-size:22px;font-weight:bold;margin-bottom:2px}
+    .mkt-item-sub{font-size:12px;color:#9198a1}
+    .mkt-up{color:#f87171}
+    .mkt-dn{color:#4ade80}
+    .mkt-neu{color:#c9d1d9}
+    .status-strong{display:inline-block;background:rgba(74,222,128,.12);color:#4ade80;
+                   padding:2px 10px;border-radius:10px;font-size:13px;font-weight:bold}
+    .status-warn{display:inline-block;background:#161b223e0;color:#fb923c;
+                 padding:2px 10px;border-radius:10px;font-size:13px;font-weight:bold}
+    .status-danger{display:inline-block;background:rgba(248,113,113,.12);color:#f87171;
+                   padding:2px 10px;border-radius:10px;font-size:13px;font-weight:bold}
+    .hot-wrap{max-width:720px;margin:0 auto 16px;background:#161b228e1;
+              border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.1);overflow:hidden}
+    .hot-hdr{padding:14px 20px 12px;border-bottom:1px solid #30363d}
+    .hot-hdr h2{margin:0;font-size:18px;color:#fb923c}
+    .hot-hdr p{margin:3px 0 0;font-size:12px;color:#9198a1}
+    .hot-body{padding:4px 0}
+    .topic-item{padding:12px 20px;border-bottom:1px solid rgba(245,158,11,.3)}
+    .topic-item:last-child{border-bottom:none}
+    .topic-title{font-size:14px;font-weight:bold;color:#fb923c;margin-bottom:5px}
+    .topic-detail{font-size:13px;color:#c9d1d9;line-height:1.7}
+    .review-wrap{max-width:720px;margin:16px auto 0;background:#161b22;
+                 border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.1);overflow:hidden}
+    .review-hdr{padding:14px 20px 12px;border-bottom:1px solid #30363d}
+    .review-hdr h2{margin:0;font-size:18px;color:#4ade80}
+    .review-hdr p{margin:3px 0 0;font-size:12px;color:#9198a1}
+    .review-body{padding:12px 16px}
+    .review-table{width:100%;border-collapse:collapse;font-size:13px}
+    .review-table th{background:#21262d;color:#c9d1d9;padding:7px 10px;
+                     text-align:left;font-weight:600;white-space:nowrap}
+    .review-table td{padding:7px 10px;border-bottom:1px solid #30363d;vertical-align:top}
+    .review-table tr:last-child td{border-bottom:none}
+    @media (max-width:480px) {
+      .card{margin:10px 6px;padding:10px 10px}
+      .top-hdr,.mkt-hdr,.hot-hdr,.review-hdr{padding-left:10px;padding-right:10px}
+      .top-item{padding-left:8px;padding-right:8px}
+      .mkt-item{padding-left:10px;padding-right:10px}
+      .topic-item{padding-left:10px;padding-right:10px}
+      .review-body{padding-left:8px;padding-right:8px}
+    }
+    </style>
+
+</head>
+<body>
+<div class="dr-layout">
+  <aside class="dr-sidebar">
+    <a class="dr-brand" href="../index.html">
+      <div class="dr-brand-name">📡 財經日報站</div>
+      <div class="dr-brand-sub">Stock · Market · Podcast</div>
+    </a>
+    <nav class="dr-nav">
+      <a class="dr-nav-item" href="../index.html">
+        <span class="dr-dot" style="background:var(--dr-all)"></span> 總覽
+      </a>
+      <a class="dr-nav-item" href="../podcast/latest.html">
+        <span class="dr-dot dr-dot-pod"></span> Podcast 摘要
+      </a>
+      <a class="dr-nav-item active" href="../tw_scout/latest.html">
+        <span class="dr-dot dr-dot-tw"></span> 台股選股雷達
+      </a>
+      <div class="dr-nav-subitems"><a class="dr-nav-subitem active" href="../tw_scout/2026-11-06.html">2026-11-06</a><a class="dr-nav-subitem" href="../tw_scout/2026-11-05.html">2026-11-05</a><a class="dr-nav-subitem" href="../tw_scout/2026-11-04.html">2026-11-04</a><a class="dr-nav-subitem" href="../tw_scout/2026-11-03.html">2026-11-03</a><a class="dr-nav-subitem" href="../tw_scout/2026-11-02.html">2026-11-02</a></div>
+      <a class="dr-nav-item" href="../us_scout/latest.html">
+        <span class="dr-dot dr-dot-us"></span> 美股選股雷達
+      </a>
+      <div class="dr-nav-subitems"><a class="dr-nav-subitem" href="../us_scout/2026-11-05.html">2026-11-05</a><a class="dr-nav-subitem" href="../us_scout/2026-11-04.html">2026-11-04</a><a class="dr-nav-subitem" href="../us_scout/2026-11-03.html">2026-11-03</a><a class="dr-nav-subitem" href="../us_scout/2026-11-02.html">2026-11-02</a><a class="dr-nav-subitem" href="../us_scout/2026-10-30.html">2026-10-30</a></div>
+      <a class="dr-nav-item" href="../tw_ma/latest.html">
+        <span class="dr-dot dr-dot-twma"></span> 台股族群強弱
+      </a>
+      <div class="dr-nav-subitems"><a class="dr-nav-subitem" href="../tw_ma/2026-11-06.html">2026-11-06</a><a class="dr-nav-subitem" href="../tw_ma/2026-11-05.html">2026-11-05</a><a class="dr-nav-subitem" href="../tw_ma/2026-11-04.html">2026-11-04</a><a class="dr-nav-subitem" href="../tw_ma/2026-11-03.html">2026-11-03</a><a class="dr-nav-subitem" href="../tw_ma/2026-11-02.html">2026-11-02</a></div>
+    </nav>
+  </aside>
+
+  <div class="dr-main">
+    <header class="dr-topbar">
+      <div class="dr-topbar-left">
+        <span class="dr-page-title">台股選股雷達</span>
+        <span class="dr-date-badge">2026-11-06</span>
+      </div>
+      <button class="dr-theme-btn" onclick="drToggleTheme()" id="dr-theme-btn">🌙</button>
+    </header>
+    <main class="dr-content">
+      
+  
+  <div class="top-wrap">
+    <div class="top-hdr">
+      <h2>🏆 近期熱門股</h2>
+      <p>近 22 個交易日通過技術篩選次數最多的前 5 檔個股</p>
+    </div>
+    <div class="top-body">
+        <div class="top-item">
+          <div class="top-rank">#1</div>
+          <div class="top-code">1802 台玻</div>
+          <div class="top-count">7<span class="unit"> 次</span></div>
+        </div>
+        <div class="top-item">
+          <div class="top-rank">#2</div>
+          <div class="top-code">6505 台塑化</div>
+          <div class="top-count">6<span class="unit"> 次</span></div>
+        </div>
+        <div class="top-item">
+          <div class="top-rank">#3</div>
+          <div class="top-code">1301 台塑</div>
+          <div class="top-count">6<span class="unit"> 次</span></div>
+        </div>
+        <div class="top-item">
+          <div class="top-rank">#4</div>
+          <div class="top-code">1303 南亞</div>
+          <div class="top-count">6<span class="unit"> 次</span></div>
+        </div>
+        <div class="top-item">
+          <div class="top-rank">#5</div>
+          <div class="top-code">2317 鴻海</div>
+          <div class="top-count">6<span class="unit"> 次</span></div>
+        </div></div>
+  </div>
+  
+  <div class="mkt-wrap">
+    <div class="mkt-hdr">
+      <h2>📊 今日大盤概況</h2>
+      <p>2026/11/06　資料來源：yfinance（^TWII / 0050.TW / 00631L.TW）</p>
+    </div>
+    <div class="mkt-body">
+      <div class="mkt-item">
+        <div class="mkt-item-label">加權指數</div>
+        <div class="mkt-item-val mkt-dn">39,702</div><div class="mkt-item-sub mkt-dn">▼ -1,873　(-4.51%)</div>
+      </div>
+      <div class="mkt-item">
+        <div class="mkt-item-label">0050 YTD</div>
+        <div class="mkt-item-val mkt-up">▲ +40.97%</div><div class="mkt-item-sub">元大台灣 50 今年以來</div>
+      </div>
+      <div class="mkt-item">
+        <div class="mkt-item-label">大盤狀態（00631L 20MA）</div>
+        <div class="mkt-item-val" style="font-size:16px;margin-bottom:6px"><span class="status-danger">帶量跌破</span></div><div class="mkt-item-sub">帶量跌破 20MA（36.1），量比 2.3x，系統性風險警戒（-27.2%）</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="hot-wrap">
+    <div class="hot-hdr">
+      <h2>🔥 今日市場熱門討論話題</h2>
+      <p>2026/11/06　資料來源：鉅亨網 / 工商時報 / 經濟日報 / Digitimes / 數位時代 / Yahoo財經</p>
+    </div>
+    <div class="hot-body"><div class="topic-item"><div class="topic-title">• 台股恐慌性賣壓與外資流出</div><div class="topic-detail">台股近期出現恐慌性殺盤，指數失守關鍵點位，外資大舉賣超超過2000億元，三大法人亦同步賣超逾千億元，使台股創下史上第4大跌點。投資人應密切關注外資動向與金管會警訊。 <a href="https://news.cnyes.com/news/id/6650107" target="_blank" style="display:inline-block;margin-top:5px;font-size:12px;color:#fb923c;text-decoration:none;border:1px solid #fb923c;border-radius:4px;padding:1px 7px">📰 原文連結</a></div></div><div class="topic-item"><div class="topic-title">• AI概念股動向與前景</div><div class="topic-detail">儘管AI交易退潮席捲亞洲，台股AI供應鏈仍被看好，專家認為500家台企市值有望上看5.5倍。野村證券點名3大指標股可逢低加碼，但AIDC建設可能遞延。相關個股如智邦營收創新高，緯致獲利創高並聚焦AI。 <a href="https://news.cnyes.com/news/id/6650081" target="_blank" style="display:inline-block;margin-top:5px;font-size:12px;color:#fb923c;text-decoration:none;border:1px solid #fb923c;border-radius:4px;padding:1px 7px">📰 原文連結</a></div></div><div class="topic-item"><div class="topic-title">• 記憶體與半導體產業景氣</div><div class="topic-detail">記憶體模組大廠創見董座指出，記憶體進一步漲價空間有限，模組廠營運將回歸穩定常態。而百容半導體業務持續強勁，金居也將啟動百億大馬建廠計畫。 <a href="https://news.cnyes.com/news/id/6650122" target="_blank" style="display:inline-block;margin-top:5px;font-size:12px;color:#fb923c;text-decoration:none;border:1px solid #fb923c;border-radius:4px;padding:1px 7px">📰 原文連結</a></div></div><div class="topic-item"><div class="topic-title">• 企業服務與併購策略</div><div class="topic-detail">台灣大收購精誠達陣，持股逾六成，目標三年內企業服務營收突破千億元。全家也斥資7.46億元買下全台物流，顯示零售業者積極佈局企業服務與物流體系。 <a href="https://news.cnyes.com/news/id/6650121" target="_blank" style="display:inline-block;margin-top:5px;font-size:12px;color:#fb923c;text-decoration:none;border:1px solid #fb923c;border-radius:4px;padding:1px 7px">📰 原文連結</a></div></div><div class="topic-item"><div class="topic-title">• 新台幣匯率與監管</div><div class="topic-detail">新台幣近期貶速過快，一度貶破33元，但隨後強勢翻升1.08角。市場關注央行是否會介入匯市以穩定新台幣，避免過度波動。 <a href="https://tw.stock.yahoo.com/news/%E6%96%B0%E5%8F%B0%E5%B9%A3%E8%B2%B6%E7%A0%B433%E5%85%83%E5%BE%8C%E9%80%B1%E4%BA%94%E5%BC%B7%E5%8B%A2%E7%BF%BB%E5%8D%871-08%E8%A7%92-%E8%BF%91%E6%9C%9F%E8%B2%B6%E9%80%9F%E9%81%8E%E5%BF%AB%E6%88%96%E5%BC%95%E7%99%BC%E7%9B%A3%E7%AE%A1%E8%AD%A6%E6%88%92-081624369.html" target="_blank" style="display:inline-block;margin-top:5px;font-size:12px;color:#fb923c;text-decoration:none;border:1px solid #fb923c;border-radius:4px;padding:1px 7px">📰 原文連結</a></div></div><div class="topic-item"><div class="topic-title">• 大型權值股表現與資金流向</div><div class="topic-detail">0050成交爆量，第四法人承接，但台積電等權值股仍受台股大盤影響。與此同時，台韓兩大權王三星與台積電的表現也成為市場關注焦點。 <a href="https://news.cnyes.com/news/id/6650126" target="_blank" style="display:inline-block;margin-top:5px;font-size:12px;color:#fb923c;text-decoration:none;border:1px solid #fb923c;border-radius:4px;padding:1px 7px">📰 原文連結</a></div></div></div>
+  </div>
+  <div class="wrap">
+    <div class="hdr">
+      <h2>🔭 台股選股雷達</h2>
+      <p>2026/11/06　共 1 支通過技術篩選</p>
+    </div>
+    <div class="card"><h3>▶ 6446 <a href="https://www.cnyes.com/twstock/6446" style="color:#8ab4f8;text-decoration:none">藥華藥</a>&nbsp;&nbsp;<span style="font-weight:normal;font-size:14px">$1,270.0</span>&nbsp;<span class="badge up">+3.8% vs 5MA</span>&nbsp;<span style="font-weight:normal;font-size:11px;color:#6e7681">.TW · 鉅亨</span></h3><div class="verdict-box v-hold">⚠️ 觀望　<span style="font-weight:normal;font-size:13px">近期營收創新高，但籌碼面法人小幅賣超，位階也偏高，有回檔風險</span></div><div class="row" style="margin:5px 0">🏷 <span style="background:rgba(96,165,250,.12);color:#60a5fa;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">🔖 新藥開發</span><span style="background:rgba(96,165,250,.12);color:#60a5fa;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">🔖 高毛利</span><span style="background:rgba(96,165,250,.12);color:#60a5fa;padding:2px 9px;border-radius:10px;font-size:12px;margin-right:4px;display:inline-block;margin-bottom:3px">🔖 營收成長</span></div><div class="row">🌐 全球相關股票：PFE(臨床藥物開發) -3.0%</div><div class="row" style="font-size:11px;color:#c4b5fd;background:rgba(192,132,252,.12);border-radius:4px;padding:4px 8px;margin:3px 0">🔍 篩選依據：價站5MA (+3.8%)&nbsp;｜&nbsp;站上20MA (+6.1%)&nbsp;｜&nbsp;量比 2.8x&nbsp;｜&nbsp;RSI 53</div><div class="row">📊 量比 2.8x&nbsp;|&nbsp;RSI <b style="color:#e6edf3">53</b></div><div class="inst-box">🏦 三大法人：外資 <span style="color:#f87171">-169張</span>&nbsp;｜&nbsp;投信 <span style="color:#4ade80">+15張</span>&nbsp;｜&nbsp;自營 <span style="color:#f87171">-21張</span>&nbsp;｜&nbsp;合計 <span style="color:#f87171">-174張</span></div><div class="margin-box">📉 融資：餘額 7,753張 增減 -134張&nbsp;｜&nbsp;融券：餘額 14張 增減 -1張</div><div class="news-section"><div style="margin:4px 0"><span style="color:#7d8590;font-size:12px">[11/06 12:07]</span> <a href="https://news.cnyes.com/news/id/6649908" style="color:#60a5fa;text-decoration:none">〈焦點股〉生技股萬綠叢中一點紅 藥華藥成千金股唯一走揚</a></div>
+<div style="margin:4px 0"><span style="color:#7d8590;font-size:12px">[11/05 19:19]</span> <a href="https://news.cnyes.com/news/id/6648402" style="color:#60a5fa;text-decoration:none">藥華藥10月營收28.36億元翻倍創單月新高 ET市場本月放量</a></div></div><table class="fin"><tr><td>📈 營收(億)</td><td>2023: 51.1</td><td>2024: 97.3</td><td>2025: 156.3</td><td style="color:#60a5fa;font-weight:bold">2026Q2: 68.6</td></tr><tr><td>💰 EPS(元)</td><td>2023: -1.57</td><td>2024: 7.27</td><td>2025: 12.30</td><td style="color:#60a5fa;font-weight:bold">2026Q2: 5.53</td></tr><tr><td colspan="10" style="color:#7d8590;font-size:11px;padding-top:2px">※ <b style="color:#60a5fa">2026Q2</b> 為最新季報，其餘為年度合計</td></tr></table><div class="gm-box">▪ 毛利率：88% → 88% → 89% → <b style="color:#60a5fa">94%</b>　｜　庫存天數：872天 → 396天 → 281天</div><div class="pe-bar">▪ 本益比：目前 <b>73.1x</b>&nbsp;&nbsp;|&nbsp;&nbsp;52W 24x ~ 95x&nbsp;&nbsp;|&nbsp;&nbsp;前瞻 <b>28.9x</b></div><div class="price-box">▪ 合理股價 <b>$1,027</b>（52W P/E中位 × EPS）&nbsp;&nbsp;|&nbsp;&nbsp;預測股價 <b>$1,437</b>（分析師目標）</div><div class="verdict">▪ 估值：📌 估值中高（52W 中位 59x）  | 前瞻 28.9x（隱含獲利成長 +153%）</div></div>
+    <div class="footer">本報告為資訊彙整，非投資建議。資料來源：TWSE / TPEx / 鉅亨網 / yfinance</div>
+  </div>
+  
+  <div class="review-wrap">
+    <div class="review-hdr">
+      <h2>📋 動能延續追蹤</h2>
+      <p>2026/11/03 評為「積極買入 / 買入」— 3 個交易日後績效</p>
+    </div>
+    <div class="review-body">
+      <table class="review-table">
+        <thead>
+          <tr>
+            <th>股票</th>
+            <th style="text-align:right">買入收盤價</th>
+            <th style="text-align:right">今日收盤</th>
+            <th style="text-align:right">報酬</th>
+            <th>當時 AI 評語</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><a href="https://www.cnyes.com/twstock/1802" style="color:#8ab4f8;text-decoration:none">
+              1802 台玻</a></td>
+          <td style="text-align:right;color:#c9d1d9">$67.7</td>
+          <td style="text-align:right;color:#c9d1d9">$57.8</td>
+          <td style="text-align:right;font-weight:bold;color:#4ade80">🟢 -14.6%</td>
+          <td style="color:#9198a1;font-size:12px">土洋合買法人動能強勁，獲利轉佳，值得關注</td>
+        </tr></tbody>
+      </table>
+    </div>
+  </div>
+
+    </main>
+  </div>
+
+  <nav class="dr-bottom-tabs">
+    <ul class="dr-tab-bar"><li><a class="dr-tab-item" href="../index.html"><span class="dr-tab-icon">🏠</span><span>總覽</span></a></li><li><a class="dr-tab-item" href="../podcast/latest.html"><span class="dr-tab-icon">🎙</span><span>Podcast</span></a></li><li><a class="dr-tab-item active" href="../tw_scout/latest.html"><span class="dr-tab-icon">📡</span><span>台股</span></a></li><li><a class="dr-tab-item" href="../us_scout/latest.html"><span class="dr-tab-icon">🔭</span><span>美股</span></a></li><li><a class="dr-tab-item" href="../tw_ma/latest.html"><span class="dr-tab-icon">📊</span><span>族群</span></a></li></ul>
+  </nav>
+</div>
+<script>
+(function() {
+  var saved = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+  document.getElementById('dr-theme-btn').textContent = saved === 'dark' ? '🌙' : '☀️';
+})();
+function drToggleTheme() {
+  var cur = document.documentElement.getAttribute('data-theme');
+  var next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+  document.getElementById('dr-theme-btn').textContent = next === 'dark' ? '🌙' : '☀️';
+}
+</script>
+</body>
+</html>
