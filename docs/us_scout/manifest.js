@@ -1,5 +1,9 @@
 window.US_SCOUT_MANIFEST = [
   {
+    "date": "2026-11-09",
+    "file": "2026-11-09.html"
+  },
+  {
     "date": "2026-11-06",
     "file": "2026-11-06.html"
   },
