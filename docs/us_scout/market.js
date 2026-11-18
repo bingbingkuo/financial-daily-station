@@ -1,28 +1,28 @@
 window.US_MARKET_OVERVIEW = {
   "sox": {
-    "close": 10506.669921875,
-    "chg_pct": -0.5437318219513315,
-    "ytd": 42.60892294761488
+    "close": null,
+    "chg_pct": null,
+    "ytd": null
   },
   "ndx": {
-    "close": 25366.08984375,
-    "chg_pct": -0.3930686589733063,
-    "ytd": 9.168931100983697
+    "close": null,
+    "chg_pct": null,
+    "ytd": null
   },
   "dji": {
-    "close": 52297.08984375,
-    "chg_pct": -0.3608517995814548,
-    "ytd": 8.091165335528519
+    "close": null,
+    "chg_pct": null,
+    "ytd": 6.667263044115031
   },
   "vix": {
-    "close": 17.920000076293945,
-    "chg_pct": -4.171126496376139
+    "close": null,
+    "chg_pct": null
   },
   "tnx": {
-    "close": 5.134999752044678
+    "close": null
   },
   "tyx": {
-    "close": 5.468999862670898
+    "close": null
   },
-  "spy_ytd": 11.690157369113358
+  "spy_ytd": null
 };
