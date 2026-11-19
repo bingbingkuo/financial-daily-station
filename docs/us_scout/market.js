@@ -12,7 +12,7 @@ window.US_MARKET_OVERVIEW = {
   "dji": {
     "close": null,
     "chg_pct": null,
-    "ytd": 6.667263044115031
+    "ytd": null
   },
   "vix": {
     "close": null,
