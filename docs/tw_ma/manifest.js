@@ -1,5 +1,9 @@
 window.TW_MA_MANIFEST = [
   {
+    "date": "2026-11-23",
+    "file": "2026-11-23.html"
+  },
+  {
     "date": "2026-11-20",
     "file": "2026-11-20.html"
   },
